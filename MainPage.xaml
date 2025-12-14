@@ -1,35 +1,202 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="NitroHttp.MainPage">
+             x:Class="NitroHttp.MainPage"
+             BackgroundColor="#0F1115">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="30" Spacing="20">
-            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
-                <Picker x:Name="MethodPicker" WidthRequest="100" SelectedIndex="0">
-                    <Picker.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>GET</x:String>
-                            <x:String>POST</x:String>
-                            <x:String>PUT</x:String>
-                            <x:String>DELETE</x:String>
-                        </x:Array>
-                    </Picker.ItemsSource>
-                </Picker>
+    <Grid RowDefinitions="Auto,*">
 
-                <Entry x:Name="ApiUrlEntry" Grid.Column="1" Placeholder="Enter API URL" HorizontalOptions="Fill" />
+        <Grid Padding="20"
+              BackgroundColor="#14161B"
+              ColumnDefinitions="Auto,*,Auto"
+              VerticalOptions="Center">
 
-                <Button Grid.Column="2" Text="Send Request" Clicked="OnSendRequestClicked" />
-            </Grid>
+            <Frame Grid.Column="1"
+                   BackgroundColor="#1C1F26"
+                   HasShadow="False"
+                   Padding="0"
+                   Margin="20,0">
+                <Entry Placeholder="https://api.example.com"
+                       BackgroundColor="Transparent"
+                       TextColor="White"
+                       HeightRequest="44"
+                />
+            </Frame>
 
-            <Label Text="Response:" FontAttributes="Bold" />
+            <HorizontalStackLayout Grid.Column="2">
 
-            <Editor x:Name="ResponseEditor"
-            HeightRequest="300"
-            IsReadOnly="True"
-            AutoSize="TextChanges" />
+                <Frame BackgroundColor="#1C1F26"
+                       HasShadow="False"
+                       Padding="0">
+                    <Picker WidthRequest="100"
+                            TextColor="White">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>GET</x:String>
+                                <x:String>POST</x:String>
+                                <x:String>PUT</x:String>
+                                <x:String>DELETE</x:String>
+                                <x:String>PATCH</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                </Frame>
 
-        </VerticalStackLayout>
-    </ScrollView>
+                <Button Text="Send"
+                        HeightRequest="44"
+                        BackgroundColor="#4F7CFF"
+                        TextColor="White"
+                        Margin="20,0"/>
+            </HorizontalStackLayout>
+        </Grid>
+
+        <Grid Grid.Row="1"
+              Padding="20"
+              ColumnDefinitions="1.2*,1*"
+              ColumnSpacing="20">
+
+            <Frame Grid.Column="0"
+                   BackgroundColor="#14161B"
+                   CornerRadius="18"
+                   HasShadow="False"
+                   Padding="20">
+
+                <ScrollView>
+                    <VerticalStackLayout Spacing="16">
+
+                        <Label Text="Request"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="White" />
+
+                        <HorizontalStackLayout Spacing="18">
+                            <Label Text="Params" TextColor="#4F7CFF" />
+                            <Label Text="Headers" TextColor="#888" />
+                            <Label Text="Body" TextColor="#888" />
+                            <Label Text="Auth" TextColor="#888" />
+                        </HorizontalStackLayout>
+
+                        <Frame BackgroundColor="#1C1F26"
+                           CornerRadius="14"
+                           Padding="14"
+                           HasShadow="False">
+                            <VerticalStackLayout>
+                                <Label Text="Query Parameters"
+                                   TextColor="#AAA"
+                                   FontSize="13" Margin="0,0,0,10"/>
+                                <Editor HeightRequest="90"
+                                    BackgroundColor="Transparent"
+                                    TextColor="White"
+                                    Placeholder="key=value" />
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        <Frame BackgroundColor="#1C1F26"
+                           CornerRadius="14"
+                           Padding="14"
+                           HasShadow="False">
+                            <VerticalStackLayout>
+                                <Label Text="Headers"
+                                   TextColor="#AAA"
+                                   FontSize="13"
+                                       Margin="0,0,0,10"/>
+                                <Editor HeightRequest="90"
+                                    BackgroundColor="Transparent"
+                                    TextColor="White"
+                                    Placeholder="Header: value" />
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        <Frame BackgroundColor="#1C1F26"
+                           CornerRadius="14"
+                           Padding="14"
+                           HasShadow="False">
+                            <VerticalStackLayout>
+                                <Label Text="Body"
+                                   TextColor="#AAA"
+                                   FontSize="13" Margin="0,0,0,10" />
+                                <Editor HeightRequest="180"
+                                    BackgroundColor="Transparent"
+                                    TextColor="White"
+                                    Placeholder="Request body" />
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        <Frame BackgroundColor="#1C1F26"
+                           CornerRadius="14"
+                           Padding="14"
+                           HasShadow="False">
+                            <VerticalStackLayout Spacing="10">
+                                <Label Text="Authorization"
+                                   TextColor="#AAA"
+                                   FontSize="13" />
+
+                                      <Picker HeightRequest="44"
+                                        TextColor="White"
+                                        Title="Auth Type">
+                                        <Picker.ItemsSource>
+                                            <x:Array Type="{x:Type x:String}">
+                                                <x:String>None</x:String>
+                                                <x:String>Bearer Token</x:String>
+                                                <x:String>Basic Auth</x:String>
+                                                <x:String>API Key</x:String>
+                                            </x:Array>
+                                        </Picker.ItemsSource>
+                                    </Picker>
+
+                                <Entry BackgroundColor="Transparent"
+                                   TextColor="White"
+                                   Placeholder="Token / API Key"
+                                   HeightRequest="44"
+                                 />
+
+                            </VerticalStackLayout>
+                        </Frame>
+
+                    </VerticalStackLayout>
+
+                </ScrollView>
+            </Frame>
+
+            <Frame Grid.Column="1"
+                   BackgroundColor="#14161B"
+                   CornerRadius="18"
+                   HasShadow="False"
+                   Padding="20">
+
+                <VerticalStackLayout Spacing="16">
+
+                    <Label Text="Response"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="White" />
+
+                    <Grid ColumnDefinitions="*,*,*">
+                        <Label Text="Status —"
+                               TextColor="#4F7CFF" />
+                        <Label Grid.Column="1"
+                               Text="Time —"
+                               TextColor="#AAA" />
+                        <Label Grid.Column="2"
+                               Text="Size —"
+                               TextColor="#AAA" />
+                    </Grid>
+
+                    <Frame BackgroundColor="#1C1F26"
+                           CornerRadius="14"
+                           Padding="14"
+                           HasShadow="False">
+                        <Editor HeightRequest="420"
+                                BackgroundColor="Transparent"
+                                TextColor="White"
+                                IsReadOnly="True"
+                                Placeholder="Response output" />
+                    </Frame>
+
+                </VerticalStackLayout>
+            </Frame>
+
+        </Grid>
+    </Grid>
 
 </ContentPage>

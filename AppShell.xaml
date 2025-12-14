@@ -7,7 +7,6 @@
     Title="NitroHttp">
 
     <ShellContent
-        Title="NitroHttp"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 
