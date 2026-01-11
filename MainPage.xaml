@@ -8,15 +8,8 @@
         <Border Grid.Row="0"
                 BackgroundColor="#12141A"
                 StrokeThickness="0">
-            <Grid Padding="15"
-                  ColumnDefinitions="Auto,*,Auto,Auto"
-                  ColumnSpacing="16">
-
-                <Border Grid.Column="1"
-                        Margin="12,0"
-                        StrokeThickness="1"
-                        Stroke="#1E2028"
-                        BackgroundColor="#14161D">
+            <Grid Padding="24" ColumnDefinitions="Auto,*,Auto,Auto">
+                <Border Grid.Column="1" StrokeThickness="0">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="12"/>
                     </Border.StrokeShape>
@@ -25,10 +18,10 @@
                                 StrokeThickness="0"
                                 Padding="0,0">
                             <Picker WidthRequest="100"
-                                    TextColor="#4F7CFF"
+                                    TextColor="#FC4850"
                                     FontAttributes="Bold"
                                     FontSize="14"
-                                    SelectedIndex="0">
+                                    SelectedItem="GET">
                                 <Picker.ItemsSource>
                                     <x:Array Type="{x:Type x:String}">
                                         <x:String>GET</x:String>
@@ -41,7 +34,8 @@
                             </Picker>
                         </Border>
 
-                        <Entry Grid.Column="1"
+                        <Entry x:Name="url"
+                               Grid.Column="1"
                                Placeholder="https://api.example.com/v1/endpoint"
                                PlaceholderColor="#4A4C54"
                                BackgroundColor="Transparent"
@@ -51,19 +45,8 @@
                     </Grid>
                 </Border>
 
-                <Border Grid.Column="2"
-                        BackgroundColor="#4F7CFF"
-                        StrokeThickness="0"
-                        Padding="28,0"
-                        HeightRequest="52">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="12"/>
-                    </Border.StrokeShape>
-                    <Label Text="Send Request"
-                           TextColor="White"
-                           FontAttributes="Bold"
-                           FontSize="14"
-                           VerticalOptions="Center"/>
+                <Border Grid.Column="2" StrokeThickness="0" HeightRequest="44.8">
+                    <Button Text="Sumbit Request" BackgroundColor="#FC4850" TextColor="#fff" Clicked="Button_Click" />
                 </Border>
             </Grid>
         </Border>
@@ -73,7 +56,7 @@
               ColumnDefinitions="Auto,Auto,Auto,Auto,*,Auto">
 
             <Border Grid.Column="0"
-                    BackgroundColor="#4F7CFF"
+                    BackgroundColor="#FC4850"
                     StrokeThickness="0"
                     Padding="20,10"
                     Margin="0,0,12,0">
@@ -414,7 +397,7 @@
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="6"/>
                                 </Border.StrokeShape>
-                                <Label Text="200 OK"
+                                <Label x:Name="status" Text="NONE"
                      TextColor="#4ADE80"
                      FontSize="12"
                      FontAttributes="Bold"/>
@@ -482,7 +465,7 @@
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="10"/>
                                 </Border.StrokeShape>
-                                <Editor HeightRequest="460"
+                                <Editor x:Name="response" HeightRequest="460"
                       BackgroundColor="Transparent"
                       TextColor="#E8E9ED"
                       FontSize="13"
