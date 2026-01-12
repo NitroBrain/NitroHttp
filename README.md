@@ -1,3 +1,3 @@
 # NitroHttp
 
-<img width="1920" height="1032" alt="image" src="https://github.com/user-attachments/assets/98b0197e-cfd7-402b-9a9f-153d109cae62" />
+<img width="1920" height="1080" alt="Screenshot (42)" src="https://github.com/user-attachments/assets/fbc9dacc-616e-4d5f-b50f-cc3ee0d4c75d" />
