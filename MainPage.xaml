@@ -17,11 +17,11 @@
                         <Border Grid.Column="0"
                                 StrokeThickness="0"
                                 Padding="0,0">
-                            <Picker WidthRequest="100"
+                            <Picker x:Name="MethodPicker"
+                                    WidthRequest="100"
                                     TextColor="#FC4850"
                                     FontAttributes="Bold"
-                                    FontSize="14"
-                                    SelectedItem="GET">
+                                    FontSize="14">
                                 <Picker.ItemsSource>
                                     <x:Array Type="{x:Type x:String}">
                                         <x:String>GET</x:String>
@@ -194,9 +194,9 @@
                                     </Border>
 
                                     <Label Grid.Column="2"
-                                           Text="X"
+                                           Text="×"
                                            TextColor="#6B6D75"
-                                           FontSize="16"
+                                           FontSize="20"
                                            VerticalOptions="Center"/>
                                 </Grid>
 
@@ -230,9 +230,9 @@
                                     </Border>
 
                                     <Label Grid.Column="2"
-                                           Text="X"
+                                           Text="×"
                                            TextColor="#6B6D75"
-                                           FontSize="16"
+                                           FontSize="20"
                                            VerticalOptions="Center"/>
                                 </Grid>
                             </Grid>
