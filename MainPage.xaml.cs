@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Net.Http.Json;
+using System.Text;
 
 namespace NitroHttp
 {
@@ -21,6 +22,9 @@ namespace NitroHttp
                     break;
                 case "POST":
                     await POST(sender, e);
+                    break;
+                case "PUT":
+                    await PUT(sender, e);
                     break;
             }
         }
@@ -74,6 +78,31 @@ namespace NitroHttp
                     status.Text = statusCode.ToString();
                 }
                 catch (Exception ex)
+                {
+                    _ = DisplayAlert("Error", ex.Message, "OK");
+                }
+            }
+        }
+
+        private async Task PUT(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(url.Text))
+            {
+                _ = DisplayAlert("Error", "Url is Empty", "OK");
+            } else
+            {
+                try
+                {
+                    string responseUrl = url.Text;
+                    string updatedJsonBody = "{\"id\": 1, \"title\": \"learn HttpClient - UPDATED\", \"completed\": true, \"userId\": 1}";
+                    var content = new StringContent(updatedJsonBody, Encoding.UTF8, "application/json");
+                    HttpResponseMessage responseMessage = await _httpClient.PutAsync(responseUrl, content);
+                    string responseBody = await responseMessage.Content.ReadAsStringAsync();
+                    response.Text = responseBody;
+                    int statusCode = (int)responseMessage.StatusCode;
+                    status.Text = statusCode.ToString();
+
+                } catch (Exception ex)
                 {
                     _ = DisplayAlert("Error", ex.Message, "OK");
                 }
