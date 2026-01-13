@@ -87,6 +87,9 @@ namespace NitroHttp
 
         private async Task PUT(object sender, EventArgs e)
         {
+            ArgumentNullException.ThrowIfNull(sender);
+            ArgumentNullException.ThrowIfNull(e);
+
             if (string.IsNullOrEmpty(url.Text))
             {
                 _ = DisplayAlert("Error", "Url is Empty", "OK");
