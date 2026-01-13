@@ -559,14 +559,11 @@
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="5" />
                                 </Border.StrokeShape>
-                                <Editor
-                                    x:Name="response"
-                                    BackgroundColor="Transparent"
-                                    FontSize="13"
-                                    HeightRequest="460"
-                                    IsReadOnly="True"
-                                    Text="Response will appear here after sending request"
-                                    TextColor="#E8E9ED" />
+                                <Label
+                                    x:Name="responseLabel"
+                                    FontSize="15"
+                                    FontFamily="OpenSansRegular"
+                                    LineBreakMode="WordWrap" />
                             </Border>
                         </ScrollView>
 

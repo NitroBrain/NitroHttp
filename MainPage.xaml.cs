@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Json;
 using System.Text;
+using NitroHttp.Helpers;
 
 namespace NitroHttp
 {
@@ -44,7 +45,7 @@ namespace NitroHttp
                     string respoonseUrl = url.Text;
                     HttpResponseMessage responseMessage = await _httpClient.GetAsync(respoonseUrl);
                     string responseText = await responseMessage.Content.ReadAsStringAsync();
-                    response.Text = responseText;
+                    responseLabel.FormattedText = JsonSyntaxHighlighter.Highlight(responseText);
                     int statusCode = (int)responseMessage.StatusCode;
                     status.Text = statusCode.ToString();
                 }
@@ -73,7 +74,7 @@ namespace NitroHttp
                     var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
                     HttpResponseMessage responseMessage = await _httpClient.PostAsync(responseUrl, content);
                     string responseBody = await responseMessage.Content.ReadAsStringAsync();
-                    response.Text = responseBody;
+                    responseLabel.FormattedText = JsonSyntaxHighlighter.Highlight(responseBody);
                     int statusCode = (int)responseMessage.StatusCode;
                     status.Text = statusCode.ToString();
                 }
@@ -98,7 +99,7 @@ namespace NitroHttp
                     var content = new StringContent(updatedJsonBody, Encoding.UTF8, "application/json");
                     HttpResponseMessage responseMessage = await _httpClient.PutAsync(responseUrl, content);
                     string responseBody = await responseMessage.Content.ReadAsStringAsync();
-                    response.Text = responseBody;
+                    responseLabel.FormattedText = JsonSyntaxHighlighter.Highlight(responseBody);
                     int statusCode = (int)responseMessage.StatusCode;
                     status.Text = statusCode.ToString();
 
