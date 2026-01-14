@@ -47,7 +47,7 @@ namespace NitroHttp
                     string responseText = await responseMessage.Content.ReadAsStringAsync();
                     responseLabel.FormattedText = JsonSyntaxHighlighter.Highlight(responseText);
                     int statusCode = (int)responseMessage.StatusCode;
-                    status.Text = statusCode.ToString();
+                    UpdateStatus(statusCode);
                 }
                 catch (Exception ex)
                 {
@@ -76,7 +76,7 @@ namespace NitroHttp
                     string responseBody = await responseMessage.Content.ReadAsStringAsync();
                     responseLabel.FormattedText = JsonSyntaxHighlighter.Highlight(responseBody);
                     int statusCode = (int)responseMessage.StatusCode;
-                    status.Text = statusCode.ToString();
+                    UpdateStatus(statusCode);
                 }
                 catch (Exception ex)
                 {
@@ -93,7 +93,8 @@ namespace NitroHttp
             if (string.IsNullOrEmpty(url.Text))
             {
                 _ = DisplayAlert("Error", "Url is Empty", "OK");
-            } else
+            }
+            else
             {
                 try
                 {
@@ -104,13 +105,30 @@ namespace NitroHttp
                     string responseBody = await responseMessage.Content.ReadAsStringAsync();
                     responseLabel.FormattedText = JsonSyntaxHighlighter.Highlight(responseBody);
                     int statusCode = (int)responseMessage.StatusCode;
-                    status.Text = statusCode.ToString();
-
-                } catch (Exception ex)
+                    UpdateStatus(statusCode);
+                }
+                catch (Exception ex)
                 {
                     _ = DisplayAlert("Error", ex.Message, "OK");
                 }
             }
+        }
+        private void StatusCodeColor(int statusCode)
+        {
+            status.TextColor = statusCode switch
+            {
+                _ when HttpStatusHelper.IsSuccess(statusCode) => Color.FromArgb("#4ADE80"),
+                _ when HttpStatusHelper.IsRedirect(statusCode) => Color.FromArgb("#4F7CFF"),
+                _ when HttpStatusHelper.IsClientError(statusCode) => Color.FromArgb("#FC4850"),
+                _ when HttpStatusHelper.IsServerError(statusCode) => Color.FromArgb("#F59E0B"),
+                _ => Color.FromArgb("#6B6D75")
+            };
+        }
+
+        private void UpdateStatus(int statusCode)
+        {
+            StatusCodeColor(statusCode);
+            status.Text = HttpStatusHelper.GetStatusText(statusCode);
         }
     }
 }
