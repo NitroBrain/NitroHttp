@@ -27,6 +27,9 @@ namespace NitroHttp
                 case "PUT":
                     await PUT(sender, e);
                     break;
+                case "PATCH":
+                    await PATCH(sender, e);
+                    break;
                 case "DELETE":
                     await DELETE(sender, e);
                     break;
@@ -129,6 +132,30 @@ namespace NitroHttp
                 try
                 {
                     HttpResponseMessage responseMessage = await _httpClient.DeleteAsync(apiUrl.Text);
+                    string responseBody = await responseMessage.Content.ReadAsStringAsync();
+                    responseLabel.FormattedText = JsonSyntaxHighlighter.Highlight(responseBody);
+                    int statusCode = (int)responseMessage.StatusCode;
+                    UpdateStatus(statusCode);
+                }
+                catch (Exception ex)
+                {
+                    _ = DisplayAlert("Error", ex.Message, "OK");
+                }
+            }
+        }
+        private async Task PATCH(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(apiUrl.Text))
+            {
+                _ = DisplayAlert("Error", "Url is Empty", "OK");
+            }
+            else
+            {
+                try
+                {
+                    string patchJsonBody = "{\"title\": \"learn HttpClient - PATCHED\"}";
+                    var content = new StringContent(patchJsonBody, Encoding.UTF8, "application/json");
+                    HttpResponseMessage responseMessage = await _httpClient.PatchAsync(apiUrl.Text, content);
                     string responseBody = await responseMessage.Content.ReadAsStringAsync();
                     responseLabel.FormattedText = JsonSyntaxHighlighter.Highlight(responseBody);
                     int statusCode = (int)responseMessage.StatusCode;
