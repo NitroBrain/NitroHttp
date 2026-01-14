@@ -27,6 +27,9 @@ namespace NitroHttp
                 case "PUT":
                     await PUT(sender, e);
                     break;
+                case "DELETE":
+                    await DELETE(sender, e);
+                    break;
             }
         }
         private async Task GET(object sender, EventArgs e)
@@ -113,6 +116,35 @@ namespace NitroHttp
                 }
             }
         }
+
+        private async Task DELETE(object sender, EventArgs e)
+        {
+            ArgumentNullException.ThrowIfNull(sender);
+            ArgumentNullException.ThrowIfNull(e);
+            
+            if (string.IsNullOrEmpty(url.Text))
+            {
+                _ = DisplayAlert("Error", "Url is Empty", "OK");
+            }
+            else
+            {
+                try
+                {
+                    string responseUrl = url.Text;
+                    HttpResponseMessage responseMessage = await _httpClient.DeleteAsync(responseUrl);
+                    string responseBody = await responseMessage.Content.ReadAsStringAsync();
+                    responseLabel.FormattedText = JsonSyntaxHighlighter.Highlight(responseBody);
+                    int statusCode = (int)responseMessage.StatusCode;
+                    UpdateStatus(statusCode);
+
+                }
+                catch(Exception ex)
+                {
+                    _ = DisplayAlert("Error", ex.Message, "OK");
+                }
+            }
+        }
+
         private void StatusCodeColor(int statusCode)
         {
             status.TextColor = statusCode switch
