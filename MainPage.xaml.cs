@@ -7,15 +7,11 @@ namespace NitroHttp
     public partial class MainPage : ContentPage
     {
         private readonly HttpClient _httpClient = new();
-        private readonly string _apiUrl;
 
         public MainPage()
         {
             InitializeComponent();
-
             MethodPicker.SelectedIndex = MethodPicker.Items.IndexOf("GET");
-            
-            _apiUrl = apiUrl.Text;
         }
 
         private async void Button_Click(object sender, EventArgs e)
@@ -36,12 +32,13 @@ namespace NitroHttp
                     break;
             }
         }
+
         private async Task GET(object sender, EventArgs e)
         {
             ArgumentNullException.ThrowIfNull(sender);
             ArgumentNullException.ThrowIfNull(e);
 
-            if (string.IsNullOrEmpty(_apiUrl))
+            if (string.IsNullOrEmpty(apiUrl.Text))
             {
                 _ = DisplayAlert("Error", "Url is Empty", "OK");
             }
@@ -49,7 +46,7 @@ namespace NitroHttp
             {
                 try
                 {
-                    HttpResponseMessage responseMessage = await _httpClient.GetAsync(_apiUrl);
+                    HttpResponseMessage responseMessage = await _httpClient.GetAsync(apiUrl.Text);
                     string responseText = await responseMessage.Content.ReadAsStringAsync();
                     responseLabel.FormattedText = JsonSyntaxHighlighter.Highlight(responseText);
                     int statusCode = (int)responseMessage.StatusCode;
@@ -67,7 +64,7 @@ namespace NitroHttp
             ArgumentNullException.ThrowIfNull(sender);
             ArgumentNullException.ThrowIfNull(e);
 
-            if (string.IsNullOrEmpty(_apiUrl))
+            if (string.IsNullOrEmpty(apiUrl.Text))
             {
                 _ = DisplayAlert("Error", "Url is Empty", "OK");
             }
@@ -77,7 +74,7 @@ namespace NitroHttp
                 {
                     string jsonBody = "{\"title\": \"learn HttpClient\", \"body\": \"coding is fun\", \"userId\": 1}";
                     var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-                    HttpResponseMessage responseMessage = await _httpClient.PostAsync(_apiUrl, content);
+                    HttpResponseMessage responseMessage = await _httpClient.PostAsync(apiUrl.Text, content);
                     string responseBody = await responseMessage.Content.ReadAsStringAsync();
                     responseLabel.FormattedText = JsonSyntaxHighlighter.Highlight(responseBody);
                     int statusCode = (int)responseMessage.StatusCode;
@@ -95,7 +92,7 @@ namespace NitroHttp
             ArgumentNullException.ThrowIfNull(sender);
             ArgumentNullException.ThrowIfNull(e);
 
-            if (string.IsNullOrEmpty(_apiUrl))
+            if (string.IsNullOrEmpty(apiUrl.Text))
             {
                 _ = DisplayAlert("Error", "Url is Empty", "OK");
             }
@@ -105,7 +102,7 @@ namespace NitroHttp
                 {
                     string updatedJsonBody = "{\"id\": 1, \"title\": \"learn HttpClient - UPDATED\", \"completed\": true, \"userId\": 1}";
                     var content = new StringContent(updatedJsonBody, Encoding.UTF8, "application/json");
-                    HttpResponseMessage responseMessage = await _httpClient.PutAsync(_apiUrl, content);
+                    HttpResponseMessage responseMessage = await _httpClient.PutAsync(apiUrl.Text, content);
                     string responseBody = await responseMessage.Content.ReadAsStringAsync();
                     responseLabel.FormattedText = JsonSyntaxHighlighter.Highlight(responseBody);
                     int statusCode = (int)responseMessage.StatusCode;
@@ -122,8 +119,8 @@ namespace NitroHttp
         {
             ArgumentNullException.ThrowIfNull(sender);
             ArgumentNullException.ThrowIfNull(e);
-            
-            if (string.IsNullOrEmpty(_apiUrl))
+
+            if (string.IsNullOrEmpty(apiUrl.Text))
             {
                 _ = DisplayAlert("Error", "Url is Empty", "OK");
             }
@@ -131,14 +128,13 @@ namespace NitroHttp
             {
                 try
                 {
-                    HttpResponseMessage responseMessage = await _httpClient.DeleteAsync(_apiUrl);
+                    HttpResponseMessage responseMessage = await _httpClient.DeleteAsync(apiUrl.Text);
                     string responseBody = await responseMessage.Content.ReadAsStringAsync();
                     responseLabel.FormattedText = JsonSyntaxHighlighter.Highlight(responseBody);
                     int statusCode = (int)responseMessage.StatusCode;
                     UpdateStatus(statusCode);
-
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     _ = DisplayAlert("Error", ex.Message, "OK");
                 }
