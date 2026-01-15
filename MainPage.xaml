@@ -525,7 +525,7 @@
                 <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,*">
                     <Grid
                         Grid.Row="0"
-                        Padding="24,20"
+                        Padding="20,16"
                         BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundAltLight}, Dark={StaticResource CardBackgroundAltDark}}"
                         ColumnDefinitions="*,Auto">
                         <Label
@@ -555,7 +555,7 @@
 
                     <Grid
                         Grid.Row="2"
-                        Padding="24,16"
+                        Padding="20,16"
                         BackgroundColor="{AppThemeBinding Light={StaticResource PageBackgroundLight}, Dark={StaticResource PageBackgroundDark}}"
                         ColumnDefinitions="Auto,*,Auto,Auto,Auto"
                         ColumnSpacing="20">
