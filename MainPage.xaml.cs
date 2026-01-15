@@ -7,11 +7,71 @@ namespace NitroHttp
     public partial class MainPage : ContentPage
     {
         private readonly HttpClient _httpClient = new();
+        private string _activeTab = "Body";
 
         public MainPage()
         {
             InitializeComponent();
-            MethodPicker.SelectedIndex = MethodPicker.Items.IndexOf("GET");
+            MethodPicker.SelectedIndex = 0;
+            UpdateTabVisibility();
+        }
+
+        private void OnTabTapped(object sender, TappedEventArgs e)
+        {
+            if (e.Parameter is string tabName)
+            {
+                _activeTab = tabName;
+                UpdateTabStyles();
+                UpdateTabVisibility();
+            }
+        }
+
+        private void UpdateTabStyles()
+        {
+            Color activeBackgroundColor = Color.FromArgb("#FC4850");
+            Color activeTextColor = Colors.White;
+            Color backgroundColor = Colors.Transparent;
+            Color textColor = Color.FromArgb("#6B6D75");
+
+            TabParams.BackgroundColor = backgroundColor;
+            TabParamsLabel.TextColor = textColor;
+
+            TabHeaders.BackgroundColor = backgroundColor;
+            TabHeadersLabel.TextColor = textColor;
+
+            TabBody.BackgroundColor = backgroundColor;
+            TabBodyLabel.TextColor = textColor;
+
+            TabAuth.BackgroundColor = backgroundColor;
+            TabAuthLabel.TextColor = textColor;
+
+            switch (_activeTab)
+            {
+                case "Params":
+                    TabParams.BackgroundColor = activeBackgroundColor;
+                    TabParamsLabel.TextColor = activeTextColor;
+                    break;
+                case "Headers":
+                    TabHeaders.BackgroundColor = activeBackgroundColor;
+                    TabHeadersLabel.TextColor = activeTextColor;
+                    break;
+                case "Body":
+                    TabBody.BackgroundColor = activeBackgroundColor;
+                    TabBodyLabel.TextColor = activeTextColor;
+                    break;
+                case "Auth":
+                    TabAuth.BackgroundColor = activeBackgroundColor;
+                    TabAuthLabel.TextColor = activeTextColor;
+                    break;
+            }
+        }
+
+        private void UpdateTabVisibility()
+        {
+            ContentParams.IsVisible = _activeTab == "Params";
+            ContentHeaders.IsVisible = _activeTab == "Headers";
+            ContentBody.IsVisible = _activeTab == "Body";
+            ContentAuth.IsVisible = _activeTab == "Auth";
         }
 
         private async void Button_Click(object sender, EventArgs e)

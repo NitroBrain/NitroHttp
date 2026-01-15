@@ -76,6 +76,7 @@
             ColumnDefinitions="Auto,Auto,Auto,Auto,*,Auto">
 
             <Border
+                x:Name="TabBody"
                 Grid.Column="0"
                 Margin="0,0,12,0"
                 Padding="20,10"
@@ -84,44 +85,71 @@
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="5" />
                 </Border.StrokeShape>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer CommandParameter="Body" Tapped="OnTabTapped" />
+                </Border.GestureRecognizers>
                 <Label
-                    FontAttributes="Bold"
+                    x:Name="TabBodyLabel"
                     FontSize="13"
-                    Text="Params"
+                    Text="Body"
                     TextColor="White" />
             </Border>
 
             <Border
+                x:Name="TabParams"
                 Grid.Column="1"
                 Margin="0,0,12,0"
                 Padding="20,10"
                 BackgroundColor="Transparent"
                 StrokeThickness="0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="5" />
+                </Border.StrokeShape>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer CommandParameter="Params" Tapped="OnTabTapped" />
+                </Border.GestureRecognizers>
                 <Label
+                    x:Name="TabParamsLabel"
+                    FontSize="13"
+                    Text="Params"
+                    TextColor="#6B6D75" />
+            </Border>
+
+            <Border
+                x:Name="TabHeaders"
+                Grid.Column="2"
+                Margin="0,0,12,0"
+                Padding="20,10"
+                BackgroundColor="Transparent"
+                StrokeThickness="0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="5" />
+                </Border.StrokeShape>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer CommandParameter="Headers" Tapped="OnTabTapped" />
+                </Border.GestureRecognizers>
+                <Label
+                    x:Name="TabHeadersLabel"
                     FontSize="13"
                     Text="Headers"
                     TextColor="#6B6D75" />
             </Border>
 
             <Border
-                Grid.Column="2"
-                Margin="0,0,12,0"
-                Padding="20,10"
-                BackgroundColor="Transparent"
-                StrokeThickness="0">
-                <Label
-                    FontSize="13"
-                    Text="Body"
-                    TextColor="#6B6D75" />
-            </Border>
-
-            <Border
+                x:Name="TabAuth"
                 Grid.Column="3"
                 Margin="0,0,12,0"
                 Padding="20,10"
                 BackgroundColor="Transparent"
                 StrokeThickness="0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="5" />
+                </Border.StrokeShape>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer CommandParameter="Auth" Tapped="OnTabTapped" />
+                </Border.GestureRecognizers>
                 <Label
+                    x:Name="TabAuthLabel"
                     FontSize="13"
                     Text="Auth"
                     TextColor="#6B6D75" />
@@ -162,20 +190,22 @@
             ColumnDefinitions="1.3*,1.7*"
             ColumnSpacing="20">
 
-            <ScrollView HorizontalScrollBarVisibility="Never">
+            <ScrollView VerticalScrollBarVisibility="Never">
 
                 <Border Padding="0" StrokeThickness="0">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="5" />
                     </Border.StrokeShape>
-                    <Grid RowDefinitions="Auto,Auto,*" RowSpacing="16">
+                    <Grid RowDefinitions="*" RowSpacing="16">
 
                         <Border
+                            x:Name="ContentParams"
                             Grid.Row="0"
                             Padding="0"
                             BackgroundColor="#12141A"
                             Stroke="#1A1C24"
-                            StrokeThickness="1">
+                            StrokeThickness="1"
+                            VerticalOptions="Fill">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="5" />
                             </Border.StrokeShape>
@@ -187,8 +217,9 @@
                                     Offset="0,4" />
                             </Border.Shadow>
 
-                            <VerticalStackLayout>
+                            <Grid RowDefinitions="Auto,Auto,*">
                                 <Grid
+                                    Grid.Row="0"
                                     Padding="20,16"
                                     BackgroundColor="#14161D"
                                     ColumnDefinitions="*,Auto">
@@ -204,109 +235,117 @@
                                         TextColor="#FC4850" />
                                 </Grid>
 
-                                <BoxView HeightRequest="1" Color="#1A1C24" />
+                                <BoxView
+                                    Grid.Row="1"
+                                    HeightRequest="1"
+                                    Color="#1A1C24" />
 
-                                <Grid
-                                    Padding="20,16"
-                                    RowDefinitions="Auto,Auto"
-                                    RowSpacing="12">
+                                <ScrollView Grid.Row="2" VerticalScrollBarVisibility="Never">
                                     <Grid
-                                        Grid.Row="0"
-                                        ColumnDefinitions="*,*,Auto"
-                                        ColumnSpacing="12">
-                                        <Border
-                                            Grid.Column="0"
-                                            Padding="12,8"
-                                            BackgroundColor="#1A1C24"
-                                            StrokeThickness="0">
-                                            <Border.StrokeShape>
-                                                <RoundRectangle CornerRadius="5" />
-                                            </Border.StrokeShape>
-                                            <Entry
-                                                BackgroundColor="Transparent"
-                                                FontSize="13"
-                                                Placeholder="key"
-                                                PlaceholderColor="#4A4C54"
-                                                TextColor="#E8E9ED" />
-                                        </Border>
+                                        Padding="20,16"
+                                        RowDefinitions="Auto,Auto"
+                                        RowSpacing="12">
+                                        <Grid
+                                            Grid.Row="0"
+                                            ColumnDefinitions="*,*,Auto"
+                                            ColumnSpacing="12">
+                                            <Border
+                                                Grid.Column="0"
+                                                Padding="12,8"
+                                                BackgroundColor="#1A1C24"
+                                                StrokeThickness="0">
+                                                <Border.StrokeShape>
+                                                    <RoundRectangle CornerRadius="5" />
+                                                </Border.StrokeShape>
+                                                <Entry
+                                                    BackgroundColor="Transparent"
+                                                    FontSize="13"
+                                                    Placeholder="key"
+                                                    PlaceholderColor="#4A4C54"
+                                                    TextColor="#E8E9ED" />
+                                            </Border>
 
-                                        <Border
-                                            Grid.Column="1"
-                                            Padding="12,8"
-                                            BackgroundColor="#1A1C24"
-                                            StrokeThickness="0">
-                                            <Border.StrokeShape>
-                                                <RoundRectangle CornerRadius="5" />
-                                            </Border.StrokeShape>
-                                            <Entry
-                                                BackgroundColor="Transparent"
-                                                FontSize="13"
-                                                Placeholder="value"
-                                                PlaceholderColor="#4A4C54"
-                                                TextColor="#E8E9ED" />
-                                        </Border>
+                                            <Border
+                                                Grid.Column="1"
+                                                Padding="12,8"
+                                                BackgroundColor="#1A1C24"
+                                                StrokeThickness="0">
+                                                <Border.StrokeShape>
+                                                    <RoundRectangle CornerRadius="5" />
+                                                </Border.StrokeShape>
+                                                <Entry
+                                                    BackgroundColor="Transparent"
+                                                    FontSize="13"
+                                                    Placeholder="value"
+                                                    PlaceholderColor="#4A4C54"
+                                                    TextColor="#E8E9ED" />
+                                            </Border>
 
-                                        <Label
-                                            Grid.Column="2"
-                                            FontSize="20"
-                                            Text="×"
-                                            TextColor="#6B6D75"
-                                            VerticalOptions="Center" />
+                                            <Label
+                                                Grid.Column="2"
+                                                FontSize="20"
+                                                Text="×"
+                                                TextColor="#6B6D75"
+                                                VerticalOptions="Center" />
+                                        </Grid>
+
+                                        <Grid
+                                            Grid.Row="1"
+                                            ColumnDefinitions="*,*,Auto"
+                                            ColumnSpacing="12">
+                                            <Border
+                                                Grid.Column="0"
+                                                Padding="12,8"
+                                                BackgroundColor="#1A1C24"
+                                                StrokeThickness="0">
+                                                <Border.StrokeShape>
+                                                    <RoundRectangle CornerRadius="5" />
+                                                </Border.StrokeShape>
+                                                <Entry
+                                                    BackgroundColor="Transparent"
+                                                    FontSize="13"
+                                                    Placeholder="key"
+                                                    PlaceholderColor="#4A4C54"
+                                                    TextColor="#E8E9ED" />
+                                            </Border>
+
+                                            <Border
+                                                Grid.Column="1"
+                                                Padding="12,8"
+                                                BackgroundColor="#1A1C24"
+                                                StrokeThickness="0">
+                                                <Border.StrokeShape>
+                                                    <RoundRectangle CornerRadius="5" />
+                                                </Border.StrokeShape>
+                                                <Entry
+                                                    BackgroundColor="Transparent"
+                                                    FontSize="13"
+                                                    Placeholder="value"
+                                                    PlaceholderColor="#4A4C54"
+                                                    TextColor="#E8E9ED" />
+                                            </Border>
+
+                                            <Label
+                                                Grid.Column="2"
+                                                FontSize="20"
+                                                Text="×"
+                                                TextColor="#6B6D75"
+                                                VerticalOptions="Center" />
+                                        </Grid>
                                     </Grid>
-
-                                    <Grid
-                                        Grid.Row="1"
-                                        ColumnDefinitions="*,*,Auto"
-                                        ColumnSpacing="12">
-                                        <Border
-                                            Grid.Column="0"
-                                            Padding="12,8"
-                                            BackgroundColor="#1A1C24"
-                                            StrokeThickness="0">
-                                            <Border.StrokeShape>
-                                                <RoundRectangle CornerRadius="5" />
-                                            </Border.StrokeShape>
-                                            <Entry
-                                                BackgroundColor="Transparent"
-                                                FontSize="13"
-                                                Placeholder="key"
-                                                PlaceholderColor="#4A4C54"
-                                                TextColor="#E8E9ED" />
-                                        </Border>
-
-                                        <Border
-                                            Grid.Column="1"
-                                            Padding="12,8"
-                                            BackgroundColor="#1A1C24"
-                                            StrokeThickness="0">
-                                            <Border.StrokeShape>
-                                                <RoundRectangle CornerRadius="5" />
-                                            </Border.StrokeShape>
-                                            <Entry
-                                                BackgroundColor="Transparent"
-                                                FontSize="13"
-                                                Placeholder="value"
-                                                PlaceholderColor="#4A4C54"
-                                                TextColor="#E8E9ED" />
-                                        </Border>
-
-                                        <Label
-                                            Grid.Column="2"
-                                            FontSize="20"
-                                            Text="×"
-                                            TextColor="#6B6D75"
-                                            VerticalOptions="Center" />
-                                    </Grid>
-                                </Grid>
-                            </VerticalStackLayout>
+                                </ScrollView>
+                            </Grid>
                         </Border>
 
                         <Border
-                            Grid.Row="1"
+                            x:Name="ContentHeaders"
+                            Grid.Row="0"
                             Padding="0"
                             BackgroundColor="#12141A"
+                            IsVisible="False"
                             Stroke="#1A1C24"
-                            StrokeThickness="1">
+                            StrokeThickness="1"
+                            VerticalOptions="Fill">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="5" />
                             </Border.StrokeShape>
@@ -346,27 +385,31 @@
                                     Margin="20,16,20,16"
                                     Padding="20,16"
                                     BackgroundColor="#1A1C24"
-                                    StrokeThickness="0">
+                                    StrokeThickness="0"
+                                    VerticalOptions="Fill">
                                     <Border.StrokeShape>
                                         <RoundRectangle CornerRadius="5" />
                                     </Border.StrokeShape>
                                     <Editor
                                         BackgroundColor="Transparent"
                                         FontSize="13"
-                                        HeightRequest="80"
                                         Placeholder="Content-Type: application/json"
                                         PlaceholderColor="#4A4C54"
-                                        TextColor="#E8E9ED" />
+                                        TextColor="#E8E9ED"
+                                        VerticalOptions="Fill" />
                                 </Border>
                             </Grid>
                         </Border>
 
                         <Border
-                            Grid.Row="2"
+                            x:Name="ContentBody"
+                            Grid.Row="0"
                             Padding="0"
                             BackgroundColor="#12141A"
+                            IsVisible="False"
                             Stroke="#1A1C24"
-                            StrokeThickness="1">
+                            StrokeThickness="1"
+                            VerticalOptions="Fill">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="5" />
                             </Border.StrokeShape>
@@ -414,7 +457,8 @@
                                     Margin="20,16,20,16"
                                     Padding="20,16"
                                     BackgroundColor="#1A1C24"
-                                    StrokeThickness="0">
+                                    StrokeThickness="0"
+                                    VerticalOptions="Fill">
                                     <Border.StrokeShape>
                                         <RoundRectangle CornerRadius="5" />
                                     </Border.StrokeShape>
@@ -422,6 +466,65 @@
                                         BackgroundColor="Transparent"
                                         FontSize="13"
                                         Placeholder="Request body JSON"
+                                        PlaceholderColor="#4A4C54"
+                                        TextColor="#E8E9ED"
+                                        VerticalOptions="Fill" />
+                                </Border>
+                            </Grid>
+                        </Border>
+
+                        <Border
+                            x:Name="ContentAuth"
+                            Grid.Row="0"
+                            Padding="0"
+                            BackgroundColor="#12141A"
+                            IsVisible="False"
+                            Stroke="#1A1C24"
+                            StrokeThickness="1"
+                            VerticalOptions="Fill">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="5" />
+                            </Border.StrokeShape>
+                            <Border.Shadow>
+                                <Shadow
+                                    Brush="#000000"
+                                    Opacity="0.3"
+                                    Radius="16"
+                                    Offset="0,4" />
+                            </Border.Shadow>
+
+                            <Grid RowDefinitions="Auto,Auto,*">
+                                <Grid
+                                    Grid.Row="0"
+                                    Padding="20,16"
+                                    BackgroundColor="#14161D"
+                                    ColumnDefinitions="*,Auto">
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="14"
+                                        Text="Authentication"
+                                        TextColor="#E8E9ED" />
+                                </Grid>
+
+                                <BoxView
+                                    Grid.Row="1"
+                                    HeightRequest="1"
+                                    Color="#1A1C24" />
+
+                                <Border
+                                    Grid.Row="2"
+                                    Margin="20,16,20,16"
+                                    Padding="20,16"
+                                    BackgroundColor="#1A1C24"
+                                    StrokeThickness="0"
+                                    VerticalOptions="Fill">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="5" />
+                                    </Border.StrokeShape>
+                                    <Editor
+                                        BackgroundColor="Transparent"
+                                        FontSize="13"
+                                        Placeholder="Bearer token or API key"
                                         PlaceholderColor="#4A4C54"
                                         TextColor="#E8E9ED"
                                         VerticalOptions="Fill" />
