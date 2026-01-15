@@ -2,4 +2,4 @@
 
 ### App
 
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/065cb1c6-82f8-47d7-8460-aac1b37a320c" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/faa6d898-fb25-4804-90e6-d11905172de1" />
