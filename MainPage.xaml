@@ -65,7 +65,8 @@
                         BackgroundColor="{StaticResource AccentPrimary}"
                         Clicked="Button_Click"
                         CornerRadius="4"
-                        Text="Submit Request"
+                        Text="Nitro"
+                        TextTransform="Uppercase"
                         TextColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource TextPrimaryDark}}" />
                 </Border>
             </Grid>
