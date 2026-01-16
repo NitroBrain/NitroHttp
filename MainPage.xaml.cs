@@ -1,4 +1,4 @@
-﻿using System.Net.Http.Json;
+﻿using System.Diagnostics;
 using System.Text;
 using NitroHttp.Helpers;
 
@@ -8,12 +8,41 @@ namespace NitroHttp
     {
         private readonly HttpClient _httpClient = new();
         private string _activeTab = "Body";
+        private string _lastJsonResponse = string.Empty;
 
         public MainPage()
         {
             InitializeComponent();
-            MethodPicker.SelectedIndex = 0;
+            MethodPicker.SelectedIndex = MethodPicker.Items.IndexOf("GET");
             UpdateTabVisibility();
+
+            if (Application.Current != null)
+            {
+                Application.Current.RequestedThemeChanged += OnThemeChanged;
+            }
+        }
+
+        private void OnThemeChanged(object? sender, AppThemeChangedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(_lastJsonResponse))
+            {
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    responseLabel.FormattedText = JsonSyntaxHighlighter.Highlight(_lastJsonResponse);
+                });
+            }
+
+            UpdateTabStyles();
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            if (Application.Current != null)
+            {
+                Application.Current.RequestedThemeChanged -= OnThemeChanged;
+            }
         }
 
         private void OnTabTapped(object sender, TappedEventArgs e)
@@ -28,40 +57,56 @@ namespace NitroHttp
 
         private void UpdateTabStyles()
         {
-            Color activeBackgroundColor = Color.FromArgb("#FC4850");
-            Color activeTextColor = Colors.White;
-            Color backgroundColor = Colors.Transparent;
-            Color textColor = Color.FromArgb("#6B6D75");
+            var transparent = Colors.Transparent;
+            var mutedColor = Colors.Gray;
+            var accentColor = Colors.Blue;
+            var whiteColor = Colors.White;
 
-            TabParams.BackgroundColor = backgroundColor;
-            TabParamsLabel.TextColor = textColor;
+            if (Application.Current?.Resources != null)
+            {
+                if (Application.Current.Resources.TryGetValue("TextMuted", out var mutedObj) && mutedObj is Color muted)
+                {
+                    mutedColor = muted;
+                }
+                if (Application.Current.Resources.TryGetValue("AccentPrimary", out var accentObj) && accentObj is Color accent)
+                {
+                    accentColor = accent;
+                }
+                if (Application.Current.Resources.TryGetValue("TextPrimary", out var whiteObj) && whiteObj is Color white)
+                {
+                    whiteColor = white;
+                }
+            }
 
-            TabHeaders.BackgroundColor = backgroundColor;
-            TabHeadersLabel.TextColor = textColor;
+            TabParams.BackgroundColor = transparent;
+            TabParamsLabel.TextColor = mutedColor;
 
-            TabBody.BackgroundColor = backgroundColor;
-            TabBodyLabel.TextColor = textColor;
+            TabHeaders.BackgroundColor = transparent;
+            TabHeadersLabel.TextColor = mutedColor;
 
-            TabAuth.BackgroundColor = backgroundColor;
-            TabAuthLabel.TextColor = textColor;
+            TabBody.BackgroundColor = transparent;
+            TabBodyLabel.TextColor = mutedColor;
+
+            TabAuth.BackgroundColor = transparent;
+            TabAuthLabel.TextColor = mutedColor;
 
             switch (_activeTab)
             {
                 case "Params":
-                    TabParams.BackgroundColor = activeBackgroundColor;
-                    TabParamsLabel.TextColor = activeTextColor;
+                    TabParams.BackgroundColor = accentColor;
+                    TabParamsLabel.TextColor = whiteColor;
                     break;
                 case "Headers":
-                    TabHeaders.BackgroundColor = activeBackgroundColor;
-                    TabHeadersLabel.TextColor = activeTextColor;
+                    TabHeaders.BackgroundColor = accentColor;
+                    TabHeadersLabel.TextColor = whiteColor;
                     break;
                 case "Body":
-                    TabBody.BackgroundColor = activeBackgroundColor;
-                    TabBodyLabel.TextColor = activeTextColor;
+                    TabBody.BackgroundColor = accentColor;
+                    TabBodyLabel.TextColor = whiteColor;
                     break;
                 case "Auth":
-                    TabAuth.BackgroundColor = activeBackgroundColor;
-                    TabAuthLabel.TextColor = activeTextColor;
+                    TabAuth.BackgroundColor = accentColor;
+                    TabAuthLabel.TextColor = whiteColor;
                     break;
             }
         }
@@ -72,6 +117,15 @@ namespace NitroHttp
             ContentHeaders.IsVisible = _activeTab == "Headers";
             ContentBody.IsVisible = _activeTab == "Body";
             ContentAuth.IsVisible = _activeTab == "Auth";
+        }
+
+        private void DisplayResponse(string responseText, int statusCode, long elapsedMs)
+        {
+            _lastJsonResponse = responseText;
+            responseLabel.FormattedText = JsonSyntaxHighlighter.Highlight(responseText);
+            responseTime.Text = $"{elapsedMs}ms";
+            responseSize.Text = FormatBytes.Format(Encoding.UTF8.GetByteCount(responseText));
+            UpdateStatus(statusCode);
         }
 
         private async void Button_Click(object sender, EventArgs e)
@@ -103,22 +157,22 @@ namespace NitroHttp
 
             if (string.IsNullOrEmpty(apiUrl.Text))
             {
-                _ = DisplayAlert("Error", "Url is Empty", "OK");
+                await DisplayAlert("Error", "URL is empty", "OK");
+                return;
             }
-            else
+
+            try
             {
-                try
-                {
-                    HttpResponseMessage responseMessage = await _httpClient.GetAsync(apiUrl.Text);
-                    string responseText = await responseMessage.Content.ReadAsStringAsync();
-                    responseLabel.FormattedText = JsonSyntaxHighlighter.Highlight(responseText);
-                    int statusCode = (int)responseMessage.StatusCode;
-                    UpdateStatus(statusCode);
-                }
-                catch (Exception ex)
-                {
-                    _ = DisplayAlert("Error", ex.Message, "OK");
-                }
+                var stopwatch = Stopwatch.StartNew();
+                HttpResponseMessage responseMessage = await _httpClient.GetAsync(apiUrl.Text);
+                stopwatch.Stop();
+
+                string responseText = await responseMessage.Content.ReadAsStringAsync();
+                DisplayResponse(responseText, (int)responseMessage.StatusCode, stopwatch.ElapsedMilliseconds);
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", ex.Message, "OK");
             }
         }
 
@@ -129,24 +183,24 @@ namespace NitroHttp
 
             if (string.IsNullOrEmpty(apiUrl.Text))
             {
-                _ = DisplayAlert("Error", "Url is Empty", "OK");
+                await DisplayAlert("Error", "URL is empty", "OK");
+                return;
             }
-            else
+
+            try
             {
-                try
-                {
-                    string jsonBody = "{\"title\": \"learn HttpClient\", \"body\": \"coding is fun\", \"userId\": 1}";
-                    var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-                    HttpResponseMessage responseMessage = await _httpClient.PostAsync(apiUrl.Text, content);
-                    string responseBody = await responseMessage.Content.ReadAsStringAsync();
-                    responseLabel.FormattedText = JsonSyntaxHighlighter.Highlight(responseBody);
-                    int statusCode = (int)responseMessage.StatusCode;
-                    UpdateStatus(statusCode);
-                }
-                catch (Exception ex)
-                {
-                    _ = DisplayAlert("Error", ex.Message, "OK");
-                }
+                var stopwatch = Stopwatch.StartNew();
+                string jsonBody = RequestBodyEditor?.Text ?? "{}";
+                var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+                HttpResponseMessage responseMessage = await _httpClient.PostAsync(apiUrl.Text, content);
+                stopwatch.Stop();
+
+                string responseBody = await responseMessage.Content.ReadAsStringAsync();
+                DisplayResponse(responseBody, (int)responseMessage.StatusCode, stopwatch.ElapsedMilliseconds);
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", ex.Message, "OK");
             }
         }
 
@@ -157,24 +211,52 @@ namespace NitroHttp
 
             if (string.IsNullOrEmpty(apiUrl.Text))
             {
-                _ = DisplayAlert("Error", "Url is Empty", "OK");
+                await DisplayAlert("Error", "URL is empty", "OK");
+                return;
             }
-            else
+
+            try
             {
-                try
-                {
-                    string updatedJsonBody = "{\"id\": 1, \"title\": \"learn HttpClient - UPDATED\", \"completed\": true, \"userId\": 1}";
-                    var content = new StringContent(updatedJsonBody, Encoding.UTF8, "application/json");
-                    HttpResponseMessage responseMessage = await _httpClient.PutAsync(apiUrl.Text, content);
-                    string responseBody = await responseMessage.Content.ReadAsStringAsync();
-                    responseLabel.FormattedText = JsonSyntaxHighlighter.Highlight(responseBody);
-                    int statusCode = (int)responseMessage.StatusCode;
-                    UpdateStatus(statusCode);
-                }
-                catch (Exception ex)
-                {
-                    _ = DisplayAlert("Error", ex.Message, "OK");
-                }
+                var stopwatch = Stopwatch.StartNew();
+                string jsonBody = RequestBodyEditor?.Text ?? "{}";
+                var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+                HttpResponseMessage responseMessage = await _httpClient.PutAsync(apiUrl.Text, content);
+                stopwatch.Stop();
+
+                string responseBody = await responseMessage.Content.ReadAsStringAsync();
+                DisplayResponse(responseBody, (int)responseMessage.StatusCode, stopwatch.ElapsedMilliseconds);
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", ex.Message, "OK");
+            }
+        }
+
+        private async Task PATCH(object sender, EventArgs e)
+        {
+            ArgumentNullException.ThrowIfNull(sender);
+            ArgumentNullException.ThrowIfNull(e);
+
+            if (string.IsNullOrEmpty(apiUrl.Text))
+            {
+                await DisplayAlert("Error", "URL is empty", "OK");
+                return;
+            }
+
+            try
+            {
+                var stopwatch = Stopwatch.StartNew();
+                string jsonBody = RequestBodyEditor?.Text ?? "{}";
+                var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+                HttpResponseMessage responseMessage = await _httpClient.PatchAsync(apiUrl.Text, content);
+                stopwatch.Stop();
+
+                string responseBody = await responseMessage.Content.ReadAsStringAsync();
+                DisplayResponse(responseBody, (int)responseMessage.StatusCode, stopwatch.ElapsedMilliseconds);
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", ex.Message, "OK");
             }
         }
 
@@ -185,46 +267,22 @@ namespace NitroHttp
 
             if (string.IsNullOrEmpty(apiUrl.Text))
             {
-                _ = DisplayAlert("Error", "Url is Empty", "OK");
+                await DisplayAlert("Error", "URL is empty", "OK");
+                return;
             }
-            else
+
+            try
             {
-                try
-                {
-                    HttpResponseMessage responseMessage = await _httpClient.DeleteAsync(apiUrl.Text);
-                    string responseBody = await responseMessage.Content.ReadAsStringAsync();
-                    responseLabel.FormattedText = JsonSyntaxHighlighter.Highlight(responseBody);
-                    int statusCode = (int)responseMessage.StatusCode;
-                    UpdateStatus(statusCode);
-                }
-                catch (Exception ex)
-                {
-                    _ = DisplayAlert("Error", ex.Message, "OK");
-                }
+                var stopwatch = Stopwatch.StartNew();
+                HttpResponseMessage responseMessage = await _httpClient.DeleteAsync(apiUrl.Text);
+                stopwatch.Stop();
+
+                string responseBody = await responseMessage.Content.ReadAsStringAsync();
+                DisplayResponse(responseBody, (int)responseMessage.StatusCode, stopwatch.ElapsedMilliseconds);
             }
-        }
-        private async Task PATCH(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(apiUrl.Text))
+            catch (Exception ex)
             {
-                _ = DisplayAlert("Error", "Url is Empty", "OK");
-            }
-            else
-            {
-                try
-                {
-                    string patchJsonBody = "{\"title\": \"learn HttpClient - PATCHED\"}";
-                    var content = new StringContent(patchJsonBody, Encoding.UTF8, "application/json");
-                    HttpResponseMessage responseMessage = await _httpClient.PatchAsync(apiUrl.Text, content);
-                    string responseBody = await responseMessage.Content.ReadAsStringAsync();
-                    responseLabel.FormattedText = JsonSyntaxHighlighter.Highlight(responseBody);
-                    int statusCode = (int)responseMessage.StatusCode;
-                    UpdateStatus(statusCode);
-                }
-                catch (Exception ex)
-                {
-                    _ = DisplayAlert("Error", ex.Message, "OK");
-                }
+                await DisplayAlert("Error", ex.Message, "OK");
             }
         }
 
@@ -232,11 +290,11 @@ namespace NitroHttp
         {
             status.TextColor = statusCode switch
             {
-                _ when HttpStatusHelper.IsSuccess(statusCode) => Color.FromArgb("#4ADE80"),
-                _ when HttpStatusHelper.IsRedirect(statusCode) => Color.FromArgb("#4F7CFF"),
-                _ when HttpStatusHelper.IsClientError(statusCode) => Color.FromArgb("#FC4850"),
-                _ when HttpStatusHelper.IsServerError(statusCode) => Color.FromArgb("#F59E0B"),
-                _ => Color.FromArgb("#6B6D75")
+                _ when HttpStatusHelper.IsSuccess(statusCode) => Color.FromArgb("#2ED573"),
+                _ when HttpStatusHelper.IsRedirect(statusCode) => Color.FromArgb("#5B8CFF"),
+                _ when HttpStatusHelper.IsClientError(statusCode) => Color.FromArgb("#FF4757"),
+                _ when HttpStatusHelper.IsServerError(statusCode) => Color.FromArgb("#FFA502"),
+                _ => Color.FromArgb("#6B6B6B")
             };
         }
 
