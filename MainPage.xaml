@@ -3,13 +3,15 @@
     x:Class="NitroHttp.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    BackgroundColor="{AppThemeBinding Light={StaticResource PageBackgroundLight}, Dark={StaticResource PageBackgroundDark}}">
+    BackgroundColor="{AppThemeBinding Light={StaticResource PageBackgroundLight},
+                                      Dark={StaticResource PageBackgroundDark}}">
 
     <Grid RowDefinitions="Auto,Auto,*" RowSpacing="0">
         <Border
             Grid.Row="0"
             Margin="24"
-            BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}"
+            BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight},
+                                              Dark={StaticResource CardBackgroundDark}}"
             StrokeThickness="0">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="5" />
@@ -26,7 +28,8 @@
                             StrokeThickness="0">
                             <Picker
                                 x:Name="MethodPicker"
-                                BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight}, Dark={StaticResource InputBackgroundDark}}"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight},
+                                                                  Dark={StaticResource InputBackgroundDark}}"
                                 FontAttributes="Bold"
                                 FontSize="14"
                                 HorizontalTextAlignment="Center"
@@ -48,10 +51,12 @@
                             x:Name="apiUrl"
                             Grid.Column="1"
                             Margin="8,0"
-                            BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight}, Dark={StaticResource InputBackgroundDark}}"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight},
+                                                              Dark={StaticResource InputBackgroundDark}}"
                             FontSize="14"
                             Placeholder="https://api.example.com/v1/endpoint"
-                            PlaceholderColor="{AppThemeBinding Light={StaticResource TextPlaceholderLight}, Dark={StaticResource TextPlaceholderDark}}"
+                            PlaceholderColor="{AppThemeBinding Light={StaticResource TextPlaceholderLight},
+                                                               Dark={StaticResource TextPlaceholderDark}}"
                             Text="http://jsonplaceholder.typicode.com/users/1"
                             TextColor="{StaticResource AccentPrimary}" />
                     </Grid>
@@ -66,8 +71,9 @@
                         Clicked="Button_Click"
                         CornerRadius="4"
                         Text="Nitro"
-                        TextTransform="Uppercase"
-                        TextColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource TextPrimaryDark}}" />
+                        TextColor="{AppThemeBinding Light={StaticResource CardBackgroundLight},
+                                                    Dark={StaticResource TextPrimaryDark}}"
+                        TextTransform="Uppercase" />
                 </Border>
             </Grid>
         </Border>
@@ -114,7 +120,8 @@
                     x:Name="TabParamsLabel"
                     FontSize="13"
                     Text="Params"
-                    TextColor="{AppThemeBinding Light={StaticResource TextMutedLight}, Dark={StaticResource TextMutedDark}}" />
+                    TextColor="{AppThemeBinding Light={StaticResource TextMutedLight},
+                                                Dark={StaticResource TextMutedDark}}" />
             </Border>
 
             <Border
@@ -134,7 +141,8 @@
                     x:Name="TabHeadersLabel"
                     FontSize="13"
                     Text="Headers"
-                    TextColor="{AppThemeBinding Light={StaticResource TextMutedLight}, Dark={StaticResource TextMutedDark}}" />
+                    TextColor="{AppThemeBinding Light={StaticResource TextMutedLight},
+                                                Dark={StaticResource TextMutedDark}}" />
             </Border>
 
             <Border
@@ -154,13 +162,15 @@
                     x:Name="TabAuthLabel"
                     FontSize="13"
                     Text="Auth"
-                    TextColor="{AppThemeBinding Light={StaticResource TextMutedLight}, Dark={StaticResource TextMutedDark}}" />
+                    TextColor="{AppThemeBinding Light={StaticResource TextMutedLight},
+                                                Dark={StaticResource TextMutedDark}}" />
             </Border>
 
             <HorizontalStackLayout Grid.Column="5" Spacing="12">
                 <Border
                     Padding="16,10"
-                    BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight}, Dark={StaticResource InputBackgroundDark}}"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight},
+                                                      Dark={StaticResource InputBackgroundDark}}"
                     StrokeThickness="0">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="5" />
@@ -168,12 +178,14 @@
                     <Label
                         FontSize="13"
                         Text="History"
-                        TextColor="{AppThemeBinding Light={StaticResource TextMutedLight}, Dark={StaticResource TextMutedDark}}" />
+                        TextColor="{AppThemeBinding Light={StaticResource TextMutedLight},
+                                                    Dark={StaticResource TextMutedDark}}" />
                 </Border>
 
                 <Border
                     Padding="16,10"
-                    BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight}, Dark={StaticResource InputBackgroundDark}}"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight},
+                                                      Dark={StaticResource InputBackgroundDark}}"
                     StrokeThickness="0">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="5" />
@@ -181,7 +193,8 @@
                     <Label
                         FontSize="13"
                         Text="Collections"
-                        TextColor="{AppThemeBinding Light={StaticResource TextMutedLight}, Dark={StaticResource TextMutedDark}}" />
+                        TextColor="{AppThemeBinding Light={StaticResource TextMutedLight},
+                                                    Dark={StaticResource TextMutedDark}}" />
                 </Border>
             </HorizontalStackLayout>
         </Grid>
@@ -204,25 +217,29 @@
                             x:Name="ContentParams"
                             Grid.Row="0"
                             Padding="0"
-                            BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}"
-                            Stroke="{AppThemeBinding Light={StaticResource BorderColorLight}, Dark={StaticResource BorderColorDark}}"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight},
+                                                              Dark={StaticResource CardBackgroundDark}}"
+                            Stroke="{AppThemeBinding Light={StaticResource BorderColorLight},
+                                                     Dark={StaticResource BorderColorDark}}"
                             StrokeThickness="1"
                             VerticalOptions="Fill">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="5" />
                             </Border.StrokeShape>
-                
+
                             <Grid RowDefinitions="Auto,Auto,*">
                                 <Grid
                                     Grid.Row="0"
                                     Padding="20,16"
-                                    BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundAltLight}, Dark={StaticResource CardBackgroundAltDark}}"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundAltLight},
+                                                                      Dark={StaticResource CardBackgroundAltDark}}"
                                     ColumnDefinitions="*,Auto">
                                     <Label
                                         FontAttributes="Bold"
                                         FontSize="14"
                                         Text="Query Parameters"
-                                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight},
+                                                                    Dark={StaticResource TextPrimaryDark}}" />
                                     <Label
                                         Grid.Column="1"
                                         FontSize="13"
@@ -233,7 +250,8 @@
                                 <BoxView
                                     Grid.Row="1"
                                     HeightRequest="1"
-                                    Color="{AppThemeBinding Light={StaticResource DividerColorLight}, Dark={StaticResource DividerColorDark}}" />
+                                    Color="{AppThemeBinding Light={StaticResource DividerColorLight},
+                                                            Dark={StaticResource DividerColorDark}}" />
 
                                 <ScrollView Grid.Row="2" VerticalScrollBarVisibility="Never">
                                     <Grid
@@ -247,7 +265,8 @@
                                             <Border
                                                 Grid.Column="0"
                                                 Padding="12,8"
-                                                BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight}, Dark={StaticResource InputBackgroundDark}}"
+                                                BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight},
+                                                                                  Dark={StaticResource InputBackgroundDark}}"
                                                 StrokeThickness="0">
                                                 <Border.StrokeShape>
                                                     <RoundRectangle CornerRadius="5" />
@@ -256,14 +275,17 @@
                                                     BackgroundColor="Transparent"
                                                     FontSize="13"
                                                     Placeholder="key"
-                                                    PlaceholderColor="{AppThemeBinding Light={StaticResource TextPlaceholderLight}, Dark={StaticResource TextPlaceholderDark}}"
-                                                    TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                                                    PlaceholderColor="{AppThemeBinding Light={StaticResource TextPlaceholderLight},
+                                                                                       Dark={StaticResource TextPlaceholderDark}}"
+                                                    TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight},
+                                                                                Dark={StaticResource TextPrimaryDark}}" />
                                             </Border>
 
                                             <Border
                                                 Grid.Column="1"
                                                 Padding="12,8"
-                                                BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight}, Dark={StaticResource InputBackgroundDark}}"
+                                                BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight},
+                                                                                  Dark={StaticResource InputBackgroundDark}}"
                                                 StrokeThickness="0">
                                                 <Border.StrokeShape>
                                                     <RoundRectangle CornerRadius="5" />
@@ -272,15 +294,18 @@
                                                     BackgroundColor="Transparent"
                                                     FontSize="13"
                                                     Placeholder="value"
-                                                    PlaceholderColor="{AppThemeBinding Light={StaticResource TextPlaceholderLight}, Dark={StaticResource TextPlaceholderDark}}"
-                                                    TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                                                    PlaceholderColor="{AppThemeBinding Light={StaticResource TextPlaceholderLight},
+                                                                                       Dark={StaticResource TextPlaceholderDark}}"
+                                                    TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight},
+                                                                                Dark={StaticResource TextPrimaryDark}}" />
                                             </Border>
 
                                             <Label
                                                 Grid.Column="2"
                                                 FontSize="20"
                                                 Text="×"
-                                                TextColor="{AppThemeBinding Light={StaticResource TextMutedLight}, Dark={StaticResource TextMutedDark}}"
+                                                TextColor="{AppThemeBinding Light={StaticResource TextMutedLight},
+                                                                            Dark={StaticResource TextMutedDark}}"
                                                 VerticalOptions="Center" />
                                         </Grid>
 
@@ -291,7 +316,8 @@
                                             <Border
                                                 Grid.Column="0"
                                                 Padding="12,8"
-                                                BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight}, Dark={StaticResource InputBackgroundDark}}"
+                                                BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight},
+                                                                                  Dark={StaticResource InputBackgroundDark}}"
                                                 StrokeThickness="0">
                                                 <Border.StrokeShape>
                                                     <RoundRectangle CornerRadius="5" />
@@ -300,14 +326,17 @@
                                                     BackgroundColor="Transparent"
                                                     FontSize="13"
                                                     Placeholder="key"
-                                                    PlaceholderColor="{AppThemeBinding Light={StaticResource TextPlaceholderLight}, Dark={StaticResource TextPlaceholderDark}}"
-                                                    TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                                                    PlaceholderColor="{AppThemeBinding Light={StaticResource TextPlaceholderLight},
+                                                                                       Dark={StaticResource TextPlaceholderDark}}"
+                                                    TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight},
+                                                                                Dark={StaticResource TextPrimaryDark}}" />
                                             </Border>
 
                                             <Border
                                                 Grid.Column="1"
                                                 Padding="12,8"
-                                                BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight}, Dark={StaticResource InputBackgroundDark}}"
+                                                BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight},
+                                                                                  Dark={StaticResource InputBackgroundDark}}"
                                                 StrokeThickness="0">
                                                 <Border.StrokeShape>
                                                     <RoundRectangle CornerRadius="5" />
@@ -316,15 +345,18 @@
                                                     BackgroundColor="Transparent"
                                                     FontSize="13"
                                                     Placeholder="value"
-                                                    PlaceholderColor="{AppThemeBinding Light={StaticResource TextPlaceholderLight}, Dark={StaticResource TextPlaceholderDark}}"
-                                                    TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                                                    PlaceholderColor="{AppThemeBinding Light={StaticResource TextPlaceholderLight},
+                                                                                       Dark={StaticResource TextPlaceholderDark}}"
+                                                    TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight},
+                                                                                Dark={StaticResource TextPrimaryDark}}" />
                                             </Border>
 
                                             <Label
                                                 Grid.Column="2"
                                                 FontSize="20"
                                                 Text="×"
-                                                TextColor="{AppThemeBinding Light={StaticResource TextMutedLight}, Dark={StaticResource TextMutedDark}}"
+                                                TextColor="{AppThemeBinding Light={StaticResource TextMutedLight},
+                                                                            Dark={StaticResource TextMutedDark}}"
                                                 VerticalOptions="Center" />
                                         </Grid>
                                     </Grid>
@@ -336,26 +368,30 @@
                             x:Name="ContentHeaders"
                             Grid.Row="0"
                             Padding="0"
-                            BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight},
+                                                              Dark={StaticResource CardBackgroundDark}}"
                             IsVisible="False"
-                            Stroke="{AppThemeBinding Light={StaticResource BorderColorLight}, Dark={StaticResource BorderColorDark}}"
+                            Stroke="{AppThemeBinding Light={StaticResource BorderColorLight},
+                                                     Dark={StaticResource BorderColorDark}}"
                             StrokeThickness="1"
                             VerticalOptions="Fill">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="5" />
                             </Border.StrokeShape>
-                    
+
                             <Grid RowDefinitions="Auto,Auto,*">
                                 <Grid
                                     Grid.Row="0"
                                     Padding="20,16"
-                                    BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundAltLight}, Dark={StaticResource CardBackgroundAltDark}}"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundAltLight},
+                                                                      Dark={StaticResource CardBackgroundAltDark}}"
                                     ColumnDefinitions="*,Auto">
                                     <Label
                                         FontAttributes="Bold"
                                         FontSize="14"
                                         Text="Headers"
-                                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight},
+                                                                    Dark={StaticResource TextPrimaryDark}}" />
                                     <Label
                                         Grid.Column="1"
                                         FontSize="13"
@@ -366,13 +402,15 @@
                                 <BoxView
                                     Grid.Row="1"
                                     HeightRequest="1"
-                                    Color="{AppThemeBinding Light={StaticResource DividerColorLight}, Dark={StaticResource DividerColorDark}}" />
+                                    Color="{AppThemeBinding Light={StaticResource DividerColorLight},
+                                                            Dark={StaticResource DividerColorDark}}" />
 
                                 <Border
                                     Grid.Row="2"
                                     Margin="20,16,20,16"
                                     Padding="20,16"
-                                    BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight}, Dark={StaticResource InputBackgroundDark}}"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight},
+                                                                      Dark={StaticResource InputBackgroundDark}}"
                                     StrokeThickness="0"
                                     VerticalOptions="Fill">
                                     <Border.StrokeShape>
@@ -382,8 +420,10 @@
                                         BackgroundColor="Transparent"
                                         FontSize="13"
                                         Placeholder="Content-Type: application/json"
-                                        PlaceholderColor="{AppThemeBinding Light={StaticResource TextPlaceholderLight}, Dark={StaticResource TextPlaceholderDark}}"
-                                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                                        PlaceholderColor="{AppThemeBinding Light={StaticResource TextPlaceholderLight},
+                                                                           Dark={StaticResource TextPlaceholderDark}}"
+                                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight},
+                                                                    Dark={StaticResource TextPrimaryDark}}"
                                         VerticalOptions="Fill" />
                                 </Border>
                             </Grid>
@@ -393,26 +433,30 @@
                             x:Name="ContentBody"
                             Grid.Row="0"
                             Padding="0"
-                            BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight},
+                                                              Dark={StaticResource CardBackgroundDark}}"
                             IsVisible="False"
-                            Stroke="{AppThemeBinding Light={StaticResource BorderColorLight}, Dark={StaticResource BorderColorDark}}"
+                            Stroke="{AppThemeBinding Light={StaticResource BorderColorLight},
+                                                     Dark={StaticResource BorderColorDark}}"
                             StrokeThickness="1"
                             VerticalOptions="Fill">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="5" />
                             </Border.StrokeShape>
-                          
+
                             <Grid RowDefinitions="Auto,Auto,*">
                                 <Grid
                                     Grid.Row="0"
                                     Padding="20,16"
-                                    BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundAltLight}, Dark={StaticResource CardBackgroundAltDark}}"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundAltLight},
+                                                                      Dark={StaticResource CardBackgroundAltDark}}"
                                     ColumnDefinitions="*,Auto,Auto">
                                     <Label
                                         FontAttributes="Bold"
                                         FontSize="14"
                                         Text="Body"
-                                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight},
+                                                                    Dark={StaticResource TextPrimaryDark}}" />
                                     <Label
                                         Grid.Column="1"
                                         Margin="0,0,16,0"
@@ -424,20 +468,23 @@
                                         Grid.Column="2"
                                         FontSize="12"
                                         Text="Beautify"
-                                        TextColor="{AppThemeBinding Light={StaticResource TextMutedLight}, Dark={StaticResource TextMutedDark}}"
+                                        TextColor="{AppThemeBinding Light={StaticResource TextMutedLight},
+                                                                    Dark={StaticResource TextMutedDark}}"
                                         VerticalOptions="Center" />
                                 </Grid>
 
                                 <BoxView
                                     Grid.Row="1"
                                     HeightRequest="1"
-                                    Color="{AppThemeBinding Light={StaticResource DividerColorLight}, Dark={StaticResource DividerColorDark}}" />
+                                    Color="{AppThemeBinding Light={StaticResource DividerColorLight},
+                                                            Dark={StaticResource DividerColorDark}}" />
 
                                 <Border
                                     Grid.Row="2"
                                     Margin="20,16,20,16"
                                     Padding="20,16"
-                                    BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight}, Dark={StaticResource InputBackgroundDark}}"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight},
+                                                                      Dark={StaticResource InputBackgroundDark}}"
                                     StrokeThickness="0"
                                     VerticalOptions="Fill">
                                     <Border.StrokeShape>
@@ -448,8 +495,10 @@
                                         BackgroundColor="Transparent"
                                         FontSize="13"
                                         Placeholder="Request body JSON"
-                                        PlaceholderColor="{AppThemeBinding Light={StaticResource TextPlaceholderLight}, Dark={StaticResource TextPlaceholderDark}}"
-                                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                                        PlaceholderColor="{AppThemeBinding Light={StaticResource TextPlaceholderLight},
+                                                                           Dark={StaticResource TextPlaceholderDark}}"
+                                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight},
+                                                                    Dark={StaticResource TextPrimaryDark}}"
                                         VerticalOptions="Fill" />
                                 </Border>
                             </Grid>
@@ -459,38 +508,44 @@
                             x:Name="ContentAuth"
                             Grid.Row="0"
                             Padding="0"
-                            BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight},
+                                                              Dark={StaticResource CardBackgroundDark}}"
                             IsVisible="False"
-                            Stroke="{AppThemeBinding Light={StaticResource BorderColorLight}, Dark={StaticResource BorderColorDark}}"
+                            Stroke="{AppThemeBinding Light={StaticResource BorderColorLight},
+                                                     Dark={StaticResource BorderColorDark}}"
                             StrokeThickness="1"
                             VerticalOptions="Fill">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="5" />
                             </Border.StrokeShape>
-                 
+
                             <Grid RowDefinitions="Auto,Auto,*">
                                 <Grid
                                     Grid.Row="0"
                                     Padding="20,16"
-                                    BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundAltLight}, Dark={StaticResource CardBackgroundAltDark}}"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundAltLight},
+                                                                      Dark={StaticResource CardBackgroundAltDark}}"
                                     ColumnDefinitions="*,Auto">
                                     <Label
                                         FontAttributes="Bold"
                                         FontSize="14"
                                         Text="Authentication"
-                                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight},
+                                                                    Dark={StaticResource TextPrimaryDark}}" />
                                 </Grid>
 
                                 <BoxView
                                     Grid.Row="1"
                                     HeightRequest="1"
-                                    Color="{AppThemeBinding Light={StaticResource DividerColorLight}, Dark={StaticResource DividerColorDark}}" />
+                                    Color="{AppThemeBinding Light={StaticResource DividerColorLight},
+                                                            Dark={StaticResource DividerColorDark}}" />
 
                                 <Border
                                     Grid.Row="2"
                                     Margin="20,16,20,16"
                                     Padding="20,16"
-                                    BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight}, Dark={StaticResource InputBackgroundDark}}"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight},
+                                                                      Dark={StaticResource InputBackgroundDark}}"
                                     StrokeThickness="0"
                                     VerticalOptions="Fill">
                                     <Border.StrokeShape>
@@ -500,8 +555,10 @@
                                         BackgroundColor="Transparent"
                                         FontSize="13"
                                         Placeholder="Bearer token or API key"
-                                        PlaceholderColor="{AppThemeBinding Light={StaticResource TextPlaceholderLight}, Dark={StaticResource TextPlaceholderDark}}"
-                                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                                        PlaceholderColor="{AppThemeBinding Light={StaticResource TextPlaceholderLight},
+                                                                           Dark={StaticResource TextPlaceholderDark}}"
+                                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight},
+                                                                    Dark={StaticResource TextPrimaryDark}}"
                                         VerticalOptions="Fill" />
                                 </Border>
                             </Grid>
@@ -515,8 +572,10 @@
             <Border
                 Grid.Column="1"
                 Padding="0"
-                BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}"
-                Stroke="{AppThemeBinding Light={StaticResource BorderColorLight}, Dark={StaticResource BorderColorDark}}"
+                BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight},
+                                                  Dark={StaticResource CardBackgroundDark}}"
+                Stroke="{AppThemeBinding Light={StaticResource BorderColorLight},
+                                         Dark={StaticResource BorderColorDark}}"
                 StrokeThickness="1">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="5" />
@@ -526,24 +585,28 @@
                     <Grid
                         Grid.Row="0"
                         Padding="20,16"
-                        BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundAltLight}, Dark={StaticResource CardBackgroundAltDark}}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundAltLight},
+                                                          Dark={StaticResource CardBackgroundAltDark}}"
                         ColumnDefinitions="*,Auto">
                         <Label
                             FontAttributes="Bold"
                             FontSize="16"
                             Text="Response"
-                            TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                            TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight},
+                                                        Dark={StaticResource TextPrimaryDark}}"
                             VerticalOptions="Center" />
                         <HorizontalStackLayout Grid.Column="1" Spacing="16">
                             <Label
                                 FontSize="12"
                                 Text="Save"
-                                TextColor="{AppThemeBinding Light={StaticResource TextMutedLight}, Dark={StaticResource TextMutedDark}}"
+                                TextColor="{AppThemeBinding Light={StaticResource TextMutedLight},
+                                                            Dark={StaticResource TextMutedDark}}"
                                 VerticalOptions="Center" />
                             <Label
                                 FontSize="12"
                                 Text="Copy"
-                                TextColor="{AppThemeBinding Light={StaticResource TextMutedLight}, Dark={StaticResource TextMutedDark}}"
+                                TextColor="{AppThemeBinding Light={StaticResource TextMutedLight},
+                                                            Dark={StaticResource TextMutedDark}}"
                                 VerticalOptions="Center" />
                         </HorizontalStackLayout>
                     </Grid>
@@ -551,19 +614,22 @@
                     <BoxView
                         Grid.Row="1"
                         HeightRequest="1"
-                        Color="{AppThemeBinding Light={StaticResource DividerColorLight}, Dark={StaticResource DividerColorDark}}" />
+                        Color="{AppThemeBinding Light={StaticResource DividerColorLight},
+                                                Dark={StaticResource DividerColorDark}}" />
 
                     <Grid
                         Grid.Row="2"
                         Padding="20,16"
-                        BackgroundColor="{AppThemeBinding Light={StaticResource PageBackgroundLight}, Dark={StaticResource PageBackgroundDark}}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource PageBackgroundLight},
+                                                          Dark={StaticResource PageBackgroundDark}}"
                         ColumnDefinitions="Auto,*,Auto,Auto,Auto"
                         ColumnSpacing="20">
 
                         <Border
                             Grid.Column="0"
                             Padding="12,6"
-                            BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight}, Dark={StaticResource InputBackgroundDark}}"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight},
+                                                              Dark={StaticResource InputBackgroundDark}}"
                             StrokeThickness="0">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="6" />
@@ -581,7 +647,8 @@
                             Grid.Column="2"
                             FontSize="12"
                             Text="0ms"
-                            TextColor="{AppThemeBinding Light={StaticResource TextMutedLight}, Dark={StaticResource TextMutedDark}}"
+                            TextColor="{AppThemeBinding Light={StaticResource TextMutedLight},
+                                                        Dark={StaticResource TextMutedDark}}"
                             VerticalOptions="Center" />
 
                         <BoxView
@@ -589,21 +656,24 @@
                             HeightRequest="16"
                             VerticalOptions="Center"
                             WidthRequest="1"
-                            Color="{AppThemeBinding Light={StaticResource BorderColorLight}, Dark={StaticResource BorderColorDark}}" />
+                            Color="{AppThemeBinding Light={StaticResource BorderColorLight},
+                                                    Dark={StaticResource BorderColorDark}}" />
 
                         <Label
                             x:Name="responseSize"
                             Grid.Column="4"
                             FontSize="12"
                             Text="0B"
-                            TextColor="{AppThemeBinding Light={StaticResource TextMutedLight}, Dark={StaticResource TextMutedDark}}"
+                            TextColor="{AppThemeBinding Light={StaticResource TextMutedLight},
+                                                        Dark={StaticResource TextMutedDark}}"
                             VerticalOptions="Center" />
                     </Grid>
 
                     <BoxView
                         Grid.Row="3"
                         HeightRequest="1"
-                        Color="{AppThemeBinding Light={StaticResource DividerColorLight}, Dark={StaticResource DividerColorDark}}" />
+                        Color="{AppThemeBinding Light={StaticResource DividerColorLight},
+                                                Dark={StaticResource DividerColorDark}}" />
 
                     <Grid
                         Grid.Row="4"
@@ -631,7 +701,8 @@
                             <Label
                                 FontSize="13"
                                 Text="Headers"
-                                TextColor="{AppThemeBinding Light={StaticResource TextMutedLight}, Dark={StaticResource TextMutedDark}}" />
+                                TextColor="{AppThemeBinding Light={StaticResource TextMutedLight},
+                                                            Dark={StaticResource TextMutedDark}}" />
                         </Border>
 
                         <Border
@@ -642,7 +713,8 @@
                             <Label
                                 FontSize="13"
                                 Text="Cookies"
-                                TextColor="{AppThemeBinding Light={StaticResource TextMutedLight}, Dark={StaticResource TextMutedDark}}" />
+                                TextColor="{AppThemeBinding Light={StaticResource TextMutedLight},
+                                                            Dark={StaticResource TextMutedDark}}" />
                         </Border>
                     </Grid>
 
@@ -650,7 +722,8 @@
                         Grid.Row="5"
                         Margin="20,16,20,16"
                         Padding="20,16"
-                        BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight}, Dark={StaticResource InputBackgroundDark}}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight},
+                                                          Dark={StaticResource InputBackgroundDark}}"
                         StrokeThickness="0"
                         VerticalOptions="Fill">
                         <Border.StrokeShape>
@@ -662,7 +735,8 @@
                                 FontFamily="OpenSansRegular"
                                 FontSize="15"
                                 LineBreakMode="WordWrap"
-                                TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                                TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight},
+                                                            Dark={StaticResource TextPrimaryDark}}" />
                         </ScrollView>
                     </Border>
                 </Grid>
