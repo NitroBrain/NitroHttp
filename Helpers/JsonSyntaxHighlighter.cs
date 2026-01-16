@@ -8,6 +8,14 @@ public static partial class JsonSyntaxHighlighter
     public static FormattedString Highlight(string json)
     {
         var formatted = new FormattedString();
+        var isDark = Application.Current?.RequestedTheme == AppTheme.Dark;
+
+        var keyColor = Color.FromArgb("#FF4757");
+        var stringColor = Color.FromArgb("#2ED573");
+        var boolColor = Color.FromArgb("#FFA502");
+        var nullColor = isDark ? Color.FromArgb("#6B6D75") : Color.FromArgb("#999999");
+        var numberColor = Color.FromArgb("#5B8CFF");
+        var punctuationColor = isDark ? Color.FromArgb("#CCCCCC") : Color.FromArgb("#333333");
 
         try
         {
@@ -16,39 +24,41 @@ public static partial class JsonSyntaxHighlighter
         }
         catch
         {
-            formatted.Spans.Add(new Span { Text = json, TextColor = Color.FromArgb("#E8E9ED") });
+            formatted.Spans.Add(new Span { Text = json, TextColor = punctuationColor });
             return formatted;
         }
 
         var regex = JsonTokenRegex();
 
-        foreach (Match match in regex.Matches(json))
+        MatchCollection list = regex.Matches(json);
+        for (int i = 0; i < list.Count; i++)
         {
+            Match match = list[i];
             var span = new Span { Text = match.Value };
 
             if (match.Value.StartsWith('"') && match.Value.EndsWith("\":"))
             {
-                span.TextColor = Color.FromArgb("#FC4850");
+                span.TextColor = keyColor;
             }
             else if (match.Value.StartsWith('"'))
             {
-                span.TextColor = Color.FromArgb("#4ADE80");
+                span.TextColor = stringColor;
             }
             else if (match.Value is "true" or "false")
             {
-                span.TextColor = Color.FromArgb("#F59E0B");
+                span.TextColor = boolColor;
             }
             else if (match.Value is "null")
             {
-                span.TextColor = Color.FromArgb("#6B6D75");
+                span.TextColor = nullColor;
             }
             else if (double.TryParse(match.Value, out _))
             {
-                span.TextColor = Color.FromArgb("#4F7CFF");
+                span.TextColor = numberColor;
             }
             else
             {
-                span.TextColor = Color.FromArgb("#E8E9ED");
+                span.TextColor = punctuationColor;
             }
 
             formatted.Spans.Add(span);
