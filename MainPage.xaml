@@ -638,8 +638,8 @@
                                 x:Name="status"
                                 FontAttributes="Bold"
                                 FontSize="12"
-                                Text="NONE"
-                                TextColor="{StaticResource StatusSuccess}" />
+                                Text="NULL"
+                                TextColor="{StaticResource TextMutedLight}" />
                         </Border>
 
                         <Label
