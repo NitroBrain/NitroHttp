@@ -1,0 +1,310 @@
+<Window xmlns="https://github.com/avaloniaui"
+xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+x:Class="AvaloniaApplication1.MainWindow"
+Title="NitroHttp"
+Width="900" Height="700"
+MinWidth="600" MinHeight="500"
+Background="#0D0D0D">
+    
+    <Window.Resources>
+        <SolidColorBrush x:Key="AccentPrimary" Color="#FF4757"/>
+        <SolidColorBrush x:Key="AccentPrimaryDark" Color="#E8404F"/>
+        
+        <SolidColorBrush x:Key="PageBackground" Color="#0D0D0D"/>
+        <SolidColorBrush x:Key="CardBackground" Color="#1A1A1A"/>
+        <SolidColorBrush x:Key="CardBackgroundAlt" Color="#1F1F1F"/>
+        <SolidColorBrush x:Key="InputBackground" Color="#252525"/>
+        
+        <SolidColorBrush x:Key="TextPrimary" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="TextSecondary" Color="#A0A0A0"/>
+        <SolidColorBrush x:Key="TextMuted" Color="#A0A0A0"/>
+        <SolidColorBrush x:Key="TextPlaceholder" Color="#505050"/>
+        
+        <SolidColorBrush x:Key="BorderColor" Color="#2A2A2A"/>
+        <SolidColorBrush x:Key="DividerColor" Color="#2A2A2A"/>
+        
+        <SolidColorBrush x:Key="StatusSuccess" Color="#2ED573"/>
+        <SolidColorBrush x:Key="StatusInfo" Color="#5B8CFF"/>
+        <SolidColorBrush x:Key="StatusWarning" Color="#FFA502"/>
+        <SolidColorBrush x:Key="StatusError" Color="#FF4757"/>
+        
+        <SolidColorBrush x:Key="SystemAccentColor" Color="#FF4757"/>
+        <SolidColorBrush x:Key="SystemAccentColorDark1" Color="#E8404F"/>
+        <SolidColorBrush x:Key="SystemAccentColorDark2" Color="#D03545"/>
+        <SolidColorBrush x:Key="SystemAccentColorDark3" Color="#B82A3A"/>
+        <SolidColorBrush x:Key="SystemAccentColorLight1" Color="#FF6B78"/>
+        <SolidColorBrush x:Key="SystemAccentColorLight2" Color="#FF8F99"/>
+        <SolidColorBrush x:Key="SystemAccentColorLight3" Color="#FFB3BA"/>
+    </Window.Resources>
+    
+    <Window.Styles>
+        <Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
+            <Setter Property="BorderBrush" Value="#FF4757"/>
+        </Style>
+        <Style Selector="TextBox">
+            <Setter Property="SelectionBrush" Value="#FF4757"/>
+            <Setter Property="CaretBrush" Value="#FF4757"/>
+        </Style>
+        
+        <Style Selector="ComboBox:focus /template/ Border#Background">
+            <Setter Property="BorderBrush" Value="#FF4757"/>
+        </Style>
+        
+        <Style Selector="ComboBoxItem:selected /template/ ContentPresenter">
+            <Setter Property="Background" Value="#FF4757"/>
+        </Style>
+        <Style Selector="ComboBoxItem:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#E8404F"/>
+        </Style>
+        <Style Selector="ComboBoxItem:selected:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#FF4757"/>
+        </Style>
+        <Style Selector="ComboBoxItem:selected:focus /template/ ContentPresenter">
+            <Setter Property="Background" Value="#FF4757"/>
+        </Style>
+        
+        <Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#E8404F"/>
+        </Style>
+        
+        <Style Selector="ProgressBar /template/ Border#PART_Indicator">
+            <Setter Property="Background" Value="#FF4757"/>
+        </Style>
+    </Window.Styles>
+
+    <Grid RowDefinitions="Auto,Auto,*" RowSpacing="0">
+        
+        <Border Grid.Row="0" Margin="24" Background="{StaticResource CardBackground}" CornerRadius="5" Padding="10">
+            <Grid ColumnDefinitions="Auto,*,Auto">
+                <Border Grid.Column="0">
+                    <ComboBox x:Name="MethodPicker" Width="100" Background="{StaticResource InputBackground}"
+                    Foreground="{StaticResource AccentPrimary}" SelectedIndex="0" BorderThickness="0">
+                        <ComboBoxItem>GET</ComboBoxItem>
+                        <ComboBoxItem>POST</ComboBoxItem>
+                        <ComboBoxItem>PUT</ComboBoxItem>
+                        <ComboBoxItem>PATCH</ComboBoxItem>
+                        <ComboBoxItem>DELETE</ComboBoxItem>
+                    </ComboBox>
+                </Border>
+
+                <TextBox x:Name="apiUrl" Grid.Column="1" Margin="8,0"
+                Background="{StaticResource InputBackground}"
+                Foreground="{StaticResource AccentPrimary}"
+                Watermark="https://api.example.com/v1/endpoint"
+                Text="http://jsonplaceholder.typicode.com/users/1"
+                BorderThickness="0"/>
+
+                <Button Grid.Column="2" Content="Nitro" Background="{StaticResource AccentPrimary}"
+                        Foreground="{StaticResource TextPrimary}" CornerRadius="4" Click="SendButton_Click"/>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="1" Margin="24,20,24,0" ColumnDefinitions="Auto,Auto,Auto,Auto,*,Auto">
+            <Border x:Name="TabBody" Grid.Column="0" Margin="0,0,12,0" Padding="20,10"
+                    Background="{StaticResource AccentPrimary}" CornerRadius="5"
+                    PointerPressed="OnTabTapped" Tag="Body">
+                <TextBlock x:Name="TabBodyLabel" FontSize="13" Text="Body" Foreground="White"/>
+            </Border>
+
+            <Border x:Name="TabParams" Grid.Column="1" Margin="0,0,12,0" Padding="20,10"
+                    Background="Transparent" CornerRadius="5"
+                    PointerPressed="OnTabTapped" Tag="Params">
+                <TextBlock x:Name="TabParamsLabel" FontSize="13" Text="Params" Foreground="{StaticResource TextMuted}"/>
+            </Border>
+
+            <Border x:Name="TabHeaders" Grid.Column="2" Margin="0,0,12,0" Padding="20,10"
+                    Background="Transparent" CornerRadius="5"
+                    PointerPressed="OnTabTapped" Tag="Headers">
+                <TextBlock x:Name="TabHeadersLabel" FontSize="13" Text="Headers" Foreground="{StaticResource TextMuted}"/>
+            </Border>
+
+            <Border x:Name="TabAuth" Grid.Column="3" Margin="0,0,12,0" Padding="20,10"
+                    Background="Transparent" CornerRadius="5"
+                    PointerPressed="OnTabTapped" Tag="Auth">
+                <TextBlock x:Name="TabAuthLabel" FontSize="13" Text="Auth" Foreground="{StaticResource TextMuted}"/>
+            </Border>
+
+            <StackPanel Grid.Column="5" Orientation="Horizontal" Spacing="12">
+                <Border Padding="16,10" Background="{StaticResource InputBackground}" CornerRadius="5">
+                    <TextBlock FontSize="13" Text="History" Foreground="{StaticResource TextMuted}"/>
+                </Border>
+                <Border Padding="16,10" Background="{StaticResource InputBackground}" CornerRadius="5">
+                    <TextBlock FontSize="13" Text="Collections" Foreground="{StaticResource TextMuted}"/>
+                </Border>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="2" Margin="24,20,24,24" ColumnDefinitions="1.3*,1.7*">
+            
+            <ScrollViewer Grid.Column="0" Margin="0,0,20,0">
+                <Grid RowDefinitions="*">
+                    
+                    <Border x:Name="ContentParams" Background="{StaticResource CardBackground}"
+                            BorderBrush="{StaticResource BorderColor}" BorderThickness="1" CornerRadius="5">
+                        <Grid RowDefinitions="Auto,Auto,*">
+                            <Border Grid.Row="0" Padding="20,16" Background="{StaticResource CardBackgroundAlt}">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <TextBlock FontWeight="Bold" FontSize="14" Text="Query Parameters"
+                                               Foreground="{StaticResource TextPrimary}"/>
+                                    <TextBlock Grid.Column="1" FontSize="13" Text="+ Add"
+                                               Foreground="{StaticResource AccentPrimary}"/>
+                                </Grid>
+                            </Border>
+                            <Rectangle Grid.Row="1" Height="1" Fill="{StaticResource DividerColor}"/>
+                            <ScrollViewer Grid.Row="2">
+                                <Border Padding="20,16">
+                                    <StackPanel Spacing="12">
+                                        <Grid ColumnDefinitions="*,*,Auto">
+                                            <Border Grid.Column="0" Padding="12,8" Background="{StaticResource InputBackground}" CornerRadius="5">
+                                                <TextBox Background="Transparent" FontSize="13" Watermark="key"
+                                                Foreground="{StaticResource TextPrimary}" BorderThickness="0"/>
+                                            </Border>
+                                            <Border Grid.Column="1" Margin="12,0" Padding="12,8" Background="{StaticResource InputBackground}" CornerRadius="5">
+                                                <TextBox Background="Transparent" FontSize="13" Watermark="value"
+                                                Foreground="{StaticResource TextPrimary}" BorderThickness="0"/>
+                                            </Border>
+                                            <TextBlock Grid.Column="2" FontSize="20" Text="�"
+                                                       Foreground="{StaticResource TextMuted}" VerticalAlignment="Center"/>
+                                        </Grid>
+                                    </StackPanel>
+                                </Border>
+                            </ScrollViewer>
+                        </Grid>
+                    </Border>
+
+                    <Border x:Name="ContentHeaders" IsVisible="False" Background="{StaticResource CardBackground}"
+                            BorderBrush="{StaticResource BorderColor}" BorderThickness="1" CornerRadius="5">
+                        <Grid RowDefinitions="Auto,Auto,*">
+                            <Border Grid.Row="0" Padding="20,16" Background="{StaticResource CardBackgroundAlt}">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <TextBlock FontWeight="Bold" FontSize="14" Text="Headers"
+                                               Foreground="{StaticResource TextPrimary}"/>
+                                    <TextBlock Grid.Column="1" FontSize="13" Text="+ Add"
+                                               Foreground="{StaticResource AccentPrimary}"/>
+                                </Grid>
+                            </Border>
+                            <Rectangle Grid.Row="1" Height="1" Fill="{StaticResource DividerColor}"/>
+                            <Border Grid.Row="2" Margin="20,16" Padding="20,16"
+                                    Background="{StaticResource InputBackground}" CornerRadius="5">
+                                <TextBox AcceptsReturn="True" Background="Transparent" FontSize="13"
+                                Watermark="Content-Type: application/json"
+                                Foreground="{StaticResource TextPrimary}" BorderThickness="0"/>
+                            </Border>
+                        </Grid>
+                    </Border>
+
+                    <Border x:Name="ContentBody" IsVisible="False" Background="{StaticResource CardBackground}"
+                            BorderBrush="{StaticResource BorderColor}" BorderThickness="1" CornerRadius="5">
+                        <Grid RowDefinitions="Auto,Auto,*">
+                            <Border Grid.Row="0" Padding="20,16" Background="{StaticResource CardBackgroundAlt}">
+                                <Grid ColumnDefinitions="*,Auto,Auto">
+                                    <TextBlock FontWeight="Bold" FontSize="14" Text="Body"
+                                               Foreground="{StaticResource TextPrimary}"/>
+                                    <TextBlock Grid.Column="1" Margin="0,0,16,0" FontSize="12" Text="JSON"
+                                               Foreground="{StaticResource AccentPrimary}" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="2" FontSize="12" Text="Beautify"
+                                               Foreground="{StaticResource TextMuted}" VerticalAlignment="Center"/>
+                                </Grid>
+                            </Border>
+                            <Rectangle Grid.Row="1" Height="1" Fill="{StaticResource DividerColor}"/>
+                            <Border Grid.Row="2" Margin="20,16" Padding="20,16"
+                                    Background="{StaticResource InputBackground}" CornerRadius="5">
+                                <TextBox x:Name="RequestBodyEditor" AcceptsReturn="True" Background="Transparent"
+                                FontSize="13" Watermark="Request body JSON"
+                                Foreground="{StaticResource TextPrimary}" BorderThickness="0"/>
+                            </Border>
+                        </Grid>
+                    </Border>
+
+                    <Border x:Name="ContentAuth" IsVisible="False" Background="{StaticResource CardBackground}"
+                            BorderBrush="{StaticResource BorderColor}" BorderThickness="1" CornerRadius="5">
+                        <Grid RowDefinitions="Auto,Auto,*">
+                            <Border Grid.Row="0" Padding="20,16" Background="{StaticResource CardBackgroundAlt}">
+                                <TextBlock FontWeight="Bold" FontSize="14" Text="Authentication"
+                                           Foreground="{StaticResource TextPrimary}"/>
+                            </Border>
+                            <Rectangle Grid.Row="1" Height="1" Fill="{StaticResource DividerColor}"/>
+                            <Border Grid.Row="2" Margin="20,16" Padding="20,16"
+                                    Background="{StaticResource InputBackground}" CornerRadius="5">
+                                <TextBox AcceptsReturn="True" Background="Transparent" FontSize="13"
+                                Watermark="Bearer token or API key"
+                                Foreground="{StaticResource TextPrimary}" BorderThickness="0"/>
+                            </Border>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </ScrollViewer>
+
+            <Border Grid.Column="1" Background="{StaticResource CardBackground}"
+                    BorderBrush="{StaticResource BorderColor}" BorderThickness="1" CornerRadius="5">
+                <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,*">
+                    <Border Grid.Row="0" Padding="20,16" Background="{StaticResource CardBackgroundAlt}">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBlock FontWeight="Bold" FontSize="16" Text="Response"
+                                       Foreground="{StaticResource TextPrimary}" VerticalAlignment="Center"/>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="16">
+                                <TextBlock FontSize="12" Text="Save" Foreground="{StaticResource TextMuted}" VerticalAlignment="Center"/>
+                                <TextBlock FontSize="12" Text="Copy" Foreground="{StaticResource TextMuted}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <Rectangle Grid.Row="1" Height="1" Fill="{StaticResource DividerColor}"/>
+
+                    <Border Grid.Row="2" Padding="20,16" Background="{StaticResource PageBackground}">
+                        <Grid ColumnDefinitions="Auto,*,Auto,Auto,Auto">
+                            <Border Grid.Column="0" Padding="12,6" Background="{StaticResource InputBackground}" CornerRadius="6">
+                                <TextBlock x:Name="status" FontWeight="Bold" FontSize="12" Text="NULL"
+                                           Foreground="{StaticResource TextMuted}"/>
+                            </Border>
+                            <TextBlock x:Name="responseTime" Grid.Column="2" FontSize="12" Text="0ms"
+                                       Foreground="{StaticResource TextMuted}" VerticalAlignment="Center"/>
+                            <Rectangle Grid.Column="3" Width="1" Height="16" Fill="{StaticResource BorderColor}"
+                                       VerticalAlignment="Center" Margin="20,0"/>
+                            <TextBlock x:Name="responseSize" Grid.Column="4" FontSize="12" Text="0B"
+                                       Foreground="{StaticResource TextMuted}" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+
+                    <Rectangle Grid.Row="3" Height="1" Fill="{StaticResource DividerColor}"/>
+
+                    <Border Grid.Row="4" Padding="24,12,24,0" Background="Transparent">
+                        <StackPanel Orientation="Horizontal">
+                            <Border Margin="0,0,24,0" Padding="0,8" Background="Transparent">
+                                <TextBlock FontWeight="Bold" FontSize="13" Text="Body" Foreground="{StaticResource AccentPrimary}"/>
+                            </Border>
+                            <Border Margin="0,0,24,0" Padding="0,8" Background="Transparent">
+                                <TextBlock FontSize="13" Text="Headers" Foreground="{StaticResource TextMuted}"/>
+                            </Border>
+                            <Border Padding="0,8" Background="Transparent">
+                                <TextBlock FontSize="13" Text="Cookies" Foreground="{StaticResource TextMuted}"/>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <Grid Grid.Row="5" Margin="20,16">
+                        <Border x:Name="ResponseContent" Padding="20,16"
+                                Background="{StaticResource InputBackground}" CornerRadius="5">
+                            <ScrollViewer>
+                                <TextBlock x:Name="responseLabel" FontSize="13" TextWrapping="Wrap"
+                                           FontFamily="Consolas, Courier New, monospace"
+                                           Foreground="{StaticResource TextPrimary}"/>
+                            </ScrollViewer>
+                        </Border>
+
+                        <Border x:Name="LoadingOverlay" Padding="20,16" IsVisible="False"
+                                Background="{StaticResource InputBackground}" CornerRadius="5">
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="16">
+                                <ProgressBar IsIndeterminate="True" Width="40" Height="40" 
+                                             Foreground="{StaticResource AccentPrimary}"/>
+                                <TextBlock FontSize="14" Text="Sending request..." 
+                                           HorizontalAlignment="Center"
+                                           Foreground="{StaticResource TextMuted}"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>
