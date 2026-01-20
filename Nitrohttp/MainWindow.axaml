@@ -2,7 +2,7 @@
 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 x:Class="AvaloniaApplication1.MainWindow"
 Title="NitroHttp"
-Width="900" Height="700"
+Width="1100" Height="600"
 MinWidth="600" MinHeight="500"
 Background="#0D0D0D">
     
@@ -77,7 +77,7 @@ Background="#0D0D0D">
         <Border Grid.Row="0" Margin="24" Background="{StaticResource CardBackground}" CornerRadius="5" Padding="10">
             <Grid ColumnDefinitions="Auto,*,Auto">
                 <Border Grid.Column="0">
-                    <ComboBox x:Name="MethodPicker" Width="100" Background="{StaticResource InputBackground}"
+                    <ComboBox x:Name="MethodPicker" Width="100" Padding="12" VerticalAlignment="Center" Background="{StaticResource InputBackground}"
                     Foreground="{StaticResource AccentPrimary}" SelectedIndex="0" BorderThickness="0">
                         <ComboBoxItem>GET</ComboBoxItem>
                         <ComboBoxItem>POST</ComboBoxItem>
@@ -92,9 +92,11 @@ Background="#0D0D0D">
                 Foreground="{StaticResource AccentPrimary}"
                 Watermark="https://api.example.com/v1/endpoint"
                 Text="http://jsonplaceholder.typicode.com/users/1"
+                VerticalAlignment="Center"
+                Padding="12"
                 BorderThickness="0"/>
 
-                <Button Grid.Column="2" Content="Nitro" Background="{StaticResource AccentPrimary}"
+                <Button Grid.Column="2" Padding="10" Content="NITRO" Background="{StaticResource AccentPrimary}"
                         Foreground="{StaticResource TextPrimary}" CornerRadius="4" Click="SendButton_Click"/>
             </Grid>
         </Border>
