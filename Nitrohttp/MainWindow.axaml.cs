@@ -10,7 +10,7 @@ using Avalonia.Interactivity;
 using Avalonia.Media;
 using AvaloniaApplication1.Helpers;
 
-namespace AvaloniaApplication1;
+namespace NitroHttp;
 
 public partial class MainWindow : Window
 {

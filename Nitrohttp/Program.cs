@@ -1,7 +1,7 @@
 ﻿using Avalonia;
 using System;
 
-namespace Nitrohttp;
+namespace NitroHttp;
 
 class Program
 {

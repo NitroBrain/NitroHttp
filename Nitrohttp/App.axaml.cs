@@ -3,7 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using AvaloniaApplication1;
 
-namespace Nitrohttp;
+namespace NitroHttp;
 
 public partial class App : Application
 {
