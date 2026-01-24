@@ -16,6 +16,7 @@ public partial class MainWindow : Window
 {
     private readonly HttpClient _httpClient = new();
     private string _activeTab = "Body";
+    private string _responseActiveTab = "Response";
 
     public MainWindow()
     {
@@ -28,6 +29,8 @@ public partial class MainWindow : Window
         if (sender is Border border && border.Tag is string tabName)
         {
             _activeTab = tabName;
+            _responseActiveTab = tabName;
+
             UpdateTabStyles();
             UpdateTabVisibility();
         }
@@ -77,6 +80,47 @@ public partial class MainWindow : Window
         ContentHeaders.IsVisible = _activeTab == "Headers";
         ContentBody.IsVisible = _activeTab == "Body";
         ContentAuth.IsVisible = _activeTab == "Auth";
+    }
+
+    private void OnResponseTabTapped(object? sender, PointerPressedEventArgs e)
+    {
+        if (sender is Border border && border.Tag is string tabName)
+        {
+            _responseActiveTab = tabName;
+            UpdateResponseTabStyles();
+            UpdateResponseTabVisibility();
+        }
+    }
+    private void UpdateResponseTabStyles()
+    {
+        var mutedBrush = this.FindResource("TextMuted") as IBrush ?? new SolidColorBrush(Color.Parse("#A0A0A0"));
+        var accentBrush = this.FindResource("AccentPrimary") as IBrush ?? new SolidColorBrush(Color.Parse("#FF4757"));
+
+        ResponseContentTab.Foreground = mutedBrush;
+        ResponseHeadersTab.Foreground = mutedBrush;
+        ResponseCookiesTab.Foreground = mutedBrush;
+
+        switch (_responseActiveTab)
+        {
+            case "Content":
+                ResponseContentTab.Foreground = accentBrush;
+                break;
+            case "Headers":
+                ResponseHeadersTab.Foreground = accentBrush;
+                break;
+            case "Cookies":
+                ResponseCookiesTab.Foreground = accentBrush;
+                break;
+        }
+    }
+
+    private void UpdateResponseTabVisibility()
+    {
+        if (ResponseContent == null) return;
+
+        ResponseContent.IsVisible = _responseActiveTab == "Content";
+        ResponseHeaders.IsVisible = _responseActiveTab == "Headers";
+        ResponseCookies.IsVisible = _responseActiveTab == "Cookies";
     }
 
     private void SetLoading(bool isLoading)
