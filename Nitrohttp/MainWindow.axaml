@@ -1,5 +1,6 @@
 <Window xmlns="https://github.com/avaloniaui"
 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+xmlns:AvaloniaEdit="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
 x:Class="NitroHttp.MainWindow"
 Title="NitroHttp"
 Width="1100" Height="600"
@@ -188,9 +189,7 @@ Background="#0D0D0D">
                             <Rectangle Grid.Row="1" Height="1" Fill="{StaticResource DividerColor}"/>
                             <Border Grid.Row="2" Margin="20,16" Padding="20,16"
                                     Background="{StaticResource InputBackground}" CornerRadius="5">
-                                <TextBox AcceptsReturn="True" Background="Transparent" FontSize="13"
-                                Watermark="Content-Type: application/json"
-                                Foreground="{StaticResource TextPrimary}" BorderThickness="0"/>
+                                <AvaloniaEdit:TextEditor ShowLineNumbers="True" FontSize="12"  SyntaxHighlighting="Json" FontFamily="Monospace"/> 
                             </Border>
                         </Grid>
                     </Border>
@@ -211,9 +210,7 @@ Background="#0D0D0D">
                             <Rectangle Grid.Row="1" Height="1" Fill="{StaticResource DividerColor}"/>
                             <Border Grid.Row="2" Margin="20,16" Padding="20,16"
                                     Background="{StaticResource InputBackground}" CornerRadius="5">
-                                <TextBox x:Name="RequestBodyEditor" AcceptsReturn="True" Background="Transparent"
-                                FontSize="13" Watermark="Request body JSON"
-                                Foreground="{StaticResource TextPrimary}" BorderThickness="0"/>
+                                <AvaloniaEdit:TextEditor ShowLineNumbers="True" FontSize="12" x:Name="RequestBodyEditor" SyntaxHighlighting="Json" FontFamily="Monospace"/> 
                             </Border>
                         </Grid>
                     </Border>
@@ -288,9 +285,7 @@ Background="#0D0D0D">
                         <Border x:Name="ResponseContent" Padding="20,16"
                                 Background="{StaticResource InputBackground}" CornerRadius="5">
                             <ScrollViewer>
-                                <TextBlock x:Name="ResponseLabel" Text="Response shown here..." FontSize="13" TextWrapping="Wrap"
-                                           FontFamily="Consolas, Courier New, monospace"
-                                           Foreground="{StaticResource TextPrimary}"/>
+                                <AvaloniaEdit:TextEditor ShowLineNumbers="True" IsReadOnly="True" FontSize="12" x:Name="ResponseLabel" SyntaxHighlighting="Json" FontFamily="Monospace"/> 
                             </ScrollViewer>
                         </Border>
                         
