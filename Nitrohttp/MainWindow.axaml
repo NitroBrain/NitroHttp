@@ -272,14 +272,14 @@ Background="#0D0D0D">
 
                     <Border Grid.Row="4" Padding="24,12,24,0" Background="Transparent">
                         <StackPanel Orientation="Horizontal">
-                            <Border Margin="0,0,24,0" Padding="0,8" Background="Transparent">
-                                <TextBlock FontWeight="Bold" FontSize="13" Text="Body" Foreground="{StaticResource AccentPrimary}"/>
+                            <Border PointerPressed="OnResponseTabTapped" Tag="Content" Margin="0,0,24,0" Padding="0,8" Background="Transparent">
+                                <TextBlock x:Name="ResponseContentTab" FontWeight="Bold" FontSize="13" Text="Body" Foreground="{StaticResource AccentPrimary}"/>
                             </Border>
-                            <Border Margin="0,0,24,0" Padding="0,8" Background="Transparent">
-                                <TextBlock FontSize="13" Text="Headers" Foreground="{StaticResource TextMuted}"/>
+                            <Border PointerPressed="OnResponseTabTapped" Tag="Headers" Margin="0,0,24,0" Padding="0,8" Background="Transparent">
+                                <TextBlock x:Name="ResponseHeadersTab" FontWeight="Bold" FontSize="13" Text="Headers" Foreground="{StaticResource TextMuted}"/>
                             </Border>
-                            <Border Padding="0,8" Background="Transparent">
-                                <TextBlock FontSize="13" Text="Cookies" Foreground="{StaticResource TextMuted}"/>
+                            <Border PointerPressed="OnResponseTabTapped" Tag="Cookies" Padding="0,8" Background="Transparent">
+                                <TextBlock x:Name="ResponseCookiesTab" FontWeight="Bold" FontSize="13" Text="Cookies" Foreground="{StaticResource TextMuted}"/>
                             </Border>
                         </StackPanel>
                     </Border>
@@ -288,7 +288,25 @@ Background="#0D0D0D">
                         <Border x:Name="ResponseContent" Padding="20,16"
                                 Background="{StaticResource InputBackground}" CornerRadius="5">
                             <ScrollViewer>
-                                <TextBlock x:Name="ResponseLabel" FontSize="13" TextWrapping="Wrap"
+                                <TextBlock x:Name="ResponseLabel" Text="Response shown here..." FontSize="13" TextWrapping="Wrap"
+                                           FontFamily="Consolas, Courier New, monospace"
+                                           Foreground="{StaticResource TextPrimary}"/>
+                            </ScrollViewer>
+                        </Border>
+                        
+                        <Border x:Name="ResponseHeaders" Padding="20,16"
+                                Background="{StaticResource InputBackground}" CornerRadius="5">
+                            <ScrollViewer>
+                                <TextBlock x:Name="ResponseHeadersLabel" Text="Headers shown here..." FontSize="13" TextWrapping="Wrap"
+                                           FontFamily="Consolas, Courier New, monospace"
+                                           Foreground="{StaticResource TextPrimary}"/>
+                            </ScrollViewer>
+                        </Border>
+                        
+                        <Border x:Name="ResponseCookies" Padding="20,16"
+                                Background="{StaticResource InputBackground}" CornerRadius="5">
+                            <ScrollViewer>
+                                <TextBlock x:Name="ResponseCookiesLabel" Text="Cookies shown here..." FontSize="13" TextWrapping="Wrap"
                                            FontFamily="Consolas, Courier New, monospace"
                                            Foreground="{StaticResource TextPrimary}"/>
                             </ScrollViewer>
