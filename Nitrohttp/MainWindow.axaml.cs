@@ -16,12 +16,13 @@ public partial class MainWindow : Window
 {
     private readonly HttpClient _httpClient = new();
     private string _activeTab = "Body";
-    private string _responseActiveTab = "Response";
+    private string _responseActiveTab = "Content";
 
     public MainWindow()
     {
         InitializeComponent();
         UpdateTabVisibility();
+        UpdateResponseTabVisibility();
     }
 
     private void OnTabTapped(object? sender, PointerPressedEventArgs e)
