@@ -87,15 +87,15 @@ public partial class MainWindow : Window
 
     private void DisplayResponse(string responseText, int statusCode, long elapsedMs)
     {
-        responseLabel.Text = TryFormatJson(responseText);
-        responseTime.Text = $"{elapsedMs}ms";
-        responseSize.Text = FormatBytes.Format(Encoding.UTF8.GetByteCount(responseText));
+        ResponseLabel.Text = TryFormatJson(responseText);
+        ResponseTime.Text = $"{elapsedMs}ms";
+        ResponseSize.Text = FormatBytes.Format(Encoding.UTF8.GetByteCount(responseText));
         UpdateStatus(statusCode);
     }
 
     private void UpdateStatus(int statusCode)
     {
-        status.Foreground = new SolidColorBrush(statusCode switch
+        Status.Foreground = new SolidColorBrush(statusCode switch
         {
             _ when HttpStatusHelper.IsSuccess(statusCode) => Color.Parse("#2ED573"),
             _ when HttpStatusHelper.IsRedirect(statusCode) => Color.Parse("#5B8CFF"),
@@ -103,7 +103,7 @@ public partial class MainWindow : Window
             _ when HttpStatusHelper.IsServerError(statusCode) => Color.Parse("#FFA502"),
             _ => Color.Parse("#6B6B6B")
         });
-        status.Text = HttpStatusHelper.GetStatusText(statusCode);
+        Status.Text = HttpStatusHelper.GetStatusText(statusCode);
     }
 
     private static string TryFormatJson(string text)
@@ -153,16 +153,16 @@ public partial class MainWindow : Window
 
     private async Task GetAsync()
     {
-        if (string.IsNullOrEmpty(apiUrl.Text))
+        if (string.IsNullOrEmpty(ApiUrl.Text))
         {
-            responseLabel.Text = "Error: URL is empty";
+            ResponseLabel.Text = "Error: URL is empty";
             return;
         }
 
         try
         {
             var stopwatch = Stopwatch.StartNew();
-            HttpResponseMessage responseMessage = await _httpClient.GetAsync(apiUrl.Text);
+            HttpResponseMessage responseMessage = await _httpClient.GetAsync(ApiUrl.Text);
             stopwatch.Stop();
 
             string responseText = await responseMessage.Content.ReadAsStringAsync();
@@ -170,15 +170,15 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            responseLabel.Text = $"Error: {ex.Message}";
+            ResponseLabel.Text = $"Error: {ex.Message}";
         }
     }
 
     private async Task PostAsync()
     {
-        if (string.IsNullOrEmpty(apiUrl.Text))
+        if (string.IsNullOrEmpty(ApiUrl.Text))
         {
-            responseLabel.Text = "Error: URL is empty";
+            ResponseLabel.Text = "Error: URL is empty";
             return;
         }
 
@@ -187,7 +187,7 @@ public partial class MainWindow : Window
             var stopwatch = Stopwatch.StartNew();
             string jsonBody = RequestBodyEditor?.Text ?? "{}";
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-            HttpResponseMessage responseMessage = await _httpClient.PostAsync(apiUrl.Text, content);
+            HttpResponseMessage responseMessage = await _httpClient.PostAsync(ApiUrl.Text, content);
             stopwatch.Stop();
 
             string responseBody = await responseMessage.Content.ReadAsStringAsync();
@@ -195,15 +195,15 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            responseLabel.Text = $"Error: {ex.Message}";
+            ResponseLabel.Text = $"Error: {ex.Message}";
         }
     }
 
     private async Task PutAsync()
     {
-        if (string.IsNullOrEmpty(apiUrl.Text))
+        if (string.IsNullOrEmpty(ApiUrl.Text))
         {
-            responseLabel.Text = "Error: URL is empty";
+            ResponseLabel.Text = "Error: URL is empty";
             return;
         }
 
@@ -212,7 +212,7 @@ public partial class MainWindow : Window
             var stopwatch = Stopwatch.StartNew();
             string jsonBody = RequestBodyEditor?.Text ?? "{}";
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-            HttpResponseMessage responseMessage = await _httpClient.PutAsync(apiUrl.Text, content);
+            HttpResponseMessage responseMessage = await _httpClient.PutAsync(ApiUrl.Text, content);
             stopwatch.Stop();
 
             string responseBody = await responseMessage.Content.ReadAsStringAsync();
@@ -220,15 +220,15 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            responseLabel.Text = $"Error: {ex.Message}";
+            ResponseLabel.Text = $"Error: {ex.Message}";
         }
     }
 
     private async Task PatchAsync()
     {
-        if (string.IsNullOrEmpty(apiUrl.Text))
+        if (string.IsNullOrEmpty(ApiUrl.Text))
         {
-            responseLabel.Text = "Error: URL is empty";
+            ResponseLabel.Text = "Error: URL is empty";
             return;
         }
 
@@ -237,7 +237,7 @@ public partial class MainWindow : Window
             var stopwatch = Stopwatch.StartNew();
             string jsonBody = RequestBodyEditor?.Text ?? "{}";
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-            HttpResponseMessage responseMessage = await _httpClient.PatchAsync(apiUrl.Text, content);
+            HttpResponseMessage responseMessage = await _httpClient.PatchAsync(ApiUrl.Text, content);
             stopwatch.Stop();
 
             string responseBody = await responseMessage.Content.ReadAsStringAsync();
@@ -245,22 +245,22 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            responseLabel.Text = $"Error: {ex.Message}";
+            ResponseLabel.Text = $"Error: {ex.Message}";
         }
     }
 
     private async Task DeleteAsync()
     {
-        if (string.IsNullOrEmpty(apiUrl.Text))
+        if (string.IsNullOrEmpty(ApiUrl.Text))
         {
-            responseLabel.Text = "Error: URL is empty";
+            ResponseLabel.Text = "Error: URL is empty";
             return;
         }
 
         try
         {
             var stopwatch = Stopwatch.StartNew();
-            HttpResponseMessage responseMessage = await _httpClient.DeleteAsync(apiUrl.Text);
+            HttpResponseMessage responseMessage = await _httpClient.DeleteAsync(ApiUrl.Text);
             stopwatch.Stop();
 
             string responseBody = await responseMessage.Content.ReadAsStringAsync();
@@ -268,7 +268,7 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            responseLabel.Text = $"Error: {ex.Message}";
+            ResponseLabel.Text = $"Error: {ex.Message}";
         }
     }
 }

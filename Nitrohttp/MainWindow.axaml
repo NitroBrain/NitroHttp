@@ -87,7 +87,7 @@ Background="#0D0D0D">
                     </ComboBox>
                 </Border>
 
-                <TextBox x:Name="apiUrl" Grid.Column="1" Margin="8,0"
+                <TextBox x:Name="ApiUrl" Grid.Column="1" Margin="8,0"
                 Background="{StaticResource InputBackground}"
                 Foreground="{StaticResource AccentPrimary}"
                 Watermark="https://api.example.com/v1/endpoint"
@@ -256,14 +256,14 @@ Background="#0D0D0D">
                     <Border Grid.Row="2" Padding="20,16" Background="{StaticResource PageBackground}">
                         <Grid ColumnDefinitions="Auto,*,Auto,Auto,Auto">
                             <Border Grid.Column="0" Padding="12,6" Background="{StaticResource InputBackground}" CornerRadius="6">
-                                <TextBlock x:Name="status" FontWeight="Bold" FontSize="12" Text="NULL"
+                                <TextBlock x:Name="Status" FontWeight="Bold" FontSize="12" Text="NULL"
                                            Foreground="{StaticResource TextMuted}"/>
                             </Border>
-                            <TextBlock x:Name="responseTime" Grid.Column="2" FontSize="12" Text="0ms"
+                            <TextBlock x:Name="ResponseTime" Grid.Column="2" FontSize="12" Text="0ms"
                                        Foreground="{StaticResource TextMuted}" VerticalAlignment="Center"/>
                             <Rectangle Grid.Column="3" Width="1" Height="16" Fill="{StaticResource BorderColor}"
                                        VerticalAlignment="Center" Margin="20,0"/>
-                            <TextBlock x:Name="responseSize" Grid.Column="4" FontSize="12" Text="0B"
+                            <TextBlock x:Name="ResponseSize" Grid.Column="4" FontSize="12" Text="0B"
                                        Foreground="{StaticResource TextMuted}" VerticalAlignment="Center"/>
                         </Grid>
                     </Border>
@@ -288,7 +288,7 @@ Background="#0D0D0D">
                         <Border x:Name="ResponseContent" Padding="20,16"
                                 Background="{StaticResource InputBackground}" CornerRadius="5">
                             <ScrollViewer>
-                                <TextBlock x:Name="responseLabel" FontSize="13" TextWrapping="Wrap"
+                                <TextBlock x:Name="ResponseLabel" FontSize="13" TextWrapping="Wrap"
                                            FontFamily="Consolas, Courier New, monospace"
                                            Foreground="{StaticResource TextPrimary}"/>
                             </ScrollViewer>
