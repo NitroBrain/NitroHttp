@@ -198,7 +198,7 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            // ignored
+            ResponseLabel.Text = $"Error: {ex.Message}";
         }
     }
 
