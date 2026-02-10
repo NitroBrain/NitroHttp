@@ -166,33 +166,39 @@ public partial class MainWindow : Window
 
     private async void SendButton_Click(object? sender, RoutedEventArgs e)
     {
-        SetLoading(true);
-
         try
         {
-            var method = (MethodPicker.SelectedItem as ComboBoxItem)?.Content?.ToString();
-            switch (method)
+            SetLoading(true);
+            try
             {
-                case "GET":
-                    await GetAsync();
-                    break;
-                case "POST":
-                    await PostAsync();
-                    break;
-                case "PUT":
-                    await PutAsync();
-                    break;
-                case "PATCH":
-                    await PatchAsync();
-                    break;
-                case "DELETE":
-                    await DeleteAsync();
-                    break;
+                var method = (MethodPicker.SelectedItem as ComboBoxItem)?.Content?.ToString();
+                switch (method)
+                {
+                    case "GET":
+                        await GetAsync();
+                        break;
+                    case "POST":
+                        await PostAsync();
+                        break;
+                    case "PUT":
+                        await PutAsync();
+                        break;
+                    case "PATCH":
+                        await PatchAsync();
+                        break;
+                    case "DELETE":
+                        await DeleteAsync();
+                        break;
+                }
+            }
+            finally
+            {
+                SetLoading(false);
             }
         }
-        finally
+        catch (Exception ex)
         {
-            SetLoading(false);
+            // ignored
         }
     }
 
