@@ -44,6 +44,7 @@ Background="#0D0D0D">
         </Style>
         <Style Selector="TextBox">
             <Setter Property="SelectionBrush" Value="#FF4757"/>
+            <Setter Property="SelectionForegroundBrush" Value="#000000"/>
             <Setter Property="CaretBrush" Value="#FF4757"/>
         </Style>
         
