@@ -1,77 +1,82 @@
 <Window xmlns="https://github.com/avaloniaui"
 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 xmlns:AvaloniaEdit="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
+xmlns:AvaloniaEditEditing="clr-namespace:AvaloniaEdit.Editing;assembly=AvaloniaEdit"
 xmlns:helpers="clr-namespace:AvaloniaApplication1.Helpers"
 x:Class="NitroHttp.MainWindow"
 Title="NitroHttp"
 Width="1100" Height="600"
 MinWidth="600" MinHeight="500"
-Background="#0D0D0D">
+Background="#101713">
     
     <Window.Resources>
-        <SolidColorBrush x:Key="AccentPrimary" Color="#FF4757"/>
-        <SolidColorBrush x:Key="AccentPrimaryDark" Color="#E8404F"/>
+        <SolidColorBrush x:Key="AccentPrimary" Color="#28A745"/>
+        <SolidColorBrush x:Key="AccentPrimaryDark" Color="#1C5D37"/>
         
-        <SolidColorBrush x:Key="PageBackground" Color="#0D0D0D"/>
-        <SolidColorBrush x:Key="CardBackground" Color="#1A1A1A"/>
-        <SolidColorBrush x:Key="CardBackgroundAlt" Color="#1F1F1F"/>
-        <SolidColorBrush x:Key="InputBackground" Color="#252525"/>
+        <SolidColorBrush x:Key="PageBackground" Color="#101713"/>
+        <SolidColorBrush x:Key="CardBackground" Color="#151F1A"/>
+        <SolidColorBrush x:Key="CardBackgroundAlt" Color="#1B2A22"/>
+        <SolidColorBrush x:Key="InputBackground" Color="#1F2F27"/>
         
         <SolidColorBrush x:Key="TextPrimary" Color="#FFFFFF"/>
-        <SolidColorBrush x:Key="TextSecondary" Color="#A0A0A0"/>
-        <SolidColorBrush x:Key="TextMuted" Color="#A0A0A0"/>
-        <SolidColorBrush x:Key="TextPlaceholder" Color="#505050"/>
+        <SolidColorBrush x:Key="TextSecondary" Color="#B8C6BE"/>
+        <SolidColorBrush x:Key="TextMuted" Color="#95A79C"/>
+        <SolidColorBrush x:Key="TextPlaceholder" Color="#63756A"/>
         
-        <SolidColorBrush x:Key="BorderColor" Color="#2A2A2A" />
-        <SolidColorBrush x:Key="DividerColor" Color="#2A2A2A"/>
+        <SolidColorBrush x:Key="BorderColor" Color="#2D3E34" />
+        <SolidColorBrush x:Key="DividerColor" Color="#2D3E34"/>
         
         <SolidColorBrush x:Key="StatusSuccess" Color="#2ED573"/>
-        <SolidColorBrush x:Key="StatusInfo" Color="#5B8CFF"/>
+        <SolidColorBrush x:Key="StatusInfo" Color="#4CC9A6"/>
         <SolidColorBrush x:Key="StatusWarning" Color="#FFA502"/>
-        <SolidColorBrush x:Key="StatusError" Color="#FF4757"/>
+        <SolidColorBrush x:Key="StatusError" Color="#E35D6A"/>
         
-        <SolidColorBrush x:Key="SystemAccentColor" Color="#FF4757"/>
-        <SolidColorBrush x:Key="SystemAccentColorDark1" Color="#E8404F"/>
-        <SolidColorBrush x:Key="SystemAccentColorDark2" Color="#D03545"/>
-        <SolidColorBrush x:Key="SystemAccentColorDark3" Color="#B82A3A"/>
-        <SolidColorBrush x:Key="SystemAccentColorLight1" Color="#FF6B78"/>
-        <SolidColorBrush x:Key="SystemAccentColorLight2" Color="#FF8F99"/>
-        <SolidColorBrush x:Key="SystemAccentColorLight3" Color="#FFB3BA"/>
+        <SolidColorBrush x:Key="SystemAccentColor" Color="#28A745"/>
+        <SolidColorBrush x:Key="SystemAccentColorDark1" Color="#1C5D37"/>
+        <SolidColorBrush x:Key="SystemAccentColorDark2" Color="#184E2E"/>
+        <SolidColorBrush x:Key="SystemAccentColorDark3" Color="#133F25"/>
+        <SolidColorBrush x:Key="SystemAccentColorLight1" Color="#4DBE67"/>
+        <SolidColorBrush x:Key="SystemAccentColorLight2" Color="#73D18A"/>
+        <SolidColorBrush x:Key="SystemAccentColorLight3" Color="#99E1AD"/>
     </Window.Resources>
     
     <Window.Styles>
         <Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
-            <Setter Property="BorderBrush" Value="#FF4757"/>
+            <Setter Property="BorderBrush" Value="{StaticResource AccentPrimary}"/>
         </Style>
         <Style Selector="TextBox">
-            <Setter Property="SelectionBrush" Value="#FF4757"/>
+            <Setter Property="SelectionBrush" Value="{StaticResource AccentPrimary}"/>
             <Setter Property="SelectionForegroundBrush" Value="#000000"/>
-            <Setter Property="CaretBrush" Value="#FF4757"/>
+            <Setter Property="CaretBrush" Value="{StaticResource AccentPrimary}"/>
         </Style>
         
         <Style Selector="ComboBox:focus /template/ Border#Background">
-            <Setter Property="BorderBrush" Value="#FF4757"/>
+            <Setter Property="BorderBrush" Value="{StaticResource AccentPrimary}"/>
         </Style>
         
         <Style Selector="ComboBoxItem:selected /template/ ContentPresenter">
-            <Setter Property="Background" Value="#FF4757"/>
+            <Setter Property="Background" Value="{StaticResource AccentPrimary}"/>
         </Style>
         <Style Selector="ComboBoxItem:pointerover /template/ ContentPresenter">
-            <Setter Property="Background" Value="#E8404F"/>
+            <Setter Property="Background" Value="{StaticResource AccentPrimaryDark}"/>
         </Style>
         <Style Selector="ComboBoxItem:selected:pointerover /template/ ContentPresenter">
-            <Setter Property="Background" Value="#FF4757"/>
+            <Setter Property="Background" Value="{StaticResource AccentPrimary}"/>
         </Style>
         <Style Selector="ComboBoxItem:selected:focus /template/ ContentPresenter">
-            <Setter Property="Background" Value="#FF4757"/>
+            <Setter Property="Background" Value="{StaticResource AccentPrimary}"/>
         </Style>
         
         <Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Background" Value="#E8404F"/>
+            <Setter Property="Background" Value="{StaticResource AccentPrimaryDark}"/>
         </Style>
         
         <Style Selector="ProgressBar /template/ Border#PART_Indicator">
-            <Setter Property="Background" Value="#FF4757"/>
+            <Setter Property="Background" Value="{StaticResource AccentPrimary}"/>
+        </Style>
+
+        <Style Selector="AvaloniaEditEditing|LineNumberMargin">
+            <Setter Property="Margin" Value="0,0,25,0"/>
         </Style>
     </Window.Styles>
 
@@ -191,7 +196,8 @@ Background="#0D0D0D">
                             <Rectangle Grid.Row="1" Height="1" Fill="{StaticResource DividerColor}"/>
                             <Border Grid.Row="2" Margin="20,16" Padding="20,16"
                                     Background="{StaticResource InputBackground}" CornerRadius="5">
-                                <AvaloniaEdit:TextEditor ShowLineNumbers="True" FontSize="12"  SyntaxHighlighting="Json" FontFamily="Monospace"/> 
+                                <AvaloniaEdit:TextEditor ShowLineNumbers="True" FontSize="14"  SyntaxHighlighting="Json" FontFamily="Monospace"
+                                                         Foreground="{StaticResource TextPrimary}" Background="Transparent"/> 
                             </Border>
                         </Grid>
                     </Border>
@@ -212,7 +218,8 @@ Background="#0D0D0D">
                             <Rectangle Grid.Row="1" Height="1" Fill="{StaticResource DividerColor}"/>
                             <Border Grid.Row="2" Margin="20,16" Padding="20,16"
                                     Background="{StaticResource InputBackground}" CornerRadius="5">
-                                <AvaloniaEdit:TextEditor ShowLineNumbers="True" FontSize="12" x:Name="RequestBodyEditor" SyntaxHighlighting="Json" FontFamily="Monospace"/> 
+                                <AvaloniaEdit:TextEditor ShowLineNumbers="True" FontSize="14" x:Name="RequestBodyEditor" SyntaxHighlighting="Json" FontFamily="Monospace"
+                                                         Foreground="{StaticResource TextPrimary}" Background="Transparent"/> 
                             </Border>
                         </Grid>
                     </Border>
@@ -350,7 +357,8 @@ Background="#0D0D0D">
                         <Border x:Name="ResponseContent" Padding="20,16"
                                 Background="{StaticResource InputBackground}" CornerRadius="5">
                             <ScrollViewer>
-                                <AvaloniaEdit:TextEditor ShowLineNumbers="True" IsReadOnly="True" FontSize="12" x:Name="ResponseLabel" SyntaxHighlighting="Json" FontFamily="Monospace"/> 
+                                <AvaloniaEdit:TextEditor ShowLineNumbers="True" IsReadOnly="True" FontSize="14" x:Name="ResponseLabel" SyntaxHighlighting="Json" FontFamily="Monospace"
+                                                         Foreground="{StaticResource TextPrimary}" Background="Transparent"/> 
                             </ScrollViewer>
                         </Border>
                         
@@ -372,15 +380,25 @@ Background="#0D0D0D">
                             </ScrollViewer>
                         </Border>
 
-                        <Border x:Name="LoadingOverlay" Padding="20,16" IsVisible="False"
-                                Background="{StaticResource InputBackground}" CornerRadius="5">
-                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="16">
-                                <ProgressBar IsIndeterminate="True" Width="40" Height="40" 
-                                             Foreground="{StaticResource AccentPrimary}"/>
-                                <TextBlock FontSize="14" Text="Sending request..." 
-                                           HorizontalAlignment="Center"
-                                           Foreground="{StaticResource TextMuted}"/>
-                            </StackPanel>
+                        <Border x:Name="LoadingOverlay" IsVisible="False"
+                                Background="#8A0E1311" CornerRadius="8">
+                            <Border HorizontalAlignment="Center" VerticalAlignment="Center"
+                                    MinWidth="260" Padding="20,16"
+                                    Background="{StaticResource CardBackgroundAlt}"
+                                    BorderBrush="{StaticResource BorderColor}" BorderThickness="1"
+                                    CornerRadius="12">
+                                <StackPanel Spacing="10">
+                                    <TextBlock FontSize="14" FontWeight="SemiBold" Text="Sending request"
+                                               HorizontalAlignment="Center"
+                                               Foreground="{StaticResource TextPrimary}"/>
+                                    <ProgressBar IsIndeterminate="True" Width="180" Height="6"
+                                                 Foreground="{StaticResource AccentPrimary}"
+                                                 Background="{StaticResource InputBackground}"/>
+                                    <TextBlock FontSize="12" Text="Please wait..."
+                                               HorizontalAlignment="Center"
+                                               Foreground="{StaticResource TextMuted}"/>
+                                </StackPanel>
+                            </Border>
                         </Border>
                     </Grid>
                 </Grid>
