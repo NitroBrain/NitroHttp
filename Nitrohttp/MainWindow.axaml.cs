@@ -11,6 +11,10 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
+using AvaloniaEdit;
+using AvaloniaEdit.Document;
+using AvaloniaEdit.Highlighting;
+using AvaloniaEdit.Rendering;
 using AvaloniaApplication1.Helpers;
 
 namespace NitroHttp;
@@ -34,6 +38,7 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        ApplyJsonEditorColors();
         HistoryList.ItemsSource = HistoryItems;
         CollectionsList.ItemsSource = CollectionItems;
 
@@ -41,6 +46,157 @@ public partial class MainWindow : Window
         UpdateTabVisibility();
         UpdateResponseTabVisibility();
         UpdateStorageButtonStyles();
+    }
+
+    private void ApplyJsonEditorColors()
+    {
+        ApplyJsonHighlighting(RequestBodyEditor);
+        ApplyJsonHighlighting(ResponseLabel);
+    }
+
+    private static void ApplyJsonHighlighting(TextEditor? editor)
+    {
+        if (editor?.SyntaxHighlighting == null)
+        {
+            return;
+        }
+
+        foreach (var color in editor.SyntaxHighlighting.NamedHighlightingColors)
+        {
+            if (color.Name is null)
+            {
+                continue;
+            }
+
+            var name = color.Name;
+            if (name.Contains("PropertyName", StringComparison.OrdinalIgnoreCase) ||
+                name.Contains("Tag", StringComparison.OrdinalIgnoreCase))
+            {
+                color.Foreground = new SimpleHighlightingBrush(Color.Parse("#bf67c2"));
+                continue;
+            }
+
+            if (name.Contains("String", StringComparison.OrdinalIgnoreCase) ||
+                name.Contains("Value", StringComparison.OrdinalIgnoreCase))
+            {
+                color.Foreground = new SimpleHighlightingBrush(Color.Parse("#FFD166"));
+                continue;
+            }
+
+            if (name.Contains("Number", StringComparison.OrdinalIgnoreCase))
+            {
+                color.Foreground = new SimpleHighlightingBrush(Color.Parse("#5ba769"));
+                continue;
+            }
+
+            if (name.Contains("Keyword", StringComparison.OrdinalIgnoreCase))
+            {
+                color.Foreground = new SimpleHighlightingBrush(Color.Parse("#FFFFFF"));
+                continue;
+            }
+
+            if (name.Contains("Boolean", StringComparison.OrdinalIgnoreCase) ||
+                name.Contains("Null", StringComparison.OrdinalIgnoreCase))
+            {
+                color.Foreground = new SimpleHighlightingBrush(Color.Parse("#5ba769"));
+            }
+        }
+
+        editor.Foreground = new SolidColorBrush(Color.Parse("#FFFFFF"));
+        editor.TextArea.TextView.LinkTextForegroundBrush = new SolidColorBrush(Color.Parse("#5ba769"));
+        editor.TextArea.TextView.LinkTextUnderline = false;
+        editor.Options.ShowTabs = true;
+        editor.Options.ShowSpaces = true;
+        editor.Options.IndentationSize = 2;
+
+        var transformers = editor.TextArea.TextView.LineTransformers;
+        for (var i = transformers.Count - 1; i >= 0; i--)
+        {
+            if (transformers[i] is JsonTokenColorizer)
+            {
+                transformers.RemoveAt(i);
+            }
+        }
+
+        transformers.Add(new JsonTokenColorizer());
+    }
+
+    private sealed class JsonTokenColorizer : DocumentColorizingTransformer
+    {
+        private static readonly IBrush KeyBrush = new SolidColorBrush(Color.Parse("#bf67c2"));
+        private static readonly IBrush ValueBrush = new SolidColorBrush(Color.Parse("#5ba769"));
+        private static readonly IBrush PunctuationBrush = new SolidColorBrush(Color.Parse("#FFFFFF"));
+
+        protected override void ColorizeLine(DocumentLine line)
+        {
+            var text = CurrentContext.Document.GetText(line);
+            var inString = false;
+            var escaped = false;
+            var stringStart = -1;
+
+            for (var i = 0; i < text.Length; i++)
+            {
+                var ch = text[i];
+
+                if (inString)
+                {
+                    if (escaped)
+                    {
+                        escaped = false;
+                        continue;
+                    }
+
+                    if (ch == '\\')
+                    {
+                        escaped = true;
+                        continue;
+                    }
+
+                    if (ch == '"')
+                    {
+                        var isKey = false;
+                        for (var j = i + 1; j < text.Length; j++)
+                        {
+                            if (char.IsWhiteSpace(text[j]))
+                            {
+                                continue;
+                            }
+
+                            isKey = text[j] == ':';
+                            break;
+                        }
+
+                        var start = line.Offset + stringStart;
+                        var end = line.Offset + i + 1;
+                        ChangeLinePart(start, end, element =>
+                        {
+                            element.TextRunProperties.SetForegroundBrush(isKey ? KeyBrush : ValueBrush);
+                        });
+                        inString = false;
+                    }
+                                // editor.Options.IndentStyle = IndentStyle.Smart; // Removed unsupported IndentStyle assignment
+                    continue;
+                }
+
+                if (ch == '"')
+                {
+                    inString = true;
+                    stringStart = i;
+                    escaped = false;
+                    continue;
+                }
+
+                if (ch is '{' or '}' or '[' or ']' or ':' or ',')
+                {
+                    var start = line.Offset + i;
+                    var end = start + 1;
+                    ChangeLinePart(start, end, element =>
+                    {
+                        element.TextRunProperties.SetForegroundBrush(PunctuationBrush);
+                    });
+                }
+            }
+        }
     }
 
     private void OnTabTapped(object? sender, PointerPressedEventArgs e)
