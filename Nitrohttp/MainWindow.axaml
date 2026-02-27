@@ -83,11 +83,13 @@ Background="#101713">
 
     <Grid RowDefinitions="Auto,Auto,*" RowSpacing="0">
         
-        <Border Grid.Row="0" Margin="24" Background="{StaticResource CardBackground}" CornerRadius="5" Padding="10">
+        <Border Grid.Row="0" Margin="24" Background="{StaticResource CardBackground}" CornerRadius="30" Padding="10">
             <Grid ColumnDefinitions="Auto,*,Auto">
                 <Border Grid.Column="0">
-                    <ComboBox x:Name="MethodPicker" Width="100" Padding="12" VerticalAlignment="Center" Background="{StaticResource InputBackground}"
-                    Foreground="{StaticResource AccentPrimary}" SelectedIndex="0" BorderThickness="0">
+                    <ComboBox x:Name="MethodPicker" Width="110" Padding="12" VerticalAlignment="Center" Background="{StaticResource InputBackground}"
+                        Foreground="{StaticResource AccentPrimary}" SelectedIndex="0" BorderThickness="0" CornerRadius="20,5,5,20"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center">
                         <ComboBoxItem>GET</ComboBoxItem>
                         <ComboBoxItem>POST</ComboBoxItem>
                         <ComboBoxItem>PUT</ComboBoxItem>
@@ -105,42 +107,50 @@ Background="#101713">
                 Padding="12"
                 BorderThickness="0"/>
 
-                <Button Grid.Column="2" Padding="10" Content="NITRO" Background="{StaticResource AccentPrimary}"
-                        Foreground="{StaticResource TextPrimary}" CornerRadius="4" Click="SendButton_Click"/>
+                <Button Grid.Column="2"
+                        Padding="10"
+                        Width="110"
+                        Content="NITRO"
+                        Background="{StaticResource AccentPrimary}"
+                        Foreground="{StaticResource TextPrimary}"
+                        CornerRadius="5,20,20,5"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        Click="SendButton_Click"/>
             </Grid>
         </Border>
 
         <Grid Grid.Row="1" Margin="24,20,24,0" ColumnDefinitions="Auto,Auto,Auto,Auto,*,Auto">
             <Border x:Name="TabBody" Grid.Column="0" Margin="0,0,12,0" Padding="20,10"
-                    Background="{StaticResource AccentPrimary}" CornerRadius="5"
+                    Background="{StaticResource AccentPrimary}" CornerRadius="20"
                     PointerPressed="OnTabTapped" Tag="Body">
                 <TextBlock x:Name="TabBodyLabel" FontSize="13" Text="Body" Foreground="White"/>
             </Border>
 
             <Border x:Name="TabParams" Grid.Column="1" Margin="0,0,12,0" Padding="20,10"
-                    Background="Transparent" CornerRadius="5"
+                    Background="Transparent" CornerRadius="20"
                     PointerPressed="OnTabTapped" Tag="Params">
                 <TextBlock x:Name="TabParamsLabel" FontSize="13" Text="Params" Foreground="{StaticResource TextMuted}"/>
             </Border>
 
             <Border x:Name="TabHeaders" Grid.Column="2" Margin="0,0,12,0" Padding="20,10"
-                    Background="Transparent" CornerRadius="5"
+                    Background="Transparent" CornerRadius="20"
                     PointerPressed="OnTabTapped" Tag="Headers">
                 <TextBlock x:Name="TabHeadersLabel" FontSize="13" Text="Headers" Foreground="{StaticResource TextMuted}"/>
             </Border>
 
             <Border x:Name="TabAuth" Grid.Column="3" Margin="0,0,12,0" Padding="20,10"
-                    Background="Transparent" CornerRadius="5"
+                    Background="Transparent" CornerRadius="20"
                     PointerPressed="OnTabTapped" Tag="Auth">
                 <TextBlock x:Name="TabAuthLabel" FontSize="13" Text="Auth" Foreground="{StaticResource TextMuted}"/>
             </Border>
 
             <StackPanel Grid.Column="5" Orientation="Horizontal" Spacing="12">
                 <Button x:Name="HistoryButton" Padding="16,10" Background="{StaticResource InputBackground}"
-                        Foreground="{StaticResource TextMuted}" CornerRadius="5" BorderThickness="0"
+                        Foreground="{StaticResource TextMuted}" CornerRadius="20" BorderThickness="0"
                         Click="OnHistoryButtonClick" Content="History"/>
                 <Button x:Name="CollectionsButton" Padding="16,10" Background="{StaticResource InputBackground}"
-                        Foreground="{StaticResource TextMuted}" CornerRadius="5" BorderThickness="0"
+                        Foreground="{StaticResource TextMuted}" CornerRadius="20" BorderThickness="0"
                         Click="OnCollectionsButtonClick" Content="Collections"/>
             </StackPanel>
         </Grid>
@@ -151,9 +161,9 @@ Background="#101713">
                 <Grid RowDefinitions="*">
                     
                     <Border x:Name="ContentParams" Background="{StaticResource CardBackground}"
-                            BorderBrush="{StaticResource BorderColor}" BorderThickness="1" CornerRadius="5">
+                            BorderBrush="{StaticResource BorderColor}" BorderThickness="1" CornerRadius="20">
                         <Grid RowDefinitions="Auto,Auto,*">
-                            <Border Grid.Row="0" Padding="20,16" Background="{StaticResource CardBackgroundAlt}">
+                            <Border Grid.Row="0" Padding="20,16" Background="{StaticResource CardBackgroundAlt}" CornerRadius="20,20,0,0">
                                 <Grid ColumnDefinitions="*,Auto">
                                     <TextBlock FontWeight="Bold" FontSize="14" Text="Query Parameters"
                                                Foreground="{StaticResource TextPrimary}"/>
@@ -184,9 +194,9 @@ Background="#101713">
                     </Border>
 
                     <Border x:Name="ContentHeaders" IsVisible="False" Background="{StaticResource CardBackground}"
-                            BorderBrush="{StaticResource BorderColor}" BorderThickness="1" CornerRadius="5">
+                            BorderBrush="{StaticResource BorderColor}" BorderThickness="1" CornerRadius="20">
                         <Grid RowDefinitions="Auto,Auto,*">
-                            <Border Grid.Row="0" Padding="20,16" Background="{StaticResource CardBackgroundAlt}">
+                            <Border Grid.Row="0" Padding="20,16" Background="{StaticResource CardBackgroundAlt}" CornerRadius="20,20,0,0">
                                 <Grid ColumnDefinitions="*,Auto">
                                     <TextBlock FontWeight="Bold" FontSize="14" Text="Headers"
                                                Foreground="{StaticResource TextPrimary}"/>
@@ -204,9 +214,9 @@ Background="#101713">
                     </Border>
 
                     <Border x:Name="ContentBody" IsVisible="False" Background="{StaticResource CardBackground}"
-                            BorderBrush="{StaticResource BorderColor}" BorderThickness="1" CornerRadius="5">
+                            BorderBrush="{StaticResource BorderColor}" BorderThickness="1" CornerRadius="20">
                         <Grid RowDefinitions="Auto,Auto,*">
-                            <Border Grid.Row="0" Padding="20,16" Background="{StaticResource CardBackgroundAlt}">
+                            <Border Grid.Row="0" Padding="20,16" Background="{StaticResource CardBackgroundAlt}" CornerRadius="20,20,0,0">
                                 <Grid ColumnDefinitions="*,Auto,Auto">
                                     <TextBlock FontWeight="Bold" FontSize="14" Text="Body"
                                                Foreground="{StaticResource TextPrimary}"/>
@@ -217,8 +227,8 @@ Background="#101713">
                                 </Grid>
                             </Border>
                             <Rectangle Grid.Row="1" Height="1" Fill="{StaticResource DividerColor}"/>
-                            <Border Grid.Row="2" Margin="20,16" Padding="20,16"
-                                    Background="{StaticResource InputBackground}" CornerRadius="5">
+                            <Border Grid.Row="2" Margin="16" Padding="20,16"
+                                    Background="{StaticResource InputBackground}" CornerRadius="20">
                                 <AvaloniaEdit:TextEditor ShowLineNumbers="True" FontSize="14" x:Name="RequestBodyEditor" SyntaxHighlighting="Json" FontFamily="Monospace"
                                                          Foreground="{StaticResource TextPrimary}" Background="Transparent"/> 
                             </Border>
@@ -226,9 +236,9 @@ Background="#101713">
                     </Border>
 
                     <Border x:Name="ContentAuth" IsVisible="False" Background="{StaticResource CardBackground}"
-                            BorderBrush="{StaticResource BorderColor}" BorderThickness="1" CornerRadius="5">
+                            BorderBrush="{StaticResource BorderColor}" BorderThickness="1" CornerRadius="20">
                         <Grid RowDefinitions="Auto,Auto,*">
-                            <Border Grid.Row="0" Padding="20,16" Background="{StaticResource CardBackgroundAlt}">
+                            <Border Grid.Row="0" Padding="20,16" Background="{StaticResource CardBackgroundAlt}" CornerRadius="20,20,0,0">
                                 <TextBlock FontWeight="Bold" FontSize="14" Text="Authentication"
                                            Foreground="{StaticResource TextPrimary}"/>
                             </Border>
@@ -243,9 +253,9 @@ Background="#101713">
                     </Border>
 
                     <Border x:Name="ContentHistory" IsVisible="False" Background="{StaticResource CardBackground}"
-                            BorderBrush="{StaticResource BorderColor}" BorderThickness="1" CornerRadius="5">
+                            BorderBrush="{StaticResource BorderColor}" BorderThickness="1" CornerRadius="20">
                         <Grid RowDefinitions="Auto,Auto,*">
-                            <Border Grid.Row="0" Padding="20,16" Background="{StaticResource CardBackgroundAlt}">
+                            <Border Grid.Row="0" Padding="20,16" Background="{StaticResource CardBackgroundAlt}" CornerRadius="20,20,0,0">
                                 <Grid ColumnDefinitions="*,Auto">
                                     <TextBlock FontWeight="Bold" FontSize="14" Text="History"
                                                Foreground="{StaticResource TextPrimary}"/>
@@ -272,9 +282,9 @@ Background="#101713">
                     </Border>
 
                     <Border x:Name="ContentCollections" IsVisible="False" Background="{StaticResource CardBackground}"
-                            BorderBrush="{StaticResource BorderColor}" BorderThickness="1" CornerRadius="5">
+                            BorderBrush="{StaticResource BorderColor}" BorderThickness="1" CornerRadius="20">
                         <Grid RowDefinitions="Auto,Auto,Auto,*">
-                            <Border Grid.Row="0" Padding="20,16" Background="{StaticResource CardBackgroundAlt}">
+                            <Border Grid.Row="0" Padding="20,16" Background="{StaticResource CardBackgroundAlt}" CornerRadius="20,20,0,0">
                                 <TextBlock FontWeight="Bold" FontSize="14" Text="Collections"
                                            Foreground="{StaticResource TextPrimary}"/>
                             </Border>
@@ -308,9 +318,9 @@ Background="#101713">
             </ScrollViewer>
 
             <Border Grid.Column="1" Background="{StaticResource CardBackground}"
-                    BorderBrush="{StaticResource BorderColor}" BorderThickness="1" CornerRadius="5">
+                    BorderBrush="{StaticResource BorderColor}" BorderThickness="1" CornerRadius="20">
                 <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,*">
-                    <Border Grid.Row="0" Padding="20,16" Background="{StaticResource CardBackgroundAlt}">
+                    <Border Grid.Row="0" Padding="20,16" Background="{StaticResource CardBackgroundAlt}" CornerRadius="20,20,0,0">
                         <Grid ColumnDefinitions="*,Auto">
                             <TextBlock FontWeight="Bold" FontSize="16" Text="Response"
                                        Foreground="{StaticResource TextPrimary}" VerticalAlignment="Center"/>
@@ -364,7 +374,7 @@ Background="#101713">
 
                     <Grid Grid.Row="5" Margin="20,16">
                         <Border x:Name="ResponseContent" Padding="20,16"
-                                Background="{StaticResource InputBackground}" CornerRadius="5">
+                                Background="{StaticResource InputBackground}" CornerRadius="20">
                             <ScrollViewer>
                                 <AvaloniaEdit:TextEditor ShowLineNumbers="True" IsReadOnly="True" FontSize="14" x:Name="ResponseLabel" SyntaxHighlighting="Json" FontFamily="Monospace"
                                                          Foreground="{StaticResource TextPrimary}" Background="Transparent"/> 
@@ -372,7 +382,7 @@ Background="#101713">
                         </Border>
                         
                         <Border x:Name="ResponseHeaders" Padding="20,16"
-                                Background="{StaticResource InputBackground}" CornerRadius="5">
+                                Background="{StaticResource InputBackground}" CornerRadius="20">
                             <ScrollViewer>
                                 <TextBlock x:Name="ResponseHeadersLabel" Text="Headers shown here..." FontSize="13" TextWrapping="Wrap"
                                            FontFamily="Consolas, Courier New, monospace"
@@ -381,7 +391,7 @@ Background="#101713">
                         </Border>
                         
                         <Border x:Name="ResponseCookies" Padding="20,16"
-                                Background="{StaticResource InputBackground}" CornerRadius="5">
+                                Background="{StaticResource InputBackground}" CornerRadius="20">
                             <ScrollViewer>
                                 <TextBlock x:Name="ResponseCookiesLabel" Text="Cookies shown here..." FontSize="13" TextWrapping="Wrap"
                                            FontFamily="Consolas, Courier New, monospace"
