@@ -16,6 +16,8 @@ using AvaloniaEdit.Document;
 using AvaloniaEdit.Highlighting;
 using AvaloniaEdit.Rendering;
 using AvaloniaApplication1.Helpers;
+using System.Collections.Generic;
+using System.Collections;
 
 namespace NitroHttp;
 
@@ -174,7 +176,6 @@ public partial class MainWindow : Window
                         });
                         inString = false;
                     }
-                                // editor.Options.IndentStyle = IndentStyle.Smart; // Removed unsupported IndentStyle assignment
                     continue;
                 }
 
@@ -337,7 +338,26 @@ public partial class MainWindow : Window
 
     private void DisplayResponse(string responseText, int statusCode, long elapsedMs)
     {
+        int count = 0;
+        try
+        {
+            using var doc = JsonDocument.Parse(responseText);
+            if (doc.RootElement.ValueKind == JsonValueKind.Array)
+            {
+                count = doc.RootElement.GetArrayLength();
+            }
+            else if (doc.RootElement.ValueKind == JsonValueKind.Object)
+            {
+                count = 1;
+            }
+        }
+        catch
+        {
+            count = 0;
+        }
+
         ResponseLabel.Text = TryFormatJson(responseText);
+        ResponseCount.Text = count.ToString();
         ResponseTime.Text = $"{elapsedMs}ms";
         ResponseSize.Text = FormatBytes.Format(Encoding.UTF8.GetByteCount(responseText));
         UpdateStatus(statusCode);
