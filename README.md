@@ -2,4 +2,4 @@
 
 <h3 align="center">A modern, minimal Lightweight API Testing Tool</h3>
 
-<img width="1964" height="1085" alt="Screenshot from 2026-02-27 23-30-41" src="https://github.com/user-attachments/assets/569280c1-6459-4fb4-b1bf-b4518bc2c824" />
+<img width="2072" height="1193" alt="image" src="https://github.com/user-attachments/assets/d5ff846e-7019-4c2a-b084-1eff6f70f188" />
