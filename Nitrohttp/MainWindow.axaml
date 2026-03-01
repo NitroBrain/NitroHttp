@@ -176,15 +176,15 @@ Background="#101713">
                                 <Border Padding="20,16">
                                     <StackPanel Spacing="12">
                                         <Grid ColumnDefinitions="*,*,Auto">
-                                            <Border Grid.Column="0" Padding="12,8" Background="{StaticResource InputBackground}" CornerRadius="5">
+                                            <Border Grid.Column="0" Padding="12,8" Background="{StaticResource InputBackground}" CornerRadius="20">
                                                 <TextBox Background="Transparent" FontSize="13" Watermark="key"
-                                                Foreground="{StaticResource TextPrimary}" BorderThickness="0"/>
+                                                Foreground="{StaticResource TextPrimary}" BorderThickness="0" CornerRadius="20"/>
                                             </Border>
-                                            <Border Grid.Column="1" Margin="12,0" Padding="12,8" Background="{StaticResource InputBackground}" CornerRadius="5">
+                                            <Border Grid.Column="1" Margin="12,0" Padding="12,8" Background="{StaticResource InputBackground}" CornerRadius="20">
                                                 <TextBox Background="Transparent" FontSize="13" Watermark="value"
-                                                Foreground="{StaticResource TextPrimary}" BorderThickness="0"/>
+                                                Foreground="{StaticResource TextPrimary}" BorderThickness="0" CornerRadius="20"/>
                                             </Border>
-                                            <TextBlock Grid.Column="2" FontSize="20" Text="�"
+                                            <TextBlock Grid.Column="2" FontSize="20" Text="⨉"
                                                        Foreground="{StaticResource TextMuted}" VerticalAlignment="Center"/>
                                         </Grid>
                                     </StackPanel>
@@ -206,7 +206,7 @@ Background="#101713">
                             </Border>
                             <Rectangle Grid.Row="1" Height="1" Fill="{StaticResource DividerColor}"/>
                             <Border Grid.Row="2" Margin="20,16" Padding="20,16"
-                                    Background="{StaticResource InputBackground}" CornerRadius="5">
+                                    Background="{StaticResource InputBackground}" CornerRadius="20">
                                 <AvaloniaEdit:TextEditor ShowLineNumbers="True" FontSize="14"  SyntaxHighlighting="Json" FontFamily="Monospace"
                                                          Foreground="{StaticResource TextPrimary}" Background="Transparent"/> 
                             </Border>
@@ -244,7 +244,7 @@ Background="#101713">
                             </Border>
                             <Rectangle Grid.Row="1" Height="1" Fill="{StaticResource DividerColor}"/>
                             <Border Grid.Row="2" Margin="20,16" Padding="20,16"
-                                    Background="{StaticResource InputBackground}" CornerRadius="5">
+                                    Background="{StaticResource InputBackground}" CornerRadius="20">
                                 <TextBox AcceptsReturn="True" Background="Transparent" FontSize="13"
                                 Watermark="Bearer token or API key"
                                 Foreground="{StaticResource TextPrimary}" BorderThickness="0"/>
@@ -335,7 +335,7 @@ Background="#101713">
 
                     <Border Grid.Row="2" Padding="20,16" Background="{StaticResource PageBackground}">
                         <Grid ColumnDefinitions="Auto,*,Auto,Auto,Auto,Auto,Auto">
-                            <Border Grid.Column="0" Padding="12,6" Background="{StaticResource InputBackground}" CornerRadius="6">
+                            <Border Grid.Column="0" Padding="12,6" Background="{StaticResource InputBackground}" CornerRadius="20">
                                 <TextBlock x:Name="Status" FontWeight="Bold" FontSize="12" Text="NULL"
                                            Foreground="{StaticResource TextMuted}"/>
                             </Border>
@@ -400,7 +400,7 @@ Background="#101713">
                         </Border>
 
                         <Border x:Name="LoadingOverlay" IsVisible="False"
-                                Background="#8A0E1311" CornerRadius="8">
+                                Background="#8A0E1311" CornerRadius="20">
                             <Border HorizontalAlignment="Center" VerticalAlignment="Center"
                                     MinWidth="260" Padding="20,16"
                                     Background="{StaticResource CardBackgroundAlt}"
