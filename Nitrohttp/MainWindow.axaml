@@ -103,6 +103,7 @@ Background="#101713">
                 Foreground="{StaticResource AccentPrimary}"
                 Watermark="https://api.example.com/v1/endpoint"
                 Text="http://jsonplaceholder.typicode.com/users/1"
+                TextChanged="OnApiUrlTextChanged"
                 VerticalAlignment="Center"
                 Padding="12"
                 BorderThickness="0"/>
@@ -168,24 +169,30 @@ Background="#101713">
                                     <TextBlock FontWeight="Bold" FontSize="14" Text="Query Parameters"
                                                Foreground="{StaticResource TextPrimary}"/>
                                     <TextBlock Grid.Column="1" FontSize="13" Text="+ Add"
-                                               Foreground="{StaticResource AccentPrimary}"/>
+                                               Foreground="{StaticResource AccentPrimary}"
+                                               Cursor="Hand"
+                                               PointerPressed="OnAddQueryParamClick"/>
                                 </Grid>
                             </Border>
                             <Rectangle Grid.Row="1" Height="1" Fill="{StaticResource DividerColor}"/>
                             <ScrollViewer Grid.Row="2">
                                 <Border Padding="20,16">
-                                    <StackPanel Spacing="12">
+                                    <StackPanel x:Name="QueryParamsPanel" Spacing="12">
                                         <Grid ColumnDefinitions="*,*,Auto">
                                             <Border Grid.Column="0" Padding="12,8" Background="{StaticResource InputBackground}" CornerRadius="20">
-                                                <TextBox Background="Transparent" FontSize="13" Watermark="key"
+                                                <TextBox x:Name="QueryParamKeyBox" Background="Transparent" FontSize="13" Watermark="key"
+                                                TextChanged="OnQueryParamTextChanged"
                                                 Foreground="{StaticResource TextPrimary}" BorderThickness="0" CornerRadius="20"/>
                                             </Border>
                                             <Border Grid.Column="1" Margin="12,0" Padding="12,8" Background="{StaticResource InputBackground}" CornerRadius="20">
-                                                <TextBox Background="Transparent" FontSize="13" Watermark="value"
+                                                <TextBox x:Name="QueryParamValueBox" Background="Transparent" FontSize="13" Watermark="value"
+                                                TextChanged="OnQueryParamTextChanged"
                                                 Foreground="{StaticResource TextPrimary}" BorderThickness="0" CornerRadius="20"/>
                                             </Border>
                                             <TextBlock Grid.Column="2" FontSize="20" Text="⨉"
-                                                       Foreground="{StaticResource TextMuted}" VerticalAlignment="Center"/>
+                                                       Foreground="{StaticResource TextMuted}" VerticalAlignment="Center"
+                                                       Cursor="Hand"
+                                                       PointerPressed="OnRemoveQueryParamClick"/>
                                         </Grid>
                                     </StackPanel>
                                 </Border>
