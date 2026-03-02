@@ -320,6 +320,7 @@ public partial class MainWindow : Window
         editor.TextArea.TextView.LinkTextUnderline = false;
         editor.Options.ShowTabs = true;
         editor.Options.ShowSpaces = true;
+        editor.Options.HighlightCurrentLine = true;
         editor.Options.IndentationSize = 2;
 
         var transformers = editor.TextArea.TextView.LineTransformers;
