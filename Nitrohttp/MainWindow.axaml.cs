@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
@@ -35,6 +36,8 @@ public partial class MainWindow : Window
     private string _activeTab = "Body";
     private string _responseActiveTab = "Content";
     private RequestStore _requestStore = new();
+    private bool _isSyncingUrlFromParams;
+    private string _manualBaseUrl = string.Empty;
 
     public ObservableCollection<RequestEntry> HistoryItems { get; } = [];
     public ObservableCollection<RequestEntry> CollectionItems { get; } = [];
@@ -58,6 +61,204 @@ public partial class MainWindow : Window
         UpdateTabVisibility();
         UpdateResponseTabVisibility();
         UpdateStorageButtonStyles();
+
+        _manualBaseUrl = ExtractBaseUrl(ApiUrl.Text);
+        SyncUrlFromQueryParams();
+    }
+
+    private void OnAddQueryParamClick(object? sender, PointerPressedEventArgs e)
+    {
+        QueryParamsPanel.Children.Add(CreateQueryParamRow());
+        SyncUrlFromQueryParams();
+    }
+
+    private void OnRemoveQueryParamClick(object? sender, PointerPressedEventArgs e)
+    {
+        if (sender is not TextBlock removeButton || removeButton.Parent is not Grid row)
+        {
+            return;
+        }
+
+        if (QueryParamsPanel.Children.Count <= 1)
+        {
+            if (TryGetQueryParamInputs(row, out var keyTextBox, out var valueTextBox))
+            {
+                keyTextBox.Text = string.Empty;
+                valueTextBox.Text = string.Empty;
+            }
+        }
+        else
+        {
+            QueryParamsPanel.Children.Remove(row);
+        }
+
+        SyncUrlFromQueryParams();
+    }
+
+    private void OnQueryParamTextChanged(object? sender, TextChangedEventArgs e)
+    {
+        SyncUrlFromQueryParams();
+    }
+
+    private void OnApiUrlTextChanged(object? sender, TextChangedEventArgs e)
+    {
+        if (_isSyncingUrlFromParams)
+        {
+            return;
+        }
+
+        _manualBaseUrl = ExtractBaseUrl(ApiUrl.Text);
+    }
+
+    private Grid CreateQueryParamRow()
+    {
+        var keyTextBox = new TextBox
+        {
+            Background = Brushes.Transparent,
+            FontSize = 13,
+            Watermark = "key",
+            Foreground = Brushes.White,
+            BorderThickness = new Thickness(0),
+            CornerRadius = new CornerRadius(20)
+        };
+        keyTextBox.TextChanged += OnQueryParamTextChanged;
+
+        var valueTextBox = new TextBox
+        {
+            Background = Brushes.Transparent,
+            FontSize = 13,
+            Watermark = "value",
+            Foreground = Brushes.White,
+            BorderThickness = new Thickness(0),
+            CornerRadius = new CornerRadius(20)
+        };
+        valueTextBox.TextChanged += OnQueryParamTextChanged;
+
+        var row = new Grid
+        {
+            ColumnDefinitions = new ColumnDefinitions("*,*,Auto")
+        };
+
+        var keyBorder = new Border
+        {
+            Padding = new Thickness(12, 8),
+            Background = this.FindResource("InputBackground") as IBrush ?? new SolidColorBrush(Color.Parse("#1F2F27")),
+            CornerRadius = new CornerRadius(20),
+            Child = keyTextBox
+        };
+        Grid.SetColumn(keyBorder, 0);
+        row.Children.Add(keyBorder);
+
+        var valueBorder = new Border
+        {
+            Margin = new Thickness(12, 0),
+            Padding = new Thickness(12, 8),
+            Background = this.FindResource("InputBackground") as IBrush ?? new SolidColorBrush(Color.Parse("#1F2F27")),
+            CornerRadius = new CornerRadius(20),
+            Child = valueTextBox
+        };
+        Grid.SetColumn(valueBorder, 1);
+        row.Children.Add(valueBorder);
+
+        var removeText = new TextBlock
+        {
+            FontSize = 20,
+            Text = "⨉",
+            Foreground = this.FindResource("TextMuted") as IBrush ?? new SolidColorBrush(Color.Parse("#95A79C")),
+            VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
+            Cursor = new Cursor(StandardCursorType.Hand)
+        };
+        removeText.PointerPressed += OnRemoveQueryParamClick;
+        Grid.SetColumn(removeText, 2);
+        row.Children.Add(removeText);
+
+        return row;
+    }
+
+    private void SyncUrlFromQueryParams()
+    {
+        var baseUrl = string.IsNullOrWhiteSpace(_manualBaseUrl)
+            ? ExtractBaseUrl(ApiUrl.Text)
+            : _manualBaseUrl;
+
+        var queryParts = QueryParamsPanel.Children
+            .OfType<Grid>()
+            .Select(TryGetQueryParamPair)
+            .Where(pair => pair.HasValue)
+            .Select(pair => pair!.Value)
+            .Select(pair => $"{Uri.EscapeDataString(pair.Key)}={Uri.EscapeDataString(pair.Value)}")
+            .ToList();
+
+        var nextUrl = baseUrl;
+        if (queryParts.Count > 0)
+        {
+            nextUrl = $"{baseUrl}?{string.Join("&", queryParts)}";
+        }
+
+        if (string.Equals(ApiUrl.Text, nextUrl, StringComparison.Ordinal))
+        {
+            return;
+        }
+
+        _isSyncingUrlFromParams = true;
+        try
+        {
+            ApiUrl.Text = nextUrl;
+        }
+        finally
+        {
+            _isSyncingUrlFromParams = false;
+        }
+    }
+
+    private static string ExtractBaseUrl(string? fullUrl)
+    {
+        if (string.IsNullOrWhiteSpace(fullUrl))
+        {
+            return string.Empty;
+        }
+
+        var text = fullUrl.Trim();
+        var questionMarkIndex = text.IndexOf('?');
+        return questionMarkIndex >= 0 ? text[..questionMarkIndex] : text;
+    }
+
+    private static KeyValuePair<string, string>? TryGetQueryParamPair(Grid row)
+    {
+        if (!TryGetQueryParamInputs(row, out var keyTextBox, out var valueTextBox))
+        {
+            return null;
+        }
+
+        var key = keyTextBox.Text?.Trim() ?? string.Empty;
+        if (string.IsNullOrWhiteSpace(key))
+        {
+            return null;
+        }
+
+        var value = valueTextBox.Text ?? string.Empty;
+        return new KeyValuePair<string, string>(key, value);
+    }
+
+    private static bool TryGetQueryParamInputs(Grid row, out TextBox keyTextBox, out TextBox valueTextBox)
+    {
+        keyTextBox = null!;
+        valueTextBox = null!;
+
+        var borders = row.Children.OfType<Border>().ToList();
+        if (borders.Count < 2)
+        {
+            return false;
+        }
+
+        if (borders[0].Child is not TextBox first || borders[1].Child is not TextBox second)
+        {
+            return false;
+        }
+
+        keyTextBox = first;
+        valueTextBox = second;
+        return true;
     }
 
     private void ApplyJsonEditorColors()
