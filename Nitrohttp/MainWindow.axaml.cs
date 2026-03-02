@@ -18,6 +18,7 @@ using AvaloniaEdit.Rendering;
 using AvaloniaApplication1.Helpers;
 using System.Collections.Generic;
 using System.Collections;
+using System.Net;
 
 namespace NitroHttp;
 
@@ -25,6 +26,7 @@ public partial class MainWindow : Window
 {
     private const int MaxHistoryItems = 50;
     private readonly HttpClient _httpClient = new();
+    private readonly CookieContainer _cookieContainer = new();
     private readonly string _storePath = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
         "NitroHttp",
@@ -39,6 +41,14 @@ public partial class MainWindow : Window
 
     public MainWindow()
     {
+       var handler = new HttpClientHandler
+        {
+            CookieContainer = _cookieContainer,
+            UseCookies = true
+        };
+
+        _httpClient = new HttpClient(handler);
+
         InitializeComponent();
         ApplyJsonEditorColors();
         HistoryList.ItemsSource = HistoryItems;
@@ -336,7 +346,7 @@ public partial class MainWindow : Window
         ResponseContent.IsVisible = !isLoading;
     }
 
-    private void DisplayResponse(string responseText, int statusCode, long elapsedMs)
+    private void DisplayResponse(string responseText, int statusCode, long elapsedMs, string? responseHeaders = "", string? responseCookies = "")
     {
         int count = 0;
         try
@@ -360,6 +370,10 @@ public partial class MainWindow : Window
         ResponseCount.Text = count.ToString();
         ResponseTime.Text = $"{elapsedMs}ms";
         ResponseSize.Text = FormatBytes.Format(Encoding.UTF8.GetByteCount(responseText));
+
+        ResponseHeadersLabel.Text = responseHeaders;
+        ResponseCookiesLabel.Text = responseCookies;
+
         UpdateStatus(statusCode);
     }
 
@@ -434,6 +448,33 @@ public partial class MainWindow : Window
         }
     }
 
+    private Task<string> GetHeadersAsync(HttpResponseMessage responseMessage)
+    {
+        var allHeaders = responseMessage.Headers
+            .Concat(responseMessage.Content.Headers)
+            .Select(h => $"{h.Key}: {string.Join(",", h.Value)}");
+
+        string responseHeaders = string.Join(Environment.NewLine, allHeaders);
+
+        return Task.FromResult(responseHeaders);
+    }
+
+    private Task<string> GetCookiesAsync(string url)
+    {
+        var uri = new Uri(url);
+
+        var cookies = _cookieContainer.GetCookies(uri)
+            .Cast<Cookie>()
+            .Select(c => $"{c.Name}: {c.Value}")
+            .ToList();
+
+        string responseCookies = cookies.Any()
+            ? string.Join(Environment.NewLine, cookies)
+            : "No Cookies";
+
+        return Task.FromResult(responseCookies);
+    }
+
     private async Task GetAsync()
     {
         if (string.IsNullOrEmpty(ApiUrl.Text))
@@ -441,7 +482,6 @@ public partial class MainWindow : Window
             ResponseLabel.Text = "Error: URL is empty";
             return;
         }
-
         try
         {
             var stopwatch = Stopwatch.StartNew();
@@ -449,7 +489,12 @@ public partial class MainWindow : Window
             stopwatch.Stop();
 
             string responseText = await responseMessage.Content.ReadAsStringAsync();
-            DisplayResponse(responseText, (int)responseMessage.StatusCode, stopwatch.ElapsedMilliseconds);
+
+            string responseHeaders = await GetHeadersAsync(responseMessage);
+
+            string responseCookies = await GetCookiesAsync(ApiUrl.Text);
+
+            DisplayResponse(responseText, (int)responseMessage.StatusCode, stopwatch.ElapsedMilliseconds, responseHeaders, responseCookies);
         }
         catch (Exception ex)
         {
