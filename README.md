@@ -1,4 +1,4 @@
-<img width="9294" height="2010" alt="Frame@2x1" src="https://github.com/user-attachments/assets/8a7ee895-3044-424b-ba2a-fc36af6b56b5" />
+<img width="9294" height="2010" alt="Frame@2x" src="https://github.com/user-attachments/assets/3684cad3-3c2c-4787-abf4-90d0a7e3310b" />
 
 <h3 align="center">A modern, minimal Lightweight API Testing Tool</h3>
 
