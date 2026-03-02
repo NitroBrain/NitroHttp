@@ -4,7 +4,7 @@ set -euo pipefail
 PROJECT="Nitrohttp.csproj"
 CONFIGURATION="Release"
 RUNTIME="linux-x64"
-APP_NAME="Nitrohttp"
+APP_NAME="NitroHttp"
 PACKAGE_NAME="nitrohttp"
 ARCH="amd64"
 VERSION="${1:-1.0.0}"
