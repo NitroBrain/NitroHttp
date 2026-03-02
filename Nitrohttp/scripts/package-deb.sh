@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PROJECT="Nitrohttp.csproj"
+PROJECT="NitroHttp.csproj"
 CONFIGURATION="Release"
 RUNTIME="linux-x64"
 APP_NAME="NitroHttp"
@@ -51,9 +51,9 @@ Version: ${VERSION}
 Section: net
 Priority: optional
 Architecture: ${ARCH}
-Maintainer: Nitrohttp <support@example.com>
+Maintainer: NitroHttp <support@example.com>
 Depends: libc6
-Description: Nitrohttp desktop HTTP client
+Description: NitroHttp desktop HTTP client
 EOF
 
 cat > "$PKG_ROOT/usr/share/applications/${PACKAGE_NAME}.desktop" <<EOF

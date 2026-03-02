@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PROJECT="Nitrohttp.csproj"
+PROJECT="NitroHttp.csproj"
 CONFIGURATION="Release"
 
 publish_target () {
