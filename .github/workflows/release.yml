@@ -20,6 +20,14 @@ jobs:
         with:
           dotnet-version: 10.0.x
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install Python dependencies
+        run: python3 -m pip install --upgrade pillow
+
       - name: Build .deb
         run: |
           chmod +x scripts/package-deb.sh
@@ -56,7 +64,11 @@ jobs:
         shell: pwsh
         run: |
           $version = $env:GITHUB_REF_NAME.Substring(1)
-          iscc /DMyAppVersion=$version installer\windows\Nitrohttp.iss
+          $isccPath = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
+          if (-not (Test-Path $isccPath)) {
+            throw "Inno Setup compiler not found at: $isccPath"
+          }
+          & $isccPath "/DMyAppVersion=$version" "installer\windows\NitroHttp.iss"
 
       - name: Upload installer artifact
         uses: actions/upload-artifact@v4
