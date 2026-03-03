@@ -68,7 +68,13 @@ jobs:
           if (-not (Test-Path $isccPath)) {
             throw "Inno Setup compiler not found at: $isccPath"
           }
-          & $isccPath "/DMyAppVersion=$version" "installer\windows\NitroHttp.iss"
+          Push-Location "installer\windows"
+          try {
+            & $isccPath "/DMyAppVersion=$version" "NitroHttp.iss"
+          }
+          finally {
+            Pop-Location
+          }
 
       - name: Upload installer artifact
         uses: actions/upload-artifact@v4

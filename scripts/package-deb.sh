@@ -31,6 +31,11 @@ mkdir -p "$PKG_ROOT/DEBIAN" "$PKG_ROOT/usr/bin" "$PKG_ROOT/usr/share/application
 
 install -m 755 "$PUBLISH_DIR/${APP_NAME}" "$PKG_ROOT/usr/bin/${PACKAGE_NAME}"
 
+if ! python3 -c "import PIL" >/dev/null 2>&1; then
+  echo "Pillow not found. Installing..."
+  python3 -m pip install --upgrade pillow
+fi
+
 python3 - <<PY
 from PIL import Image
 
