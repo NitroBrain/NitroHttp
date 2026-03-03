@@ -2,10 +2,6 @@
 
 <h3 align="center">A modern, minimal lightweight API testing tool</h3>
 
-<img width="2072" height="1193" alt="image" src="https://github.com/user-attachments/assets/d5ff846e-7019-4c2a-b084-1eff6f70f188" />
-
----
-
 ## NitroHttp
 
 NitroHttp is a desktop HTTP client for fast API testing.
@@ -15,6 +11,8 @@ It focuses on a clean UI and practical workflows:
 - Build query parameters visually
 - Inspect response body, status, time, size, headers, and cookies
 - Persist recent requests (history) and reusable requests (collections)
+
+<img width="2072" height="1193" alt="image" src="https://github.com/user-attachments/assets/d5ff846e-7019-4c2a-b084-1eff6f70f188" />
 
 ## Features
 
