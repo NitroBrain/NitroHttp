@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
@@ -274,83 +275,139 @@ public partial class MainWindow : Window
             return;
         }
 
+        var keyBrush = new SimpleHighlightingBrush(Color.Parse("#00E5A8"));
+        var stringBrush = new SimpleHighlightingBrush(Color.Parse("#FFD166"));
+        var numberBrush = new SimpleHighlightingBrush(Color.Parse("#7EE787"));
+        var keywordBrush = new SimpleHighlightingBrush(Color.Parse("#86EFAC"));
+        var booleanNullBrush = new SimpleHighlightingBrush(Color.Parse("#FBBF24"));
+        var punctuationBrush = new SimpleHighlightingBrush(Color.Parse("#E6EDF3"));
+
         foreach (var color in editor.SyntaxHighlighting.NamedHighlightingColors)
         {
-            if (color.Name is null)
+            var name = color.Name;
+            if (string.IsNullOrWhiteSpace(name))
             {
                 continue;
             }
 
-            var name = color.Name;
             if (name.Contains("PropertyName", StringComparison.OrdinalIgnoreCase) ||
+                name.Contains("Property", StringComparison.OrdinalIgnoreCase) ||
+                name.Contains("Attribute", StringComparison.OrdinalIgnoreCase) ||
                 name.Contains("Tag", StringComparison.OrdinalIgnoreCase))
             {
-                color.Foreground = new SimpleHighlightingBrush(Color.Parse("#bf67c2"));
+                color.Foreground = keyBrush;
                 continue;
             }
 
             if (name.Contains("String", StringComparison.OrdinalIgnoreCase) ||
+                name.Contains("Char", StringComparison.OrdinalIgnoreCase) ||
                 name.Contains("Value", StringComparison.OrdinalIgnoreCase))
             {
-                color.Foreground = new SimpleHighlightingBrush(Color.Parse("#FFD166"));
+                color.Foreground = stringBrush;
                 continue;
             }
 
             if (name.Contains("Number", StringComparison.OrdinalIgnoreCase))
             {
-                color.Foreground = new SimpleHighlightingBrush(Color.Parse("#5ba769"));
+                color.Foreground = numberBrush;
                 continue;
             }
 
-            if (name.Contains("Keyword", StringComparison.OrdinalIgnoreCase))
+            if (name.Contains("Keyword", StringComparison.OrdinalIgnoreCase) ||
+                name.Contains("Literal", StringComparison.OrdinalIgnoreCase))
             {
-                color.Foreground = new SimpleHighlightingBrush(Color.Parse("#FFFFFF"));
+                color.Foreground = keywordBrush;
                 continue;
             }
 
             if (name.Contains("Boolean", StringComparison.OrdinalIgnoreCase) ||
                 name.Contains("Null", StringComparison.OrdinalIgnoreCase))
             {
-                color.Foreground = new SimpleHighlightingBrush(Color.Parse("#5ba769"));
+                color.Foreground = booleanNullBrush;
+                continue;
+            }
+
+            if (name.Contains("Bracket", StringComparison.OrdinalIgnoreCase) ||
+                name.Contains("Operator", StringComparison.OrdinalIgnoreCase) ||
+                name.Contains("Delimiter", StringComparison.OrdinalIgnoreCase) ||
+                name.Contains("Punctuation", StringComparison.OrdinalIgnoreCase))
+            {
+                color.Foreground = punctuationBrush;
             }
         }
 
         editor.Foreground = new SolidColorBrush(Color.Parse("#FFFFFF"));
         editor.TextArea.TextView.LinkTextForegroundBrush = new SolidColorBrush(Color.Parse("#5ba769"));
         editor.TextArea.TextView.LinkTextUnderline = false;
+        editor.TextArea.TextView.CurrentLineBackground = new SolidColorBrush(Color.Parse("#151f1a"));
+        editor.TextArea.TextView.CurrentLineBorder = new Pen(new SolidColorBrush(Colors.Transparent), 1);
+
+        if (!editor.TextArea.TextView.LineTransformers.OfType<JsonKeyColorizer>().Any())
+        {
+            editor.TextArea.TextView.LineTransformers.Add(new JsonKeyColorizer(new SolidColorBrush(Color.Parse("#00E5A8"))));
+        }
+
+        if (!editor.TextArea.TextView.LineTransformers.OfType<JsonBooleanNullColorizer>().Any())
+        {
+            editor.TextArea.TextView.LineTransformers.Add(new JsonBooleanNullColorizer(new SolidColorBrush(Color.Parse("#FBBF24"))));
+        }
+
         editor.Options.ShowTabs = true;
         editor.Options.ShowSpaces = true;
         editor.Options.HighlightCurrentLine = true;
         editor.Options.IndentationSize = 2;
-
-        var transformers = editor.TextArea.TextView.LineTransformers;
-        for (var i = transformers.Count - 1; i >= 0; i--)
-        {
-            if (transformers[i] is JsonTokenColorizer)
-            {
-                transformers.RemoveAt(i);
-            }
-        }
-
-        transformers.Add(new JsonTokenColorizer());
     }
 
-    private sealed class JsonTokenColorizer : DocumentColorizingTransformer
+    private sealed class JsonKeyColorizer : DocumentColorizingTransformer
     {
-        private static readonly IBrush KeyBrush = new SolidColorBrush(Color.Parse("#bf67c2"));
-        private static readonly IBrush ValueBrush = new SolidColorBrush(Color.Parse("#5ba769"));
-        private static readonly IBrush PunctuationBrush = new SolidColorBrush(Color.Parse("#FFFFFF"));
+        private static readonly Regex JsonKeyRegex = new("\"(?:\\\\.|[^\"\\\\])*\"\\s*:", RegexOptions.Compiled);
+        private readonly IBrush _keyBrush;
+
+        public JsonKeyColorizer(IBrush keyBrush)
+        {
+            _keyBrush = keyBrush;
+        }
 
         protected override void ColorizeLine(DocumentLine line)
         {
-            var text = CurrentContext.Document.GetText(line);
+            var lineText = CurrentContext.Document.GetText(line);
+            foreach (Match match in JsonKeyRegex.Matches(lineText))
+            {
+                var colonIndex = lineText.IndexOf(':', match.Index);
+                if (colonIndex <= match.Index)
+                {
+                    continue;
+                }
+
+                var start = line.Offset + match.Index;
+                var end = line.Offset + colonIndex;
+
+                ChangeLinePart(start, end, element =>
+                {
+                    element.TextRunProperties.SetForegroundBrush(_keyBrush);
+                });
+            }
+        }
+    }
+
+    private sealed class JsonBooleanNullColorizer : DocumentColorizingTransformer
+    {
+        private readonly IBrush _valueBrush;
+
+        public JsonBooleanNullColorizer(IBrush valueBrush)
+        {
+            _valueBrush = valueBrush;
+        }
+
+        protected override void ColorizeLine(DocumentLine line)
+        {
+            var lineText = CurrentContext.Document.GetText(line);
             var inString = false;
             var escaped = false;
-            var stringStart = -1;
 
-            for (var i = 0; i < text.Length; i++)
+            for (var index = 0; index < lineText.Length; index++)
             {
-                var ch = text[i];
+                var ch = lineText[index];
 
                 if (inString)
                 {
@@ -368,46 +425,41 @@ public partial class MainWindow : Window
 
                     if (ch == '"')
                     {
-                        var isKey = false;
-                        for (var j = i + 1; j < text.Length; j++)
-                        {
-                            if (char.IsWhiteSpace(text[j]))
-                            {
-                                continue;
-                            }
-
-                            isKey = text[j] == ':';
-                            break;
-                        }
-
-                        var start = line.Offset + stringStart;
-                        var end = line.Offset + i + 1;
-                        ChangeLinePart(start, end, element =>
-                        {
-                            element.TextRunProperties.SetForegroundBrush(isKey ? KeyBrush : ValueBrush);
-                        });
                         inString = false;
                     }
+
                     continue;
                 }
 
                 if (ch == '"')
                 {
                     inString = true;
-                    stringStart = i;
-                    escaped = false;
                     continue;
                 }
 
-                if (ch is '{' or '}' or '[' or ']' or ':' or ',')
+                if (!char.IsLetter(ch))
                 {
-                    var start = line.Offset + i;
-                    var end = start + 1;
-                    ChangeLinePart(start, end, element =>
+                    continue;
+                }
+
+                var start = index;
+                while (index < lineText.Length && char.IsLetter(lineText[index]))
+                {
+                    index++;
+                }
+
+                var token = lineText[start..index];
+                if (token is "true" or "false" or "null")
+                {
+                    var offsetStart = line.Offset + start;
+                    var offsetEnd = line.Offset + index;
+                    ChangeLinePart(offsetStart, offsetEnd, element =>
                     {
-                        element.TextRunProperties.SetForegroundBrush(PunctuationBrush);
+                        element.TextRunProperties.SetForegroundBrush(_valueBrush);
                     });
                 }
+
+                index--;
             }
         }
     }
