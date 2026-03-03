@@ -157,16 +157,6 @@ Stored model:
 - **JSON not formatted**: response is likely not valid JSON; NitroHttp shows raw text.
 - **Packaging fails on Linux**: verify `dpkg-deb`, `python3`, and `pip` are installed.
 
-## Contributing
-
-Contributions are welcome.
-
-Suggested flow:
-1. Create a feature branch.
-2. Keep changes focused and minimal.
-3. Build and run locally.
-4. Open a pull request with screenshots for UI changes.
-
 ## Roadmap ideas
 
 - Apply custom request headers from the Headers tab
