@@ -102,7 +102,6 @@ Background="#101713">
                 Background="{StaticResource InputBackground}"
                 Foreground="{StaticResource AccentPrimary}"
                 Watermark="https://api.example.com/v1/endpoint"
-                Text="http://jsonplaceholder.typicode.com/users/1"
                 TextChanged="OnApiUrlTextChanged"
                 VerticalAlignment="Center"
                 Padding="12"
