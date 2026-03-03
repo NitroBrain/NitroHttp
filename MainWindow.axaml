@@ -5,7 +5,7 @@ xmlns:AvaloniaEditEditing="clr-namespace:AvaloniaEdit.Editing;assembly=AvaloniaE
 xmlns:helpers="clr-namespace:AvaloniaApplication1.Helpers"
 Icon="avares://NitroHttp/Assets/app.ico"
 x:Class="NitroHttp.MainWindow"
-Title="NitroHttp (Beta)"
+Title="NitroHttp"
 Width="1100" Height="600"
 MinWidth="600" MinHeight="500"
 Background="#101713">
