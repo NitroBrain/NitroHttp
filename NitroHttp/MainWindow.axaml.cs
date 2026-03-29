@@ -17,11 +17,10 @@ using AvaloniaEdit;
 using AvaloniaEdit.Document;
 using AvaloniaEdit.Highlighting;
 using AvaloniaEdit.Rendering;
-using AvaloniaApplication1.Helpers;
 using System.Collections.Generic;
-using System.Collections;
 using System.Net;
 using Avalonia.Threading;
+using NitroHttp.Core.Helpers;
 
 namespace NitroHttp;
 
@@ -789,7 +788,6 @@ public partial class MainWindow : Window
 
       stopwatch.Stop();
 
-      // Offload heavy processing
       _ = Task.Run(() =>
       {
         var formatted = TryFormatJson(responseText);

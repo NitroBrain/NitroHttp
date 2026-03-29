@@ -1,7 +1,7 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using AvaloniaApplication1;
+using NitroHttp;
 
 namespace NitroHttp;
 
