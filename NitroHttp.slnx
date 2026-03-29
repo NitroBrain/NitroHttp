@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="NitroHttp.Cli/NitroHttp.Cli.csproj" />
+  <Project Path="NitroHttp.Core/NitroHttp.Core.csproj" />
+  <Project Path="NitroHttp/NitroHttp.csproj" />
+</Solution>
