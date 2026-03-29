@@ -25,4 +25,8 @@
   <ItemGroup>
     <Folder Include="Helpers\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NitroHttp.Core\NitroHttp.Core.csproj" />
+  </ItemGroup>
 </Project>
