@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-
-namespace AvaloniaApplication1.Helpers;
+namespace NitroHttp.Core.Helpers;
 
 public sealed class RequestEntry
 {

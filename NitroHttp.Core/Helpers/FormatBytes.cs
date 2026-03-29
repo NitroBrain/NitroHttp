@@ -1,4 +1,4 @@
-namespace AvaloniaApplication1.Helpers;
+namespace NitroHttp.Core.Helpers;
 
 public static class FormatBytes
 {
