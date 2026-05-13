@@ -4,6 +4,12 @@
     <ProjectReference Include="..\NitroHttp.Core\NitroHttp.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="NTokenizers.Extensions.Spectre.Console" Version="2.2.0" />
+    <PackageReference Include="Spectre.Console.Json" Version="0.54.0" />
+    <PackageReference Include="System.CommandLine" Version="2.0.5" />
+  </ItemGroup>
+
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net10.0</TargetFramework>
