@@ -658,7 +658,7 @@ public partial class MainWindow : Window
     }
     else
     {
-      ResponseLabel.Text = TryFormatJson(responseText);
+      ResponseLabel.Text = FormatJson.TryFormatJson(responseText);
     }
     ResponseCount.Text = count.ToString();
     ResponseTime.Text = $"{elapsedMs}ms";
@@ -681,19 +681,6 @@ public partial class MainWindow : Window
       _ => Color.Parse("#6B6B6B")
     });
     Status.Text = HttpStatusHelper.GetStatusText(statusCode);
-  }
-
-  private static string TryFormatJson(string text)
-  {
-    try
-    {
-      using var doc = JsonDocument.Parse(text);
-      return JsonSerializer.Serialize(doc, new JsonSerializerOptions { WriteIndented = true });
-    }
-    catch
-    {
-      return text;
-    }
   }
 
   private async void SendButton_Click(object? sender, RoutedEventArgs e)
@@ -790,7 +777,7 @@ public partial class MainWindow : Window
 
       _ = Task.Run(() =>
       {
-        var formatted = TryFormatJson(responseText);
+        var formatted = FormatJson.TryFormatJson(responseText);
 
         Dispatcher.UIThread.InvokeAsync(() =>
           {

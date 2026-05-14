@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using Helpers;
+using NitroHttp.Core.Helpers;
 using NitroHttp.Cli.View;
 using Spectre.Console;
 using Views.Interfaces;
