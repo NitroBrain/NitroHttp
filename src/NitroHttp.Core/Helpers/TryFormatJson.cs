@@ -1,7 +1,7 @@
 using System.Text.Json;
 
-namespace Helpers
-{
+namespace NitroHttp.Core.Helpers;
+
   public class FormatJson
   {
     public static string TryFormatJson(string text)
@@ -17,4 +17,3 @@ namespace Helpers
       }
     }
   }
-}
