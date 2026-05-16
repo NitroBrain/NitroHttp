@@ -1,19 +1,25 @@
 ﻿using System.CommandLine;
-using NitroHttp.Cli.Commands;
-using NitroHttp.Cli.Services;
+using Microsoft.Extensions.DependencyInjection;
+using NitroHttp.Cli.Commands.Interfaces;
+using NitroHttp.Cli.Composition;
 
 namespace NitroHttp.Cli
 {
-    class Program
+  class Program
+  {
+    static async Task<int> Main(string[] args)
     {
-        static async Task<int> Main(string[] args)
-        {
-            RootCommand rootCommand = new("NitroHttp CLI");
-            var httpService = new HttpService();
+      var provider = DependencyInjection.Build();
 
-            rootCommand.Add(GetCommand.Create(httpService));
+      RootCommand rootCommand = new("NitroHttp CLI");
+      var commands = provider.GetServices<ICommand>();
 
-            return await rootCommand.Parse(args).InvokeAsync();
-        }
+      foreach (var cmd in commands)
+      {
+        rootCommand.Add(cmd.Build());
+      }
+
+      return await rootCommand.Parse(args).InvokeAsync();
     }
+  }
 }
