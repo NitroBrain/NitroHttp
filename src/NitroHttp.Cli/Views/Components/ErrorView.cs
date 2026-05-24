@@ -1,8 +1,9 @@
 using Spectre.Console;
+using NitroHttp.Cli.Views.Interfaces;
 
-namespace NitroHttp.Cli.View
+namespace NitroHttp.Cli.Views.Components
 {
-    public class ErrorView
+    public class ErrorView : IErrorView
     {
         public void Display(string message)
         {
