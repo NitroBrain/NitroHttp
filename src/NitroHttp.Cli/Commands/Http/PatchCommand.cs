@@ -2,6 +2,7 @@ using NitroHttp.Cli.Commands.Interfaces;
 using System.CommandLine;
 using NitroHttp.Cli.Views.Interfaces;
 using NitroHttp.Core.Services.Interfaces;
+using NitroHttp.Cli.Commands.Options;
 
 namespace NitroHttp.Cli.Commands.Http;
 
@@ -16,25 +17,13 @@ public class PatchCommand(
         var command = new Command("patch", "Send an HTTP PATCH request to update a resource.");
         command.Aliases.Add("pa");
 
-        var urlOption = new Option<string>("--url")
-        {
-            Required = true,
-            Description = "Patch Request"
-        };
-
-        var bodyOption = new Option<string>("--body")
-        {
-            Required = true,
-            Description = "Patch Request"
-        };
-
-        command.Add(urlOption);
-        command.Add(bodyOption);
+        command.Add(HttpOptions.Url);
+        command.Add(HttpOptions.Body);
 
         command.SetAction(async result =>
         {
-            var url = result.GetValue(urlOption)!;
-            var body = result.GetValue(bodyOption)!;
+            var url = result.GetValue(HttpOptions.Url)!;
+            var body = result.GetValue(HttpOptions.Body)!;
 
             try
             {
