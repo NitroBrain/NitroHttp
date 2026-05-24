@@ -5,21 +5,20 @@ using NitroHttp.Cli.Composition;
 
 namespace NitroHttp.Cli
 {
-  class Program
-  {
-    static async Task<int> Main(string[] args)
+    static class Program
     {
-      var provider = DependencyInjection.Build();
+        static async Task<int> Main(string[] args)
+        {
+            RootCommand rootCommand = new("NitroHttp CLI");
 
-      RootCommand rootCommand = new("NitroHttp CLI");
-      var commands = provider.GetServices<ICommand>();
+            var provider = DependencyInjection.Build();
 
-      foreach (var cmd in commands)
-      {
-        rootCommand.Add(cmd.Build());
-      }
+            foreach (var cmd in provider.GetServices<ICommand>())
+            {
+                rootCommand.Add(cmd.Build());
+            }
 
-      return await rootCommand.Parse(args).InvokeAsync();
+            return await rootCommand.Parse(args).InvokeAsync();
+        }
     }
-  }
 }
