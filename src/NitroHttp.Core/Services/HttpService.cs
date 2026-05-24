@@ -19,7 +19,7 @@ namespace NitroHttp.Core.Services
 
             int count = doc.RootElement.ValueKind == JsonValueKind.Array
                 ? doc.RootElement.GetArrayLength()
-                : 0;
+                : 1;
 
             return new HttpResponseResult
             {
@@ -76,10 +76,8 @@ namespace NitroHttp.Core.Services
 
             return new HttpResponseResult
             {
-                Content = null,
                 StatusCode = (int)request.StatusCode,
                 Count = 0,
-                Size = null
             };
         }
     }
