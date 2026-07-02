@@ -10,8 +10,7 @@ public class ResponseView(
     ITable table
     ) : IResponseView
 {
-
-    public void Display(string response, int responseStatus, int responseCount, int responseSize)
+    public void Display(string requestUrl, string response, int responseStatus, int responseCount, int responseSize)
     {
         var sw = Stopwatch.StartNew();
 
@@ -19,7 +18,7 @@ public class ResponseView(
         {
             string formattedJson = FormatJson.TryFormatJson(response);
 
-            table.Display(formattedJson, "todos");
+            table.Display(formattedJson, requestUrl);
 
             stats.Display(sw.ElapsedMilliseconds, responseStatus, responseCount, responseSize);
         }
