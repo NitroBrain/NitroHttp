@@ -13,10 +13,40 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net10.0</TargetFramework>
+
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
     <Version>1.0.0</Version>
+
+    <PackageId>NitroHttp</PackageId>
+    <Title>NitroHttp</Title>
+
+    <Authors>Shoxruxmirzo Usmonov</Authors>
+    <Company>NitroBrain</Company>
+
+    <Description>A blazing-fast HTTP testing tool for the terminal.</Description>
+
+    <PackageTags>http;cli;terminal;rest;api;json;ansi</PackageTags>
+
+    <PackageProjectUrl>https://github.com/NitroBrain/NitroHttp</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/NitroBrain/NitroHttp</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>nhttp</ToolCommandName>
+
     <PublishAot>true</PublishAot>
     <InvariantGlobalization>true</InvariantGlobalization>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 </Project>
