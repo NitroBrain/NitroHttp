@@ -6,6 +6,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     <ApplicationIcon>Assets/app.ico</ApplicationIcon>
+    <NoWarn>$(NoWarn);NU1903</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
