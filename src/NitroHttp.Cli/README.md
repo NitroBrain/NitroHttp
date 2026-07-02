@@ -3,6 +3,7 @@
 A command-line tool for making HTTP requests with support for GET, POST, PUT, PATCH, and DELETE operations.
 
 [Documentation](../../docs/cli)
+[NuGet package](https://www.nuget.org/packages/NitroHttp)
 
 ## Features
 
