@@ -39,6 +39,8 @@ public static partial class JsonHighlighter
       Colors.Orange => Ansi.Orange + text + Ansi.Reset,
       Colors.Purple => Ansi.Purple + text + Ansi.Reset,
       Colors.Gray => Ansi.Gray + text + Ansi.Reset,
+      Colors.Yellow => Ansi.Yellow + text + Ansi.Reset,
+      Colors.Red => Ansi.Red + text + Ansi.Reset,
       _ => text,
     };
   }

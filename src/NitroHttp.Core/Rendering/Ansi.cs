@@ -21,4 +21,10 @@ public static class Ansi
 
   // braces, brackets, commas, colons
   public const string White = "\u001b[38;5;252m";
+
+  // errors, DELETE, failures
+  public const string Red = "\u001b[38;5;203m";
+
+  // warnings, PUT, PATCH
+  public const string Yellow = "\u001b[38;5;220m";
 }
