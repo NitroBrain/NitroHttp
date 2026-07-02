@@ -26,7 +26,8 @@ public class GetCommand(
                 var response = await httpService.GetAsync(url);
 
                 responseView.Display(
-                   response.Content,
+                    $"GET {url}",
+                    response.Content,
                     response.StatusCode,
                     response.Count,
                     response.Size

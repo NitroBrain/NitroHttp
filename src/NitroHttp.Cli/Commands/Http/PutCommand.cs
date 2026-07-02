@@ -26,8 +26,13 @@ public class PutCommand(
             var body = result.GetValue(HttpOptions.Body)!;
             try
             {
+                if (File.Exists(body))
+                {
+                    body = await File.ReadAllTextAsync(body);
+                }
+
                 var request = await httpService.PutAsync(url, body);
-                responseView.Display(request.Content, request.StatusCode, request.Count, request.Size);
+                responseView.Display($"PUT {url}", request.Content, request.StatusCode, request.Count, request.Size);
             }
             catch (Exception ex)
             {

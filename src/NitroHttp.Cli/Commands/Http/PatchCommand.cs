@@ -27,8 +27,14 @@ public class PatchCommand(
 
             try
             {
+                if (File.Exists(body))
+                {
+                    body = await File.ReadAllTextAsync(body);
+                }
+
                 var request = await httpService.PatchAsync(url, body);
                 responseView.Display(
+                    $"PATCH {url}",
                     request.Content,
                     request.StatusCode,
                     request.Count,

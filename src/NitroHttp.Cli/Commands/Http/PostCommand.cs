@@ -26,8 +26,14 @@ public class PostCommand(
             var body = result.GetValue(HttpOptions.Body)!;
             try
             {
+                if (File.Exists(body))
+                {
+                    body = await File.ReadAllTextAsync(body);
+                }
+
                 var request = await httpService.PostAsync(url, body);
                 responseView.Display(
+                  $"POST {url}",
                   request.Content,
                   request.StatusCode,
                   request.Count,

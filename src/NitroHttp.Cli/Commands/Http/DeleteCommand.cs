@@ -26,6 +26,7 @@ public class DeleteCommand(
             {
                 var request = await httpService.DeleteAsync(url);
                 responseView.Display(
+                    $"DELETE {url}",
                     "No Content",
                     request.StatusCode,
                     request.Count,
