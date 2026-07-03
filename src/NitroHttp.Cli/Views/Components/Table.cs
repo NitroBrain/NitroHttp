@@ -6,6 +6,9 @@ using NitroHttp.Core.Enums;
 
 namespace NitroHttp.Cli.Views.Components;
 
+/// <summary>
+/// Renders JSON output as a numbered table.
+/// </summary>
 public class Table : ITable
 {
     private const int ChunkSize = 500;
@@ -13,7 +16,12 @@ public class Table : ITable
 
     private static readonly Regex AnsiRegex = new(@"\x1B\[[0-9;]*m", RegexOptions.Compiled);
 
-    public void Display(string formattedJson, string endpoint = "JSON")
+    /// <summary>
+    /// Displays formatted JSON with the supplied endpoint label.
+    /// </summary>
+    /// <param name="formattedJson">The JSON payload to render.</param>
+    /// <param name="endpoint">The request endpoint label.</param>
+    public void Display(string formattedJson, string endpoint)
     {
         using var reader = new StringReader(formattedJson);
         var chunk = new List<string>(ChunkSize);
@@ -24,6 +32,11 @@ public class Table : ITable
         TableBottom();
     }
 
+    /// <summary>
+    /// Writes the table header.
+    /// </summary>
+    /// <param name="windowWidth">The current console width.</param>
+    /// <param name="endpoint">The request endpoint label.</param>
     public static void TableHeader(int windowWidth, string endpoint)
     {
         var rightWidth = Math.Max(10, windowWidth - (LeftColumnWidth + 5));
@@ -71,6 +84,9 @@ public class Table : ITable
         Console.Write(headerSb.ToString());
     }
 
+    /// <summary>
+    /// Writes the table bottom border.
+    /// </summary>
     public static void TableBottom()
     {
         var rightWidth = Math.Max(10, Console.WindowWidth - (LeftColumnWidth + 5));
@@ -82,6 +98,12 @@ public class Table : ITable
         Console.WriteLine('┘');
     }
 
+    /// <summary>
+    /// Writes the table body for the provided chunked lines.
+    /// </summary>
+    /// <param name="chunk">The buffered JSON lines.</param>
+    /// <param name="lineNumber">The current line number.</param>
+    /// <param name="reader">The text reader for the JSON payload.</param>
     public static void TableBody(List<string> chunk, int lineNumber, StringReader reader)
     {
         var outSb = new StringBuilder(ChunkSize * 80);
@@ -118,6 +140,12 @@ public class Table : ITable
         }
     }
 
+    /// <summary>
+    /// Appends rendered rows to the output buffer.
+    /// </summary>
+    /// <param name="sb">The output buffer.</param>
+    /// <param name="chunk">The buffered JSON lines.</param>
+    /// <param name="startLine">The starting line number for the chunk.</param>
     public static void AppendRows(StringBuilder sb, List<string> chunk, int startLine)
     {
         var rightWidth = Console.WindowWidth - LeftColumnWidth - 7;
