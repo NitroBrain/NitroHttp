@@ -1,6 +1,6 @@
 # NitroHttp CLI
 
-NitroHttp CLI is the command-line companion to NitroHttp. It is a blazing fast HTTP testing tool for quick API checks from a terminal, with formatted JSON output and response statistics.
+NitroHttp CLI is the command-line companion to nhttp. It is a blazing fast HTTP testing tool for quick API checks from a terminal, with formatted JSON output and response statistics.
 
 ## Overview
 
@@ -23,7 +23,7 @@ Short aliases are also available:
 ## General usage
 
 ```bash
-NitroHttp <command> --url <endpoint> [--body <json-or-file>]
+nhttp <command> --url <endpoint> [--body <json-or-file>]
 ```
 
 Rules to keep in mind:
@@ -41,8 +41,8 @@ Rules to keep in mind:
 Send a request and render the response body as formatted JSON when possible.
 
 ```bash
-NitroHttp get --url https://jsonplaceholder.typicode.com/users
-NitroHttp g --url jsonplaceholder.typicode.com/users
+nhttp get --url https://jsonplaceholder.typicode.com/users
+nhttp g --url jsonplaceholder.typicode.com/users
 ```
 
 Behavior:
@@ -57,8 +57,8 @@ Behavior:
 Create a resource or submit JSON to an endpoint.
 
 ```bash
-NitroHttp post --url https://jsonplaceholder.typicode.com/users --body '{"name":"Ada"}'
-NitroHttp p --url jsonplaceholder.typicode.com/users --body ./payloads/user.json
+nhttp post --url https://jsonplaceholder.typicode.com/users --body '{"name":"Ada"}'
+nhttp p --url jsonplaceholder.typicode.com/users --body ./payloads/user.json
 ```
 
 ### PUT
@@ -66,8 +66,8 @@ NitroHttp p --url jsonplaceholder.typicode.com/users --body ./payloads/user.json
 Replace a resource with JSON content.
 
 ```bash
-NitroHttp put --url https://jsonplaceholder.typicode.com/users/42 --body ./payloads/user-update.json
-NitroHttp pu --url jsonplaceholder.typicode.com/users/42 --body '{"name":"Ada Lovelace"}'
+nhttp put --url https://jsonplaceholder.typicode.com/users/42 --body ./payloads/user-update.json
+nhttp pu --url jsonplaceholder.typicode.com/users/42 --body '{"name":"Ada Lovelace"}'
 ```
 
 ### PATCH
@@ -75,8 +75,8 @@ NitroHttp pu --url jsonplaceholder.typicode.com/users/42 --body '{"name":"Ada Lo
 Update part of a resource with JSON content.
 
 ```bash
-NitroHttp patch --url https://jsonplaceholder.typicode.com/users/42 --body '{"title":"Engineer"}'
-NitroHttp pa --url jsonplaceholder.typicode.com/users/42 --body ./payloads/user-patch.json
+nhttp patch --url https://jsonplaceholder.typicode.com/users/42 --body '{"title":"Engineer"}'
+nhttp pa --url jsonplaceholder.typicode.com/users/42 --body ./payloads/user-patch.json
 ```
 
 ### DELETE
@@ -84,8 +84,8 @@ NitroHttp pa --url jsonplaceholder.typicode.com/users/42 --body ./payloads/user-
 Remove a resource.
 
 ```bash
-NitroHttp delete --url https://jsonplaceholder.typicode.com/users/42
-NitroHttp del --url jsonplaceholder.typicode.com/users/42
+nhttp delete --url https://jsonplaceholder.typicode.com/users/42
+nhttp del --url jsonplaceholder.typicode.com/users/42
 ```
 
 ## Output
@@ -110,23 +110,23 @@ For AOT builds and runtime-specific publish commands, see [BUILD.md](BUILD.md).
 Fetch a collection:
 
 ```bash
-NitroHttp get --url jsonplaceholder.typicode.com/posts
+nhttp get --url jsonplaceholder.typicode.com/posts
 ```
 
 Create from inline JSON:
 
 ```bash
-NitroHttp post --url https://jsonplaceholder.typicode.com/posts --body '{"title":"New post","body":"Hello"}'
+nhttp post --url https://jsonplaceholder.typicode.com/posts --body '{"title":"New post","body":"Hello"}'
 ```
 
 Update from a file:
 
 ```bash
-NitroHttp patch --url https://jsonplaceholder.typicode.com/posts/10 --body ./patch.json
+nhttp patch --url https://jsonplaceholder.typicode.com/posts/10 --body ./patch.json
 ```
 
 Delete a record:
 
 ```bash
-NitroHttp delete --url jsonplaceholder.typicode.com/posts/10
+nhttp delete --url jsonplaceholder.typicode.com/posts/10
 ```
