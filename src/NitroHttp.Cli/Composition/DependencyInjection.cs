@@ -8,8 +8,15 @@ using NitroHttp.Core.Services.Interfaces;
 
 namespace NitroHttp.Cli.Composition;
 
+/// <summary>
+/// Registers the CLI services used by the application.
+/// </summary>
 public static class DependencyInjection
 {
+    /// <summary>
+    /// Builds the application service provider.
+    /// </summary>
+    /// <returns>The configured service provider.</returns>
     public static IServiceProvider Build()
     {
         var services = new ServiceCollection();
