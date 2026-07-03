@@ -101,6 +101,10 @@ Successful requests are rendered with:
 
 If an error occurs, the CLI prints the message in a red error panel.
 
+## Build and Publish
+
+For AOT builds and runtime-specific publish commands, see [BUILD.md](BUILD.md).
+
 ## Examples
 
 Fetch a collection:
