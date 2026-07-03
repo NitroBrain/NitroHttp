@@ -20,6 +20,36 @@ Short aliases are also available:
 - `pa` for `patch`
 - `del` for `delete`
 
+## Installation
+
+### Install as a .NET Tool
+
+```bash
+dotnet tool install -g NitroHttp
+```
+
+Verify the installation:
+
+```bash
+nhttp --help
+```
+
+Update to the latest version:
+
+```bash
+dotnet tool update -g NitroHttp
+```
+
+Uninstall:
+
+```bash
+dotnet tool uninstall -g NitroHttp
+```
+
+### Native AOT
+
+For maximum startup performance, you can also build and use the Native AOT executable. See [BUILD.md](BUILD.md) for instructions.
+
 ## General usage
 
 ```bash
