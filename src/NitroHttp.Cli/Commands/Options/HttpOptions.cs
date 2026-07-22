@@ -24,4 +24,13 @@ public static class HttpOptions
         Required = true,
         Description = "Request body content to include in the HTTP request."
     };
+
+    /// <summary>
+    /// Gets the request headers option
+    /// </summary>
+    public static Option<string> Headers { get; } = new("--headers")
+    {
+        Required = false,
+        Description = "HTTP request headers. Specify either 'Header1:Value1;Header2:Value2' or the path to a JSON file."
+    };
 }
