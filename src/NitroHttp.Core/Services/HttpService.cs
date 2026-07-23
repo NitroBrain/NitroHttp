@@ -1,84 +1,29 @@
-using System.Text;
-using System.Text.Json;
-using NitroHttp.Core.Helpers;
+using System.Diagnostics;
+using NitroHttp.Core.Http;
 using NitroHttp.Core.Models;
 using NitroHttp.Core.Services.Interfaces;
 
-namespace NitroHttp.Core.Services
+namespace NitroHttp.Core.Services;
+
+/// <summary>
+/// Default HTTP service.
+/// </summary>
+public sealed class HttpService(IHttpClient httpClient, IHttpResponseFactory responseFactory) : IHttpService
 {
-    public class HttpService : IHttpService
+    /// <inheritdoc/>
+    public async Task<HttpResponseResult> ExecuteAsync(
+        HttpRequestModel request)
     {
-        private static readonly HttpClient http = new() { Timeout = TimeSpan.FromSeconds(10) };
+        ArgumentNullException.ThrowIfNull(request);
 
-        public async Task<HttpResponseResult> GetAsync(string url)
-        {
-            var response = await http.GetAsync(BuildUri.Build(url));
-            var content = await response.Content.ReadAsStringAsync();
+        using var message = HttpRequestBuilder.Build(request);
 
-            using JsonDocument doc = JsonDocument.Parse(content);
+        var stopwatch = Stopwatch.StartNew();
 
-            int count = doc.RootElement.ValueKind == JsonValueKind.Array
-                ? doc.RootElement.GetArrayLength()
-                : 1;
+        using var response = await httpClient.SendAsync(message, request.Options.CancellationToken);
 
-            return new HttpResponseResult
-            {
-                Content = content,
-                StatusCode = (int)response.StatusCode,
-                Count = count,
-                Size = Encoding.UTF8.GetByteCount(content)
-            };
-        }
+        stopwatch.Stop();
 
-        public async Task<HttpResponseResult> PostAsync(string url, string content)
-        {
-            var request = await http.PostAsync(BuildUri.Build(url), new StringContent(content, Encoding.UTF8, "application/json"));
-
-            return new HttpResponseResult
-            {
-                Content = content,
-                StatusCode = (int)request.StatusCode,
-                Count = 0,
-                Size = Encoding.UTF8.GetByteCount(content)
-            };
-        }
-
-        public async Task<HttpResponseResult> PutAsync(string url, string content)
-        {
-
-            var request = await http.PutAsync(BuildUri.Build(url), new StringContent(content, Encoding.UTF8, "application/json"));
-
-            return new HttpResponseResult
-            {
-                Content = content,
-                StatusCode = (int)request.StatusCode,
-                Count = 0,
-                Size = Encoding.UTF8.GetByteCount(content)
-            };
-        }
-
-        public async Task<HttpResponseResult> PatchAsync(string url, string content)
-        {
-            var request = await http.PatchAsync(BuildUri.Build(url), new StringContent(content, Encoding.UTF8, "application/json"));
-
-            return new HttpResponseResult
-            {
-                Content = content,
-                StatusCode = (int)request.StatusCode,
-                Count = 0,
-                Size = Encoding.UTF8.GetByteCount(content)
-            };
-        }
-
-        public async Task<HttpResponseResult> DeleteAsync(string url)
-        {
-            var request = await http.DeleteAsync(BuildUri.Build(url));
-
-            return new HttpResponseResult
-            {
-                StatusCode = (int)request.StatusCode,
-                Count = 0,
-            };
-        }
+        return await responseFactory.CreateAsync(response, stopwatch.Elapsed);
     }
 }
