@@ -1,9 +1,12 @@
 namespace NitroHttp.Core.Models;
 
-public class HttpResponseResult
+public sealed class HttpResponseResult
 {
-    public string Content { get; set; } = "";
-    public int StatusCode { get; set; }
-    public int Count { get; set; } = 0;
-    public int Size { get; set; } = 0;
+    public required int StatusCode { get; init; }
+    public required string Content { get; init; }
+    public IReadOnlyList<HttpHeader> Headers { get; init; } = [];
+    public IReadOnlyList<CookieModel> Cookies { get; init; } = [];
+    public long Size { get; init; }
+    public int Count { get; init; }
+    public TimeSpan Duration { get; init; }
 }
