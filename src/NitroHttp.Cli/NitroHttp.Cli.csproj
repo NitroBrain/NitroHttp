@@ -4,7 +4,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.8" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.10" />
     <PackageReference Include="NTokenizers.Extensions.Spectre.Console" Version="2.2.0" />
     <PackageReference Include="Spectre.Console.Json" Version="0.54.0" />
     <PackageReference Include="System.CommandLine" Version="2.0.5" />
