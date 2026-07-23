@@ -2,11 +2,15 @@ using NitroHttp.Core.Models;
 
 namespace NitroHttp.Core.Services.Interfaces;
 
+/// <summary>
+/// Provides HTTP request execution.
+/// </summary>
 public interface IHttpService
 {
-    Task<HttpResponseResult> GetAsync(string url);
-    Task<HttpResponseResult> PostAsync(string url, string content);
-    Task<HttpResponseResult> PutAsync(string url, string content);
-    Task<HttpResponseResult> PatchAsync(string url, string content);
-    Task<HttpResponseResult> DeleteAsync(string url);
+    /// <summary>
+    /// Executes an HTTP request.
+    /// </summary>
+    /// <param name="request">HTTP request.</param>
+    /// <returns>HTTP response.</returns>
+    Task<HttpResponseResult> ExecuteAsync(HttpRequestModel request);
 }
