@@ -17,7 +17,7 @@ public class ResponseStatsView : IResponseStatsView
     /// <param name="responseStatus">The HTTP response status code.</param>
     /// <param name="responseCount">The number of returned items.</param>
     /// <param name="responseSize">The response size in bytes.</param>
-    public void Display(long responseTime, int responseStatus, int responseCount, int responseSize)
+    public void Display(long responseTime, int responseStatus, int responseCount, long responseSize)
     {
         SpectreTable statsTable = new();
 
