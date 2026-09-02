@@ -12,5 +12,5 @@ public interface IResponseStatsView
     /// <param name="responseStatus">The HTTP response status code.</param>
     /// <param name="responseCount">The number of returned items.</param>
     /// <param name="responseSize">The response size in bytes.</param>
-    void Display(long responseTime, int responseStatus, int responseCount, int responseSize);
+    void Display(long responseTime, int responseStatus, int responseCount, long responseSize);
 }
