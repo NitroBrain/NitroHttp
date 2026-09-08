@@ -13,15 +13,15 @@ public class ResponseStatsView : IResponseStatsView
     /// <summary>
     /// Displays the request timing and response details.
     /// </summary>
-    /// <param name="responseTime">The elapsed request time in milliseconds.</param>
-    /// <param name="responseStatus">The HTTP response status code.</param>
-    /// <param name="responseCount">The number of returned items.</param>
-    /// <param name="responseSize">The response size in bytes.</param>
-    public void Display(long responseTime, int responseStatus, int responseCount, long responseSize)
+    /// <param name="time">The elapsed request time in milliseconds.</param>
+    /// <param name="status">The HTTP response status code.</param>
+    /// <param name="count">The number of returned items.</param>
+    /// <param name="size">The response size in bytes.</param>
+    public void Display(long time, int status, int count, long size)
     {
         SpectreTable statsTable = new()
         {
-          Border = TableBorder.Rounded
+            Border = TableBorder.Rounded
         };
 
         statsTable.AddColumn("[green]Status[/]");
@@ -29,18 +29,19 @@ public class ResponseStatsView : IResponseStatsView
         statsTable.AddColumn("[green]Size[/]");
         statsTable.AddColumn("[green]Items[/]");
 
-        string formattedSize = FormatBytes.Format(responseSize);
-        string status = HttpStatusHelper.GetStatusText(responseStatus);
+        string formattedSize = FormatBytes.Format(size);
+        string statusCode = HttpStatusHelper.GetStatusText(status);
 
         statsTable.AddRow(
-            $"[yellow]{status}[/]",
-            $"[yellow]{responseTime}ms[/]",
+            $"[yellow]{statusCode}[/]",
+            $"[yellow]{time}ms[/]",
             $"[yellow]{formattedSize}[/]",
-            $"[yellow]{responseCount:#,##,##,##0}[/]"
+            $"[yellow]{count:#,##,##,##0}[/]"
         );
 
         var table = Align.Right(statsTable);
 
+        AnsiConsole.Write(new Align(new Markup("[bold green]Statistics[/]"), HorizontalAlignment.Right));
         AnsiConsole.Write(table);
     }
 }
