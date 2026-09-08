@@ -1,3 +1,6 @@
+using System.Net.Http.Headers;
+using NitroHttp.Core.Models;
+
 namespace NitroHttp.Cli.Views.Interfaces;
 
 /// <summary>
@@ -13,5 +16,5 @@ public interface IResponseView
     /// <param name="responseStatus">The HTTP response status code.</param>
     /// <param name="responseCount">The number of returned items.</param>
     /// <param name="responseSize">The response size in bytes.</param>
-    void Display(string requestUrl, string response, int responseStatus, int responseCount, long responseSize);
+    void Display(string requestUrl, string response, int responseStatus, int responseCount, long responseSize, IReadOnlyList<HttpHeader>? headers);
 }
