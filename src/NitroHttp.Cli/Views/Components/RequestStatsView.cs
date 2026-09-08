@@ -19,7 +19,10 @@ public class ResponseStatsView : IResponseStatsView
     /// <param name="responseSize">The response size in bytes.</param>
     public void Display(long responseTime, int responseStatus, int responseCount, long responseSize)
     {
-        SpectreTable statsTable = new();
+        SpectreTable statsTable = new()
+        {
+          Border = TableBorder.Rounded
+        };
 
         statsTable.AddColumn("[green]Status[/]");
         statsTable.AddColumn("[green]Time[/]");
