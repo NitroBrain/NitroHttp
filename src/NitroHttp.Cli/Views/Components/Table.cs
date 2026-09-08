@@ -42,11 +42,11 @@ public class Table : ITable
         var rightWidth = Math.Max(10, windowWidth - (LeftColumnWidth + 5));
         var headerSb = new StringBuilder();
 
-        headerSb.Append('┌')
+        headerSb.Append('╭')
             .Append('─', LeftColumnWidth + 2)
             .Append('┬')
             .Append('─', rightWidth)
-            .Append('┐')
+            .Append('╮')
             .AppendLine();
 
         var parts = endpoint.Split(' ', 2);
@@ -91,11 +91,11 @@ public class Table : ITable
     {
         var rightWidth = Math.Max(10, Console.WindowWidth - (LeftColumnWidth + 5));
 
-        Console.Write('└');
+        Console.Write('╰');
         Console.Write(new string('─', LeftColumnWidth + 2));
         Console.Write('┴');
         Console.Write(new string('─', rightWidth));
-        Console.WriteLine('┘');
+        Console.WriteLine('╯');
     }
 
     /// <summary>
