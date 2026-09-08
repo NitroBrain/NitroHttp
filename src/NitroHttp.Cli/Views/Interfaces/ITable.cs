@@ -1,4 +1,3 @@
-
 namespace NitroHttp.Cli.Views.Interfaces;
 
 /// <summary>
