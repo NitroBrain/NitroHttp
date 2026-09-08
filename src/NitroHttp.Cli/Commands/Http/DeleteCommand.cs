@@ -2,7 +2,9 @@ using System.CommandLine;
 using NitroHttp.Cli.Commands.Interfaces;
 using NitroHttp.Cli.Commands.Options;
 using NitroHttp.Cli.Views.Interfaces;
+using NitroHttp.Core.Models;
 using NitroHttp.Core.Services.Interfaces;
+using NitroHttp.Core.Helpers;
 
 namespace NitroHttp.Cli.Commands.Http;
 
@@ -12,11 +14,7 @@ namespace NitroHttp.Cli.Commands.Http;
 /// <param name="httpService">The HTTP service used to execute the request.</param>
 /// <param name="responseView">The view used to render successful responses.</param>
 /// <param name="errorView">The view used to render errors.</param>
-public class DeleteCommand(
-    IHttpService httpService,
-    IResponseView responseView,
-    IErrorView errorView
-    ) : ICommand
+public sealed class DeleteCommand(IHttpService httpService, IResponseView responseView, IErrorView errorView) : ICommand
 {
     /// <summary>
     /// Creates the configured command.
@@ -25,22 +23,40 @@ public class DeleteCommand(
     public Command Build()
     {
         var command = new Command("delete", "Send an HTTP DELETE request to remove a resource.");
+
         command.Aliases.Add("del");
 
         command.Add(HttpOptions.Url);
+        command.Add(HttpOptions.Headers);
 
         command.SetAction(async result =>
         {
-            var url = result.GetValue(HttpOptions.Url)!;
             try
             {
-                var request = await httpService.DeleteAsync(url);
+                var url = result.GetValue(HttpOptions.Url)!;
+                var headers = result.GetValue(HttpOptions.Headers);
+
+                if (!string.IsNullOrWhiteSpace(headers) && File.Exists(headers))
+                {
+                    headers = await File.ReadAllTextAsync(headers);
+                }
+
+                var request = new HttpRequestModel
+                {
+                    Method = HttpMethod.Delete,
+                    Url = url,
+                    Headers = HeaderParser.Parse(headers)
+                };
+
+                var response = await httpService.ExecuteAsync(request);
+
                 responseView.Display(
-                    $"DELETE {url}",
-                    "No Content",
-                    request.StatusCode,
-                    request.Count,
-                    request.Size
+                    $"{request.Method} {request.Url}",
+                    response.Content,
+                    response.StatusCode,
+                    response.Count,
+                    response.Size,
+                    response.Headers
                 );
             }
             catch (Exception ex)
@@ -48,6 +64,7 @@ public class DeleteCommand(
                 errorView.Display(ex.Message);
             }
         });
+
         return command;
     }
 }
