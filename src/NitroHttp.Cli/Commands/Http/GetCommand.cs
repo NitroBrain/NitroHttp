@@ -1,18 +1,17 @@
 using System.CommandLine;
 using NitroHttp.Cli.Commands.Interfaces;
-using NitroHttp.Core.Services.Interfaces;
-using NitroHttp.Cli.Views.Interfaces;
 using NitroHttp.Cli.Commands.Options;
+using NitroHttp.Cli.Views.Interfaces;
+using NitroHttp.Core.Models;
+using NitroHttp.Core.Services.Interfaces;
+using NitroHttp.Core.Helpers;
 
 namespace NitroHttp.Cli.Commands.Http;
 
 /// <summary>
 /// Builds the command used to send HTTP GET requests.
 /// </summary>
-/// <param name="httpService">The HTTP service used to execute the request.</param>
-/// <param name="responseView">The view used to render successful responses.</param>
-/// <param name="errorView">The view used to render errors.</param>
-public class GetCommand(
+public sealed class GetCommand(
     IHttpService httpService,
     IResponseView responseView,
     IErrorView errorView) : ICommand
@@ -23,24 +22,32 @@ public class GetCommand(
     /// <returns>The configured command instance.</returns>
     public Command Build()
     {
-        var command = new Command("get", "Send an HTTP GET request to retrieve data.");
+        var command = new Command("get", "Send an HTTP GET request.");
         command.Aliases.Add("g");
 
         command.Add(HttpOptions.Url);
+        command.Add(HttpOptions.Headers);
 
         command.SetAction(async result =>
         {
-            var url = result.GetValue(HttpOptions.Url)!;
             try
             {
-                var response = await httpService.GetAsync(url);
+                var request = new HttpRequestModel
+                {
+                    Method = HttpMethod.Get,
+                    Url = result.GetValue(HttpOptions.Url)!,
+                    Headers = HeaderParser.Parse(result.GetValue(HttpOptions.Headers))
+                };
+
+                var response = await httpService.ExecuteAsync(request);
 
                 responseView.Display(
-                    $"GET {url}",
+                    $"{request.Method} {request.Url}",
                     response.Content,
                     response.StatusCode,
                     response.Count,
-                    response.Size
+                    response.Size,
+                    response.Headers
                 );
             }
             catch (Exception ex)
