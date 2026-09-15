@@ -58,7 +58,8 @@ public sealed class PostCommand(
                     response.StatusCode,
                     response.Count,
                     response.Size,
-                    response.Headers
+                    response.Headers,
+                    response.Cookies
                 );
             }
             catch (Exception ex)

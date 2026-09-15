@@ -56,7 +56,8 @@ public sealed class DeleteCommand(IHttpService httpService, IResponseView respon
                     response.StatusCode,
                     response.Count,
                     response.Size,
-                    response.Headers
+                    response.Headers,
+                    response.Cookies
                 );
             }
             catch (Exception ex)

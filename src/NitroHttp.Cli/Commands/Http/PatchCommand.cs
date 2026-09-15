@@ -68,7 +68,8 @@ public sealed class PatchCommand(
                     response.StatusCode,
                     response.Count,
                     response.Size,
-                    response.Headers
+                    response.Headers,
+                    response.Cookies
                 );
             }
             catch (Exception ex)

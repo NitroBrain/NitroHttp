@@ -59,7 +59,8 @@ public sealed class PutCommand(
                     response.StatusCode,
                     response.Count,
                     response.Size,
-                    response.Headers
+                    response.Headers,
+                    response.Cookies
                 );
             }
             catch (Exception ex)
