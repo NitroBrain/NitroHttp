@@ -9,8 +9,9 @@ namespace NitroHttp.Cli.Views.Interfaces
     public interface IHeaders
     {
         /// <summary>
-        /// Displays formmated cookies
+        /// Displays formatted HTTP headers.
         /// </summary>
+        /// <param name="headers">The HTTP headers to display.</param>
         void Display(IReadOnlyList<HttpHeader> headers);
     }
 }

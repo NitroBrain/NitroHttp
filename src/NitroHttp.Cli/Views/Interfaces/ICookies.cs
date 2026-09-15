@@ -1,3 +1,5 @@
+using NitroHttp.Core.Models;
+
 namespace NitroHttp.Cli.Views.Interfaces
 {
     /// <summary>
@@ -6,8 +8,9 @@ namespace NitroHttp.Cli.Views.Interfaces
     public interface ICookies
     {
         /// <summary>
-        /// Displays formmated cookies
+        /// Displays formatted cookies.
         /// </summary>
-        void Display();
+        /// <param name="cookies">The HTTP cookies to display.</param>
+        void Display(IReadOnlyList<CookieModel> cookies);
     }
 }
