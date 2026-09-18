@@ -6,5 +6,9 @@ namespace NitroHttp.Core.Models
         public required string Value { get; init; }
         public string? Domain { get; init; }
         public string Path { get; init; } = "/";
+        public string? Age { get; init; }
+        public int Size { get; init; }
+        public bool HttpOnly { get; init; }
+        public string? SameSite { get; init; }
     }
 }
