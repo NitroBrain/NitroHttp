@@ -3,6 +3,7 @@ using NitroHttp.Cli.Commands.Http;
 using NitroHttp.Cli.Commands.Interfaces;
 using NitroHttp.Cli.Views.Components;
 using NitroHttp.Cli.Views.Interfaces;
+using NitroHttp.Core.Http;
 using NitroHttp.Core.Services;
 using NitroHttp.Core.Services.Interfaces;
 
@@ -21,7 +22,11 @@ public static class DependencyInjection
     {
         var services = new ServiceCollection();
 
+        services.AddHttpClient();
+        services.AddSingleton<IHttpClient, HttpClientAdapter>();
+        services.AddSingleton<IHttpResponseFactory, HttpResponseFactory>();
         services.AddSingleton<IHttpService, HttpService>();
+
         services.AddSingleton<ICommand, GetCommand>();
         services.AddSingleton<ICommand, PostCommand>();
         services.AddSingleton<ICommand, PutCommand>();
@@ -32,6 +37,8 @@ public static class DependencyInjection
         services.AddSingleton<IResponseStatsView, ResponseStatsView>();
         services.AddSingleton<IErrorView, ErrorView>();
         services.AddSingleton<ITable, Table>();
+        services.AddSingleton<ICookies, CookiesView>();
+        services.AddSingleton<IHeaders, HeadersView>();
 
         return services.BuildServiceProvider();
     }
