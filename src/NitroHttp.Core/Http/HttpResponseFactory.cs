@@ -124,8 +124,8 @@ public sealed class HttpResponseFactory : IHttpResponseFactory
 
             cookies.Add(new CookieModel
             {
-                Name = name,
-                Value = cookieValue,
+                Name = name!,
+                Value = cookieValue!,
                 Domain = domain,
                 Path = path,
                 Age = age,
