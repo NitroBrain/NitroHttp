@@ -16,5 +16,6 @@ public interface IResponseView
     /// <param name="count">The number of returned items.</param>
     /// <param name="size">The response size in bytes.</param>
     /// <param name="headers">The HTTP headers.</param>
-    void Display(string url, string response, int status, int count, long size, IReadOnlyList<HttpHeader> headers);
+    /// <param name="cookies">The HTTP cookies.</param>
+    void Display(string url, string response, int status, int count, long size, IReadOnlyList<HttpHeader> headers, IReadOnlyList<CookieModel> cookies);
 }
