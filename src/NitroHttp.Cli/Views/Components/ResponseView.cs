@@ -11,8 +11,8 @@ namespace NitroHttp.Cli.Views.Components;
 /// <param name="stats">The view used to display request statistics.</param>
 /// <param name="errorView">The view used to display errors.</param>
 /// <param name="table">The table renderer used for formatted JSON output.</param>
-/// <param name="cookiesView">The table renderer used for formatted JSON output.</param>
-/// <param name="headersView">The table renderer used for formatted JSON output.</param>
+/// <param name="cookiesView">The view used to display cookies.</param>
+/// <param name="headersView">The view used to display HTTP headers.</param>
 public class ResponseView(
     IResponseStatsView stats,
     IErrorView errorView,
@@ -30,7 +30,8 @@ public class ResponseView(
     /// <param name="count">The number of returned items.</param>
     /// <param name="size">The response size in bytes.</param>
     /// <param name="headers">The HTTP headers.</param>
-    public void Display(string url, string response, int status, int count, long size, IReadOnlyList<HttpHeader> headers)
+    /// <param name="cookies">The HTTP cookies.</param>
+    public void Display(string url, string response, int status, int count, long size, IReadOnlyList<HttpHeader> headers, IReadOnlyList<CookieModel> cookies)
     {
         var sw = Stopwatch.StartNew();
 
@@ -41,7 +42,7 @@ public class ResponseView(
             table.Display(formattedJson, url);
 
             stats.Display(sw.ElapsedMilliseconds, status, count, size);
-            cookiesView.Display();
+            cookiesView.Display(cookies);
             headersView.Display(headers);
         }
         catch (Exception ex)
